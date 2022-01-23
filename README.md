@@ -1,70 +1,192 @@
-# Getting Started with Create React App
+# HornLog Client App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the app for HornLog. 
 
-## Available Scripts
+## 1. Initialization (development)
+<!-- <details><summary>Setup the project for dev</summary> -->
+### 1.1. Create a new project
 
-In the project directory, you can run:
+```bash
+$ npx create-react-app hornlog-client --use-npm
+$ cd hornlog-client
+```
 
-### `npm start`
+### 1.2. Add Dockerfile to the root of the project
+```dockerfile
+# pull official base image
+FROM node:alpine
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# set working directory
+WORKDIR /app
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
-### `npm test`
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install # --silent
+# RUN npm install react-scripts@3.4.1 -g --silent
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# add app
+COPY . ./
 
-### `npm run build`
+# start app
+CMD ["npm", "start"]
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1.3. Add .dockerignore to the root of the project
+```dockerignore
+node_modules
+build
+.dockerignore
+Dockerfile
+Dockerfile.prod
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1.4 Build and tag the Docker image
+```bash
+$ docker build -t hornlog-client:dev .
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 1.5. Run the app
+```bash
+$ docker run \
+    -it \
+    --rm \
+    -v ${PWD}:/app \
+    -v /app/node_modules \
+    -p 3001:3000 \
+    -e CHOKIDAR_USEPOLLING=true \
+    sample:dev
+```
+#### Explanation
 
-### `npm run eject`
+1. The docker run command creates and runs a new container instance from the image we just created.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. -it starts the container in interactive mode. Why is this necessary? As of version 3.4.1, react-scripts exits after start-up (unless CI mode is specified) which will cause the container to exit. Thus the need for interactive mode.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. --rm removes the container and volumes after the container exits.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. -v ${PWD}:/app mounts the code into the container at “/app”.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+5. Since we want to use the container version of the “node_modules” folder, we configured another volume: -v /app/node_modules. You should now be able to remove the local “node_modules” flavor.
 
-## Learn More
+6. -p 3001:3000 exposes port 3000 to other Docker containers on the same network (for inter-container communication) and port 3001 to the host.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+7. Finally, -e CHOKIDAR_USEPOLLING=true enables a polling mechanism via chokidar (which wraps fs.watch, fs.watchFile, and fsevents) so that hot-reloading will work.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+9. Add -d to run the container in detached mode.
 
-### Code Splitting
+### 1.6. Use docker compose to run the app
+```bash
+version: '3.7'
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+services:
+  hornlog-client:
+    container_name: hornlog-client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 3001:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+```
 
-### Analyzing the Bundle Size
+### 1.7. Run the app
+```bash
+$ docker-compose up -d --build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 1.8. Stop the app
+Check that is working then stop it. 
+```bash
+$ docker-compose stop 
+```
+</details>
 
-### Making a Progressive Web App
+## 2. Initialization (production)
+<!-- <details><summary>Setup the project for prod</summary> -->
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 2.0 If you use React Router 
+Create the following folder along with a nginx.conf file:
+```
+└── nginx
+    └── nginx.conf
+```
 
-### Advanced Configuration
+nginx.conf:
+```nginx.conf
+server {
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+  listen 80;
 
-### Deployment
+  location / {
+    root   /usr/share/nginx/html;
+    index  index.html index.htm;
+    try_files $uri $uri/ /index.html;
+  }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+  error_page   500 502 503 504  /50x.html;
 
-### `npm run build` fails to minify
+  location = /50x.html {
+    root   /usr/share/nginx/html;
+  }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+}
+```
+
+### 2.1. create a separate Dockerfile for use in production called Dockerfile.prod
+```dockerfile
+# build environment
+FROM node:alpine as build
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm ci --silent
+COPY . ./
+RUN npm run build
+
+# production environment
+FROM nginx:stable-alpine
+COPY --from=build /app/build /usr/share/nginx/html
+# if using React Router, add the following line:
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+### 2.2. Build and tag the Docker image
+```bash
+$ docker build -f Dockerfile.prod -t hornlog-client:prod .
+```
+
+### 2.3. Run the container
+```bash
+$ docker run -it --rm -p 1337:80 hornlog-client:prod
+```
+Check that is working then stop it. 
+
+### 2.4. Use docker compose to run the app
+```dockercompose
+version: '3.7'
+
+services:
+  hornlog-client-prod:
+    container_name: hornlog-client-prod
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - '1337:80'
+```
+
+### 2.5. Run the app
+```bash
+$ docker-compose -f docker-compose.prod.yml up -d --build
+```
