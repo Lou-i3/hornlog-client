@@ -2,6 +2,40 @@
 
 This is the app for HornLog. 
 
+## Important Commands
+```bash 
+# Dev - Build and tag the Docker image
+$ docker build -t hornlog-client:dev .
+
+# Dev - Run the app
+$ docker run \
+    -itd \
+    --rm \
+    -v ${PWD}:/app \
+    -v /app/node_modules \
+    -p 3001:3000 \
+    -e CHOKIDAR_USEPOLLING=true \
+    hornlog-client:dev
+
+# Dev - Run the app with docker-compose
+$ docker-compose up -d --build
+
+# Prod - Build and tag the Docker image
+$ docker build -f Dockerfile.prod -t hornlog-client:prod .
+
+# Prod - Run the app 
+$ docker run -itd --rm -p 1337:80 hornlog-client:prod
+
+# Prod - Run the app with docker-compose
+$ docker-compose -f docker-compose.prod.yml up -d --build
+
+# Stop the app
+$ docker stop hornlog-client
+
+# Stop the app with docker-compose
+$ docker-compose stop
+```
+
 ## 1. Initialization (development)
 <!-- <details><summary>Setup the project for dev</summary> -->
 ### 1.1. Create a new project
@@ -58,7 +92,7 @@ $ docker run \
     -v /app/node_modules \
     -p 3001:3000 \
     -e CHOKIDAR_USEPOLLING=true \
-    sample:dev
+    hornlog-client:dev
 ```
 #### Explanation
 
@@ -78,7 +112,7 @@ $ docker run \
 
 9. Add -d to run the container in detached mode.
 
-### 1.6. Use docker compose to run the app
+### 1.6. Use docker compose to run the app, add docker-compose.yml to the root of the project
 ```bash
 version: '3.7'
 
@@ -172,7 +206,7 @@ $ docker run -it --rm -p 1337:80 hornlog-client:prod
 ```
 Check that is working then stop it. 
 
-### 2.4. Use docker compose to run the app
+### 2.4. Use docker compose to run the app, add docker-compose.prod.yml to the root of the project
 ```dockercompose
 version: '3.7'
 
