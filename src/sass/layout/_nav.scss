@@ -1,26 +1,39 @@
 .navbar {
     @include flex(row, space-between);
-    padding: 0.5rem 1rem;
-    background-color: $color-main;
-    & .left-section {
-        @include flex(row, center, center);
-    }
-    & .right-section {}
-    & .under-burger {
-        display: none;
-    }
-    & a {
-        color: white;
-        text-decoration: none;
-        & .nav-link {}
-        & .navbar-brand {
-            font-size: 35px;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
+    padding: 30px 50px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    // height: 100px;
+    background-color: $color-secondary-black;
+    & .navbar-inner {
+        @include flex(row, space-between);
+        width: 100%;
+        & .left-section {
+            @include flex(row, center, center);
         }
-        &:hover {
-            color: white;
+        & .right-section .right-section-inner {
+            @include flex(row, center, center);
+            gap: 10px;
+        }
+        & .under-burger {
+            display: none;
+        }
+        & a {
+            color: #cacbce;
+            text-decoration: none;
+            & .nav-link {
+                font-size: 18px;
+                font-weight: regular;
+            }
+            &.navbar-brand {
+                font-size: 35px;
+                font-weight: 400;
+                text-decoration: none;
+            }
+            &:hover {
+                color: white;
+            }
         }
     }
 }

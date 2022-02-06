@@ -1,0 +1,16 @@
+.register,
+.login {
+    @include flex();
+    height: 100%;
+    width: 100%;
+    background-color: $color-main-black;
+    & .register-inner,
+    .login-inner {
+        padding: 60px;
+        background-color: $color-secondary-black;
+        border-radius: 40px;
+        border: 1px solid #373737;
+        box-shadow: inset 0px 4px 10px rgba(0, 0, 0, 0.25);
+        min-width: 530px;
+    }
+}

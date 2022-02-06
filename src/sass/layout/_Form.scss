@@ -1,0 +1,64 @@
+form .form-inner {
+    @include flex(column, center, center);
+    gap: 30px;
+    & h1 {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 25px;
+        line-height: 31px;
+        color: $color-blue;
+    }
+    & label,
+    p,
+    p {
+        color: #f5f1f1;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 26px;
+        & a {
+            color: $color-blue;
+            text-decoration: none;
+        }
+    }
+    & .form-line {
+        @include flex(row, center, flex-start);
+        gap: 20px;
+        width: 100%;
+        & .form-group {
+            width: 50%;
+        }
+    }
+    & .form-group {
+        @include flex(column, center, flex-start);
+        gap: 10px;
+        width: 100%;
+        & input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            border-radius: 15px;
+            padding: 15px;
+            // width: 241px;
+            // height: 51px;
+            /* Main Black/20% Main Black */
+            background: $color-main-black-20;
+            /* Secondary Black/50% Secondary Black */
+            border: 1px solid $color-secondary-black-50;
+            box-sizing: border-box;
+            border-radius: 15px;
+            width: 100%;
+        }
+        & .error {
+            color: $color-red;
+            max-width: inherit;
+        }
+    }
+    & button,
+    .button {
+        @include flex(row, center, center);
+        width: 100%;
+        padding: 15px 0;
+        // height: 51px;
+        margin: auto;
+    }
+}

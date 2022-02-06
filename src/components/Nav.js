@@ -45,95 +45,96 @@ const Nav = (props) => {
 
     return (
         <nav className="navbar">
-            <div className="left-section">
+            <div className="navbar-inner">
+                <div className="left-section">
 
-                <Link to={"/"} className="navbar-brand">
-                    HornLog
-                </Link>
-            </div>
-            <div className="center">
-
-            </div>
-
-            <div className="right-section">
-                {currentUser ? (
-                    <div className="navbar-nav ml-auto">
-                        <li className="nav-item">
-                            <Link to={"/profile"} className="nav-link">
-                                {currentUser.username}
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <a href="/login" className="nav-link" onClick={logOut}>
-                                LogOut
-                            </a>
-                        </li>
-                    </div>
-                ) : (
-                    <div className="navbar-nav ml-auto">
-                        <li className="nav-item">
-                            <Link to={"/login"} className="nav-link">
-                                Login
-                            </Link>
-                        </li>
-
-                        <li className="nav-item">
-                            <Link to={"/register"} className="nav-link">
-                                Sign Up
-                            </Link>
-                        </li>
-                    </div>
-                )}
-            </div>
-
-            <div className="under-burger">
-                <li className="nav-item">
-                    <Link to={"/home"} className="nav-link">
-                        Home
+                    <Link to={"/"} className="navbar-brand">
+                        HornLog
                     </Link>
-                </li>
+                </div>
+                <div className="center">
 
-                {showModeratorBoard && (
+                </div>
+
+                <div className="right-section">
+                    {currentUser ? (
+                        <div className="navbar-nav ml-auto">
+                            <li className="nav-item">
+                                <Link to={"/profile"} className="nav-link">
+                                    {currentUser.username}
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <a href="/login" className="nav-link" onClick={logOut}>
+                                    LogOut
+                                </a>
+                            </li>
+                        </div>
+                    ) : (
+                        <div className="right-section-inner">
+                            <div className="nav-item">
+                                <Link to={"/login"} className="nav-link">
+                                    Login
+                                </Link>
+                            </div>
+
+                            <div className="nav-item">
+                                <Link to={"/register"} className="nav-link">
+                                    Register
+                                </Link>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div className="under-burger">
                     <li className="nav-item">
-                        <Link to={"/mod"} className="nav-link">
-                            Moderator Board
+                        <Link to={"/home"} className="nav-link">
+                            Home
                         </Link>
                     </li>
-                )}
 
-                {showAdminBoard && (
-                    <li className="nav-item">
-                        <Link to={"/admin"} className="nav-link">
-                            Admin Board
-                        </Link>
-                    </li>
-                )}
+                    {showModeratorBoard && (
+                        <li className="nav-item">
+                            <Link to={"/mod"} className="nav-link">
+                                Moderator Board
+                            </Link>
+                        </li>
+                    )}
 
-                {currentUser && (
-                    <li className="nav-item">
-                        <Link to={"/hooks"} className="nav-link">
-                            Hooks
-                        </Link>
-                    </li>
-                )}
+                    {showAdminBoard && (
+                        <li className="nav-item">
+                            <Link to={"/admin"} className="nav-link">
+                                Admin Board
+                            </Link>
+                        </li>
+                    )}
 
-                {currentUser && (
-                    <li className="nav-item">
-                        <Link to={"/partners"} className="nav-link">
-                            Partners
-                        </Link>
-                    </li>
-                )}
+                    {currentUser && (
+                        <li className="nav-item">
+                            <Link to={"/hooks"} className="nav-link">
+                                Hooks
+                            </Link>
+                        </li>
+                    )}
 
-                {currentUser && (
-                    <li className="nav-item">
-                        <Link to={"/user"} className="nav-link">
-                            User
-                        </Link>
-                    </li>
-                )}
+                    {currentUser && (
+                        <li className="nav-item">
+                            <Link to={"/partners"} className="nav-link">
+                                Partners
+                            </Link>
+                        </li>
+                    )}
+
+                    {currentUser && (
+                        <li className="nav-item">
+                            <Link to={"/user"} className="nav-link">
+                                User
+                            </Link>
+                        </li>
+                    )}
+                </div>
             </div>
-
 
         </nav>
     );

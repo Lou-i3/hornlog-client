@@ -49,18 +49,18 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <div className="app">
       <Nav isLoggedIn={isLoggedIn} logOut={logOut} />
       { isLoggedIn && <p>Logged In!</p>}
 
-      <div className="container mt-3">
+      <div className="content">
         <Switch>
-          <Route exact path={["/", "/home"]} component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-
-          { !isLoggedIn && <Route  path="/" component={Login} />}
           
+          { !isLoggedIn && <Route exact path="/register" component={Register} /> }
+
+          { !isLoggedIn && <Route  path={["/", "/login"]} component={Login} />}
+          
+          <Route exact path={["/", "/home"]} component={Home} />
           <Route exact path="/profile" component={Profile} />
           <Route path="/user" component={BoardUser} />
           <Route path="/mod" component={BoardModerator} />

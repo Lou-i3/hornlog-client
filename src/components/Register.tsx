@@ -4,6 +4,7 @@ import * as Yup from "yup";
 
 import IUser from "../types/user.type";
 import { register } from "../services/auth.service";
+import { Link } from "react-router-dom";
 
 const Register: React.FC = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
@@ -64,13 +65,13 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
-        <img
+    <div className="register">
+      <div className="register-inner">
+        {/* <img
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
           alt="profile-img"
           className="profile-img-card"
-        />
+        /> */}
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -78,24 +79,38 @@ const Register: React.FC = () => {
         >
           <Form>
             {!successful && (
-              <div>
-                <div className="form-group">
-                  <label htmlFor="username"> Username </label>
-                  <Field name="username" type="text" className="form-control" />
-                  <ErrorMessage
-                    name="username"
-                    component="div"
-                    className="alert alert-danger"
-                  />
+              <div className="form-inner">
+                <h1>Create Account</h1>
+                <div className="form-line">
+                  <div className="form-group">
+                    <label htmlFor="username"> Username </label>
+                    <Field name="username" type="text" className="form-control" placeholder="toto69"/>
+                    <ErrorMessage
+                      name="username"
+                      component="div"
+                      className="error"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="name"> Name </label>
+                    <Field name="name" type="text" className="form-control" placeholder="Toto" />
+                    <ErrorMessage
+                      name="name"
+                      component="div"
+                      className="error"
+                    />
+                  </div>
                 </div>
 
+                <div className="form-line">
                 <div className="form-group">
                   <label htmlFor="email"> Email </label>
-                  <Field name="email" type="email" className="form-control" />
+                  <Field name="email" type="email" className="form-control" placeholder="toto@gmail.com"/>
                   <ErrorMessage
                     name="email"
                     component="div"
-                    className="alert alert-danger"
+                    className="error"
                   />
                 </div>
 
@@ -105,16 +120,21 @@ const Register: React.FC = () => {
                     name="password"
                     type="password"
                     className="form-control"
+                    placeholder="**********"
                   />
                   <ErrorMessage
                     name="password"
                     component="div"
-                    className="alert alert-danger"
+                    className="error"
                   />
+                </div>
                 </div>
 
                 <div className="form-group">
-                  <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+                  <button type="submit" className="button-primary button">Sign Up</button>
+                </div>
+                <div className="gotologin">
+                  <p>Already have an account? <Link to="/login">Login</Link></p>
                 </div>
               </div>
             )}
@@ -123,7 +143,7 @@ const Register: React.FC = () => {
               <div className="form-group">
                 <div
                   className={
-                    successful ? "alert alert-success" : "alert alert-danger"
+                    successful ? "alert alert-success" : "error"
                   }
                   role="alert"
                 >
