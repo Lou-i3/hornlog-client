@@ -5,9 +5,9 @@ import { Switch, Route } from "react-router-dom";
 // import * as Yup from "yup";
 
 // import logo from './logo.svg';
-import './App.css';
+import './sass/App.scss';
 
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -23,6 +23,7 @@ import AuthVerify from './common/AuthVerify';
 import EventBus from './common/EventBus';
 import Error404 from './components/error404';
 import Hooks from './components/Hooks';
+import Partners from './components/Partners';
 
 
 const App: React.FC = () => {
@@ -51,6 +52,7 @@ const App: React.FC = () => {
     <div>
       <Nav isLoggedIn={isLoggedIn} logOut={logOut} />
       { isLoggedIn && <p>Logged In!</p>}
+
       <div className="container mt-3">
         <Switch>
           <Route exact path={["/", "/home"]} component={Home} />
@@ -64,6 +66,7 @@ const App: React.FC = () => {
           <Route path="/mod" component={BoardModerator} />
           <Route path="/admin" component={BoardAdmin} />
           <Route path="/hooks" component={Hooks} />
+          <Route path="/partners" component={Partners} />
 
 
           <Route path="/" component={Error404} />

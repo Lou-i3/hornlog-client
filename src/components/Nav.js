@@ -70,11 +70,19 @@ const Nav = (props) => {
                         </Link>
                     </li>
                 )}
-                
+
                 {currentUser && (
                     <li className="nav-item">
                         <Link to={"/hooks"} className="nav-link">
                             Hooks
+                        </Link>
+                    </li>
+                )}
+
+                {currentUser && (
+                    <li className="nav-item">
+                        <Link to={"/partners"} className="nav-link">
+                            Partners
                         </Link>
                     </li>
                 )}
