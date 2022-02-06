@@ -1,3 +1,26 @@
 .navbar {
-    background-color: aquamarine;
+    @include flex(row, space-between);
+    padding: 0.5rem 1rem;
+    background-color: $color-main;
+    & .left-section {
+        @include flex(row, center, center);
+    }
+    & .right-section {}
+    & .under-burger {
+        display: none;
+    }
+    & a {
+        color: white;
+        text-decoration: none;
+        & .nav-link {}
+        & .navbar-brand {
+            font-size: 35px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        &:hover {
+            color: white;
+        }
+    }
 }
