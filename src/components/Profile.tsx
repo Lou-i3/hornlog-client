@@ -12,9 +12,13 @@ const Profile: React.FC = () => {
         </h3>
       </header>
       <p>
-        <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
-        {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
+        <strong>Token:</strong> 
       </p>
+      <p style={{wordWrap: 'break-word'}}>{currentUser.accessToken}</p>
+      <p>
+        <strong>Refresh Token:</strong> 
+      </p>
+      <p style={{wordWrap: 'break-word'}}>{currentUser.refreshToken}</p>
       <p>
         <strong>Id:</strong> {currentUser.id}
       </p>
