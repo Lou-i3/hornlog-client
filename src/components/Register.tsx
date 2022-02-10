@@ -131,7 +131,7 @@ const Register: React.FC = () => {
                 </div>
 
                 <div className="form-group">
-                  <button type="submit" className="button-primary button">Sign Up</button>
+                  <button type="submit" className="button-primary button">Register</button>
                 </div>
                 <div className="gotologin">
                   <p>Already have an account? <Link to="/login">Login</Link></p>
