@@ -4,7 +4,8 @@
     position: fixed;
     left: 0;
     right: 0;
-    // height: 100px;
+    height: $size-header-height;
+    box-sizing: border-box;
     background-color: $color-secondary-black;
     & .navbar-inner {
         @include flex(row, space-between);
