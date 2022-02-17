@@ -4,6 +4,7 @@ import * as Yup from "yup";
 
 import { login } from "../services/auth.service";
 import { Link, RouteComponentProps } from "react-router-dom";
+import { gql, useMutation, useQuery } from "@apollo/client";
 
 interface RouterProps {
   history: string;
@@ -11,9 +12,25 @@ interface RouterProps {
 
 type Props = RouteComponentProps<RouterProps>;
 
-const Login: React.FC<Props> = ({ history }) => {
-  const [loading, setLoading] = useState<boolean>(false);
+
+const LoginMutation = gql`
+  mutation LoginQuery($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
+        id
+        email
+        role
+      }
+    }
+  }
+`;
+
+const Login = (Props: { setIsLoggedIn: (arg0: boolean) => void; }) => {
+  // const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const [mutateFunction, { data, loading, error }] = useMutation(LoginMutation);
+
 
   const initialValues: {
     username: string;
@@ -32,28 +49,55 @@ const Login: React.FC<Props> = ({ history }) => {
     const { username, password } = formValue;
 
     setMessage("");
-    setLoading(true);
+    // setLoading(true);
 
-    login(username, password).then(
-      () => {
-        if (window.location.href.includes("/login")) {
-          history.push("/profile");
-        }
-        window.location.reload();
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
-        setLoading(false);
-        setMessage(resMessage);
+    mutateFunction( {
+      variables: {
+        email: username,
+        password: password
       }
-    );
+    }).then(data => {
+      console.log(data);
+      localStorage.setItem("token", data.data.login.token);
+      localStorage.setItem("user", JSON.stringify(data.data.login.user));
+      Props.setIsLoggedIn(true);
+    }).catch(err => {
+      console.log(err.message);
+    });
+
+    console.log("LoginQuery");
+    console.log(data);
+
+
+    // login(username, password).then(
+    //   () => {
+    //     if (window.location.href.includes("/login")) {
+    //       history.push("/profile");
+    //     }
+    //     window.location.reload();
+    //   },
+    //   (error) => {
+    //     const resMessage =
+    //       (error.response &&
+    //         error.response.data &&
+    //         error.response.data.message) ||
+    //       error.message ||
+    //       error.toString();
+
+    //     setLoading(false);
+    //     setMessage(resMessage);
+    //   }
+    // );
   };
+
+  // if (data) {
+  //   localStorage.setItem("token", data.login.token);
+  //   history.push("/profile");
+  // }
+
+  // if (loading) {
+  //   return <p>Loading...</p>;
+  // }
 
   return (
     <div className="login">
@@ -96,21 +140,21 @@ const Login: React.FC<Props> = ({ history }) => {
               </div>
 
               <div className="form-line">
-              <div className="form-group">
-                <Link to="/register" className="button-secondary button">
+                <div className="form-group">
+                  <Link to="/register" className="button-secondary button">
 
-                  Register
-                </Link>
-              </div>
-              <div className="form-group">
+                    Register
+                  </Link>
+                </div>
+                <div className="form-group">
 
-                <button type="submit" className="button-primary button" disabled={loading}>
-                  {loading && (
-                    <span className="spinner-border spinner-border-sm"></span>
-                  )}
-                  <span>Login</span>
-                </button>
-              </div>
+                  <button type="submit" className="button-primary button" disabled={loading}>
+                    {loading && (
+                      <span className="spinner-border spinner-border-sm"></span>
+                    )}
+                    <span>Login</span>
+                  </button>
+                </div>
               </div>
               {message && (
                 <div className="form-group">

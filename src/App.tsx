@@ -24,7 +24,29 @@ import EventBus from './common/EventBus';
 import Error404 from './components/error404';
 import Hooks from './components/Hooks';
 import Partners from './components/Partners';
+import { gql, useQuery } from '@apollo/client';
+import Admin from './components/Admin';
 
+const ok = gql`
+  query Ok {
+    ok
+  }
+`;
+
+function OkQuery() {
+  const { loading, error, data } = useQuery(ok);
+  console.log("OkQuery");
+  console.log(data);
+  
+  return (
+    <div className="okQuery">
+      <p>OkQuery</p>
+      {  loading && <p>Loading...</p>}
+      {  error && <p>Error: {error.message}</p>}
+      {  data && <p>{data.ok}</p>}
+    </div>
+  );
+}
 
 const App: React.FC = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false);
@@ -51,20 +73,23 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <Nav isLoggedIn={isLoggedIn} logOut={logOut} />
-      { isLoggedIn && <p>Logged In!</p>}
+      <OkQuery  />
+
+      {/* { isLoggedIn && <p>Logged In!</p>} */}
 
       <div className="content">
         <Switch>
-          
           { !isLoggedIn && <Route exact path="/register" component={Register} /> }
 
-          { !isLoggedIn && <Route  path={["/", "/login"]} component={Login} />}
+          { !isLoggedIn && <Route  path={["/", "/login"]} >
+            <Login setIsLoggedIn={setisLoggedIn} />
+            </Route> }
           
           <Route exact path={["/", "/home"]} component={Home} />
           <Route exact path="/profile" component={Profile} />
           <Route path="/user" component={BoardUser} />
           <Route path="/mod" component={BoardModerator} />
-          <Route path="/admin" component={BoardAdmin} />
+          <Route path="/admin" component={Admin} />
           <Route path="/hooks" component={Hooks} />
           <Route path="/partners" component={Partners} />
 
