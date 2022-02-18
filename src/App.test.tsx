@@ -1,9 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+
+import { BrowserRouter } from 'react-router-dom';
+import Error404 from './components/error404';
+
 
 test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
+  render(
+    <BrowserRouter>
+      <Error404 />
+    </BrowserRouter>
+  );
+  const linkElement = screen.getByText(/404/i);
   expect(linkElement).toBeInTheDocument();
 });
