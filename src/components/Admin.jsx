@@ -1,4 +1,4 @@
-import AllUsers from "./AllUsers";
+import AllUsers from "./allUsers";
 
 
 const Admin = () => {
