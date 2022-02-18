@@ -1,3 +1,5 @@
+import MyHooks from "./myHooks";
+
 const Hooks = () => {
     return (
         <div>
@@ -10,6 +12,7 @@ const Hooks = () => {
                 <p>Grade</p>
                 <p>Duration</p>
             </div>
+            <MyHooks />
         </div>
     );
 }
