@@ -13,9 +13,10 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 import { setContext } from '@apollo/client/link/context';
+import { env } from 'process';
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000/',
+  uri: env.API_URL || 'http://localhost:4000/',
   // credentials: 'include'
 });
 
