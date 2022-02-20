@@ -33,10 +33,12 @@ const ok = gql`
   }
 `;
 
+
 function OkQuery() {
   const { loading, error, data } = useQuery(ok);
   console.log("OkQuery");
   console.log(data);
+  // console.log(process.env.REACT_APP_API_URL);
   
   return (
     <div className="okQuery">
