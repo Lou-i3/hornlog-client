@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Capriola&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&family=Capriola&display=swap');
+h1,
+h2,
+h3,
+p {
+    color: $color-main-black-20;
+}
+
+p {
+    font-family: $font-main;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 21px;
+}
+
+h1 {
+    font-family: $font-secondary;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 35px;
+    line-height: 44px;
+}
+
+h2 {
+    font-family: $font-secondary;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 31px;
+}
+
+h3 {
+    font-family: $font-main;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 26px;
+}
+
+h4 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 17px;
+}

@@ -1,8 +1,9 @@
-import PartnerProfile from "./PartnerProfile";
+import Icon from "../global/Icon";
+import PartnerProfile from "../itemGroups/PartnerProfile";
 
 const Partners = () => {
     return (
-        <div className="partners-page">
+        <div className="content-inner">
             <div className="partners-page-inner">
                 <div className="left-side side">
                     <div className="recents">
@@ -11,7 +12,8 @@ const Partners = () => {
                     </div>
                     <div className="partners">
                         <h1>Partners</h1>
-                        <input type="text" placeholder="Search" />
+                        {/* <div className="search"></div> */}
+                        <input type="search" />
                     </div>
 
                 </div>

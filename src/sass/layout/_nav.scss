@@ -1,39 +1,36 @@
-.navbar {
-    @include flex(row, space-between);
-    padding: 30px 50px;
-    position: fixed;
-    left: 0;
-    right: 0;
-    height: $size-header-height;
-    box-sizing: border-box;
+.nav {
+    @include flex(column, flex-start);
+    height: 100%;
+    width: $size-nav-width;
     background-color: $color-secondary-black;
-    & .navbar-inner {
-        @include flex(row, space-between);
+    padding: 50px 0px;
+    & .menu {
+        @include flex(column, flex-start, flex-start);
+        gap: 10px;
         width: 100%;
-        & .left-section {
-            @include flex(row, center, center);
-        }
-        & .right-section .right-section-inner {
-            @include flex(row, center, center);
+        padding: 50px 0px 50px 20px;
+        & .menuItem {
+            @include flex(row, flex-start);
             gap: 10px;
-        }
-        & .under-burger {
-            display: none;
-        }
-        & a {
-            color: #cacbce;
+            width: 100%;
+            color: white;
+            border-radius: 20px 0px 0px 20px;
+            padding: 15px 10px;
             text-decoration: none;
-            & .nav-link {
-                font-size: 18px;
-                font-weight: regular;
+            & svg {
+                width: 20px;
+                height: 20px;
+                &.filled {
+                    fill: $color-blue;
+                }
+                &.outlined {
+                    stroke: $color-blue;
+                    fill: transparent;
+                }
             }
-            &.navbar-brand {
-                font-size: 35px;
-                font-weight: 400;
-                text-decoration: none;
-            }
-            &:hover {
-                color: white;
+            &.menuItem.active {
+                background-color: $color-main-black;
+                padding: 20px 10px;
             }
         }
     }

@@ -1,25 +1,25 @@
 import { useState, useEffect } from "react";
-import * as AuthService from "../services/auth.service";
+// import * as AuthService from "../../services/auth.service";
 // import IUser from '../types/user.type';
 import { Link } from "react-router-dom";
 
 
-import EventBus from "../common/EventBus";
+// import EventBus from "../../common/EventBus";
 
 
-const Nav = (props) => {
+const Header = (props) => {
 
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
     const [showAdminBoard, setShowAdminBoard] = useState(false);
     const [currentUser, setCurrentUser] = useState(undefined);
 
     useEffect(() => {
-        console.log("Nav useEffect");
+        console.log("Header useEffect");
         console.log(props.isLoggedIn);
-        const user = AuthService.getCurrentUser();
+        // const user = AuthService.getCurrentUser();
 
-        if (user) {
-            setCurrentUser(user);
+        if (props.user) {
+            setCurrentUser(props.user);
             // setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
             // setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
         } else {
@@ -37,49 +37,52 @@ const Nav = (props) => {
     }, [props.isLoggedIn]);
 
     const logOut = () => {
-        AuthService.logout();
-        setShowModeratorBoard(false);
-        setShowAdminBoard(false);
-        setCurrentUser(undefined);
+        console.log(props.logout());
+
+        // AuthService.logout();
+        // setShowModeratorBoard(false);
+        // setShowAdminBoard(false);
+        // setCurrentUser(undefined);
     };
 
     return (
-        <nav className="navbar">
-            <div className="navbar-inner">
+        <header className="headerbar">
+            <div className="headerbar-inner">
                 <div className="left-section">
 
-                    <Link to={"/"} className="navbar-brand">
+                    {props.isLoggedIn && <Link to={"/"} className="headerbar-brand">
                         HornLog
                     </Link>
+                    }
                 </div>
                 <div className="center">
 
                 </div>
 
                 <div className="right-section">
-                    {currentUser ? (
-                        <div className="navbar-nav ml-auto">
-                            <li className="nav-item">
-                                <Link to={"/profile"} className="nav-link">
-                                    {currentUser.username}
+                    {props.user ? (
+                        <div className="headerbar-header ml-auto">
+                            <li className="header-item">
+                                <Link to={"/profile"} className="header-link">
+                                    {props.user.email}
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                <a href="/login" className="nav-link" onClick={logOut}>
-                                    LogOut
+                            <li className="header-item">
+                                <a href="/login" className="header-link" onClick={props.logOut}>
+                                    LogOut {props.user.email}
                                 </a>
                             </li>
                         </div>
                     ) : (
                         <div className="right-section-inner">
-                            <div className="nav-item">
-                                <Link to={"/login"} className="nav-link">
+                            <div className="header-item">
+                                <Link to={"/login"} className="header-link">
                                     Login
                                 </Link>
                             </div>
 
-                            <div className="nav-item">
-                                <Link to={"/register"} className="nav-link">
+                            <div className="header-item">
+                                <Link to={"/register"} className="header-link">
                                     Register
                                 </Link>
                             </div>
@@ -88,47 +91,47 @@ const Nav = (props) => {
                 </div>
 
                 <div className="under-burger">
-                    <li className="nav-item">
-                        <Link to={"/home"} className="nav-link">
+                    <li className="header-item">
+                        <Link to={"/home"} className="header-link">
                             Home
                         </Link>
                     </li>
 
                     {showModeratorBoard && (
-                        <li className="nav-item">
-                            <Link to={"/mod"} className="nav-link">
+                        <li className="header-item">
+                            <Link to={"/mod"} className="header-link">
                                 Moderator Board
                             </Link>
                         </li>
                     )}
 
                     {showAdminBoard && (
-                        <li className="nav-item">
-                            <Link to={"/admin"} className="nav-link">
+                        <li className="header-item">
+                            <Link to={"/admin"} className="header-link">
                                 Admin Board
                             </Link>
                         </li>
                     )}
 
                     {currentUser && (
-                        <li className="nav-item">
-                            <Link to={"/hooks"} className="nav-link">
+                        <li className="header-item">
+                            <Link to={"/hooks"} className="header-link">
                                 Hooks
                             </Link>
                         </li>
                     )}
 
                     {currentUser && (
-                        <li className="nav-item">
-                            <Link to={"/partners"} className="nav-link">
+                        <li className="header-item">
+                            <Link to={"/partners"} className="header-link">
                                 Partners
                             </Link>
                         </li>
                     )}
 
                     {currentUser && (
-                        <li className="nav-item">
-                            <Link to={"/user"} className="nav-link">
+                        <li className="header-item">
+                            <Link to={"/user"} className="header-link">
                                 User
                             </Link>
                         </li>
@@ -136,8 +139,8 @@ const Nav = (props) => {
                 </div>
             </div>
 
-        </nav>
+        </header>
     );
 }
 
-export default Nav;
+export default Header;

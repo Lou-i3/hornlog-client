@@ -1,4 +1,4 @@
-import AllUsers from "./allUsers";
+import AllUsers from "../itemGroups/allUsers";
 
 
 const Admin = () => {

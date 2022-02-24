@@ -2,11 +2,17 @@ import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import IUser from "../types/user.type";
-import { register } from "../services/auth.service";
+import IUser from "../../types/user.type";
+// import { register } from "../../services/auth.service";
 import { Link } from "react-router-dom";
 
-const Register: React.FC = () => {
+type RegisterProps = {
+  onSubmit: (email: string, password: string) => void;
+  errorAuth: string | undefined;
+};
+
+
+const Register: React.FC<RegisterProps> = ({ onSubmit, errorAuth }) => {
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
 
@@ -45,23 +51,26 @@ const Register: React.FC = () => {
   const handleRegister = (formValue: IUser) => {
     const { username, email, password } = formValue;
 
-    register(username || "", email || "", password || "").then(
-      (response) => {
-        setMessage(response.data.message);
-        setSuccessful(true);
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+    // register(username || "", email || "", password || "").then(
+    //   (response) => {
+    //     setMessage(response.data.message);
+    //     setSuccessful(true);
+    //   },
+    //   (error) => {
+    //     const resMessage =
+    //       (error.response &&
+    //         error.response.data &&
+    //         error.response.data.message) ||
+    //       error.message ||
+    //       error.toString();
 
-        setMessage(resMessage);
-        setSuccessful(false);
-      }
-    );
+    //     setMessage(resMessage);
+    //     setSuccessful(false);
+    //   }
+    // );
+
+    onSubmit(email || "", password || "");
+
   };
 
   return (
@@ -84,7 +93,7 @@ const Register: React.FC = () => {
                 <div className="form-line">
                   <div className="form-group">
                     <label htmlFor="username"> Username </label>
-                    <Field name="username" type="text" className="form-control" placeholder="toto69"/>
+                    <Field name="username" type="text" className="form-control" placeholder="toto69" />
                     <ErrorMessage
                       name="username"
                       component="div"
@@ -104,30 +113,30 @@ const Register: React.FC = () => {
                 </div>
 
                 <div className="form-line">
-                <div className="form-group">
-                  <label htmlFor="email"> Email </label>
-                  <Field name="email" type="email" className="form-control" placeholder="toto@gmail.com"/>
-                  <ErrorMessage
-                    name="email"
-                    component="div"
-                    className="error"
-                  />
-                </div>
+                  <div className="form-group">
+                    <label htmlFor="email"> Email </label>
+                    <Field name="email" type="email" className="form-control" placeholder="toto@gmail.com" />
+                    <ErrorMessage
+                      name="email"
+                      component="div"
+                      className="error"
+                    />
+                  </div>
 
-                <div className="form-group">
-                  <label htmlFor="password"> Password </label>
-                  <Field
-                    name="password"
-                    type="password"
-                    className="form-control"
-                    placeholder="**********"
-                  />
-                  <ErrorMessage
-                    name="password"
-                    component="div"
-                    className="error"
-                  />
-                </div>
+                  <div className="form-group">
+                    <label htmlFor="password"> Password </label>
+                    <Field
+                      name="password"
+                      type="password"
+                      className="form-control"
+                      placeholder="**********"
+                    />
+                    <ErrorMessage
+                      name="password"
+                      component="div"
+                      className="error"
+                    />
+                  </div>
                 </div>
 
                 <div className="form-group">
@@ -139,7 +148,7 @@ const Register: React.FC = () => {
               </div>
             )}
 
-            {message && (
+            {errorAuth && (
               <div className="form-group">
                 <div
                   className={
@@ -147,7 +156,7 @@ const Register: React.FC = () => {
                   }
                   role="alert"
                 >
-                  {message}
+                  {errorAuth}
                 </div>
               </div>
             )}

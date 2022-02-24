@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import { BrowserRouter } from 'react-router-dom';
-import Error404 from './components/error404';
+import Error404 from './components/pages/error404';
 
 
 test('renders learn react link', () => {

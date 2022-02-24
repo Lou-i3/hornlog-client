@@ -2,15 +2,12 @@ import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { login } from "../services/auth.service";
-import { Link, RouteComponentProps } from "react-router-dom";
-import { gql, useMutation, useQuery } from "@apollo/client";
+// import { login } from "../../services/auth.service";
+import { Link } from "react-router-dom";
+import { gql, useMutation } from "@apollo/client";
 
-interface RouterProps {
-  history: string;
-}
 
-type Props = RouteComponentProps<RouterProps>;
+import 'firebase/auth';
 
 
 const LoginMutation = gql`
@@ -26,7 +23,14 @@ const LoginMutation = gql`
   }
 `;
 
-const Login = (Props: { setIsLoggedIn: (arg0: boolean) => void; }) => {
+type LoginProps = {
+  onSubmit: (email: string, password: string) => void;
+  errorAuth: string | undefined;
+
+};
+
+
+const Login = ({ onSubmit, errorAuth }: LoginProps) => {
   // const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [mutateFunction, { data, loading, error }] = useMutation(LoginMutation);
@@ -60,7 +64,7 @@ const Login = (Props: { setIsLoggedIn: (arg0: boolean) => void; }) => {
       console.log(data);
       localStorage.setItem("token", data.data.login.token);
       localStorage.setItem("user", JSON.stringify(data.data.login.user));
-      Props.setIsLoggedIn(true);
+      // Props.setIsLoggedIn(true);
     }).catch(err => {
       console.log(err.message);
     });
@@ -68,6 +72,8 @@ const Login = (Props: { setIsLoggedIn: (arg0: boolean) => void; }) => {
     console.log("LoginQuery");
     console.log(data);
 
+
+    onSubmit(username, password);
 
     // login(username, password).then(
     //   () => {
@@ -134,6 +140,11 @@ const Login = (Props: { setIsLoggedIn: (arg0: boolean) => void; }) => {
                   className="error"
                 />
               </div>
+
+
+              {errorAuth && <div className="form-group">
+                <p>Error: {errorAuth}</p>
+              </div>}
 
               <div className="form-group">
                 <p>Forgot your password? Sorry.</p>

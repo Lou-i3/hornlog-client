@@ -14,6 +14,12 @@ import {
 } from "@apollo/client";
 import { setContext } from '@apollo/client/link/context';
 
+// import Firebase from './helpers/firebase';
+import firebase from 'firebase/app';
+
+
+
+
 const httpLink = createHttpLink({
   uri: process.env.REACT_APP_API_URL || 'http://localhost:4000/',
   // credentials: 'include'
@@ -22,7 +28,18 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem('token');
+
+  // const fireToken = Firebase.token();
+  // console.log('fire token', fireToken);
   // return the headers to the context so httpLink can read them
+  const user = firebase.auth().currentUser;
+  if (user) {
+    const fireToken = user.getIdToken(); 
+    console.log('fire token', fireToken);
+  }
+  
+  
+
   return {
     headers: {
       ...headers,

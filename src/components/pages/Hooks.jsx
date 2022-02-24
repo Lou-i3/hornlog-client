@@ -1,8 +1,8 @@
-import MyHooks from "./myHooks";
+import MyHooks from "../itemGroups/myHooks";
 
 const Hooks = () => {
     return (
-        <div>
+        <div className="content-inner">
             <h1>Hooks</h1>
             <div>
                 <input placeholder="Search"></input>
