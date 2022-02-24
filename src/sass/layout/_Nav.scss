@@ -1,0 +1,37 @@
+.nav {
+    @include flex(column, flex-start, center);
+    height: 100%;
+    width: $size-nav-width;
+    background-color: $color-secondary-black;
+    padding: 50px 0px;
+    & .menu {
+        @include flex(column, flex-start, flex-start);
+        gap: 10px;
+        width: 100%;
+        padding: 50px 0px 50px 20px;
+        & .menuItem {
+            @include flex(row, flex-start);
+            gap: 10px;
+            width: 100%;
+            color: white;
+            border-radius: 20px 0px 0px 20px;
+            padding: 15px 10px;
+            text-decoration: none;
+            & svg {
+                width: 20px;
+                height: 20px;
+                &.filled {
+                    fill: $color-blue;
+                }
+                &.outlined {
+                    stroke: $color-blue;
+                    fill: transparent;
+                }
+            }
+            &.menuItem.active {
+                background-color: $color-main-black;
+                padding: 20px 10px;
+            }
+        }
+    }
+}
