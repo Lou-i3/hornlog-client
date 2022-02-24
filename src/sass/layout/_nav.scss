@@ -1,5 +1,5 @@
 .nav {
-    @include flex(column, flex-start);
+    @include flex(column, flex-start, center);
     height: 100%;
     width: $size-nav-width;
     background-color: $color-secondary-black;
