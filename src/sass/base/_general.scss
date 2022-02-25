@@ -1,0 +1,9 @@
+.personName {
+    @include flex(row, center, center);
+    gap: 10px;
+    & img.profilePic {
+        width: 35px;
+        height: 35px;
+    }
+    // & p.name {}
+}

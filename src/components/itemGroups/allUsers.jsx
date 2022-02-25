@@ -25,24 +25,26 @@ const AllUsers = () => {
         <div className="allUsers">
             <table>
                 <thead>
-                    <th>id</th>
-                    <th>username</th>
-                    <th>displayName</th>
-                    <th>email</th>
-                    <th>role</th>
+                    <tr>
+                        <th>id</th>
+                        <th>username</th>
+                        <th>displayName</th>
+                        <th>email</th>
+                        <th>role</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {
-                    data.allUsers.map(user => (
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.username}</td>
-                            <td>{user.displayName}</td>
-                            <td>{user.email}</td>
-                            <td>{user.role}</td>
-                        </tr>
-                    ))
-                }
+                    {
+                        data.allUsers.map(user => (
+                            <tr key={user.id}>
+                                <td>{user.id}</td>
+                                <td>{user.username}</td>
+                                <td>{user.displayName}</td>
+                                <td>{user.email}</td>
+                                <td>{user.role}</td>
+                            </tr>
+                        ))
+                    }
                 </tbody>
             </table>
         </div>

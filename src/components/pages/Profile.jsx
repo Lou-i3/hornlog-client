@@ -1,5 +1,6 @@
 import React from "react";
 import { gql, useQuery } from '@apollo/client';
+import { useEffect, useState } from "react";
 
 // import { useState } from 'react';
 
@@ -20,43 +21,58 @@ const ME_QUERY = gql`
 const Profile = (props) => {
   // const currentUser = getCurrentUser();
   const { loading, error, data } = useQuery(ME_QUERY);
+  const [me, setMe] = useState(null);
 
+  useEffect(() => {
+    console.log("profile useEffet");
+    if (data) {
+      setMe({
+        displayName: data.me.displayName,
+        username: data.me.username,
+        email: data.me.email,
+        role: data.me.role,
+        since: data.me.createdAt
+      })
+    }
+  },
+    [data]
+  );
 
   return (
     <div className="content-inner">
       {loading ?
         <p>Loading...</p> :
         error ? <p>Error: {error.message}</p> :
-          data ?
+          me ?
             (
               <div>
 
                 {console.log("data", data)}
                 <header className="jumbotron">
-                  <h3>
-                    <strong>{data.me.username}</strong> Profile
-                  </h3>
+                  <h3>My Profile</h3>
                 </header>
-                <p>
-                  <strong>Token:</strong>
-                </p>
-                <p style={{ wordWrap: 'break-word' }}>{data.me.accessToken}</p>
-                <p>
-                  <strong>Refresh Token:</strong>
-                </p>
-                {/* <p style={{ wordWrap: 'break-word' }}>{currentUser.refreshToken}</p> */}
-                <p>
-                  {/* <strong>Id:</strong> {currentUser.id} */}
-                </p>
-                <p>
-                  <strong>Email:</strong> {data.me.email}
-                </p>
-                <p>
-                  <strong>Role:</strong>
-                  {
-                    data.me.role
-                  }
-                </p>
+                <div className="profile">
+                  <div className="profileItem">
+                    <h4>Display Name</h4>
+                    <p>{me.displayName}</p>
+                  </div>
+                  <div className="profileItem">
+                    <h4>Username</h4>
+                    <p>{me.username}</p>
+                  </div>
+                  <div className="profileItem">
+                    <h4>Email</h4>
+                    <p>{me.email}</p>
+                  </div>
+                  <div className="profileItem">
+                    <h4>Role</h4>
+                    <p>{me.role}</p>
+                  </div>
+                  <div className="profileItem">
+                    <h4>Since</h4>
+                    <p>{me.since}</p>
+                  </div>
+                </div>
               </div>
             ) : null
       }

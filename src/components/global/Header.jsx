@@ -14,8 +14,8 @@ const Header = (props) => {
     // const [currentUser, setCurrentUser] = useState(undefined);
 
     useEffect(() => {
-        console.log("Header useEffect");
-        console.log(props.isLoggedIn);
+        // console.log("Header useEffect");
+        // console.log(props.isLoggedIn);
         // const user = AuthService.getCurrentUser();
 
         if (props.user) {
@@ -28,7 +28,7 @@ const Header = (props) => {
             // setShowAdminBoard(false);
         }
 
-        console.log("holaaaa");
+        // console.log("holaaaa");
         // EventBus.on("logout", logOut);
 
         // return () => {
@@ -50,7 +50,7 @@ const Header = (props) => {
             <div className="headerbar-inner">
                 <div className="left-section">
 
-                    {props.isLoggedIn && <Link to={"/"} className="headerbar-brand">
+                    {!props.isLoggedIn && <Link to={"/"} className="headerbar-brand">
                         HornLog
                     </Link>
                     }

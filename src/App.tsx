@@ -41,8 +41,8 @@ const ok = gql`
 
 function OkQuery(_props: { user: any; }) {
   const { loading, error, data } = useQuery(ok);
-  console.log("OkQuery");
-  console.log(data);
+  // console.log("OkQuery");
+  // console.log(data);
 
   const handleClick = () => {
     console.log("Clicked");
@@ -92,34 +92,37 @@ const App: React.FC<WrappedComponentProps> = ({
       <Nav />
       <div className="content">
 
-        <Header isLoggedIn={user === null} logOut={signOut} user={user} />
+        <Header isLoggedIn={!(user === null)} logOut={signOut} user={user} />
+        {/* {console.log("user exist: " + !(user === null))}
+        {console.log("user ", user)} */}
 
-        { loading ?
+        { (loading || user === undefined)  ?
           <Loading /> :
-          <Switch>
-            {!user && <Route exact path="/register">
-              <Register onSubmit={createUserWithEmailAndPassword} errorAuth={error} />
-            </Route>}
+          user ?
+            <Switch>
 
-            {!user && <Route path={["/", "/login"]} >
-              <Login onSubmit={signInWithEmailAndPassword} errorAuth={error} loadingAuth={loading}/>
-            </Route>}
+              <Route exact path={["/", "/home"]} component={Home} />
+              <Route exact path="/profile" >
+                <Profile user={user} />
+              </Route>
 
+              <Route path="/admin" component={Admin} />
+              <Route path="/hooks" component={Hooks} />
+              <Route path="/partners" component={Partners} />
 
+              <Route path="/" component={Error404} />
+            </Switch>
+            :
+            <Switch>
+              {console.log("user ", user)}
+              {!user && <Route exact path="/register">
+                <Register onSubmit={createUserWithEmailAndPassword} errorAuth={error} />
+              </Route>}
 
-            <Route exact path={["/", "/home"]} component={Home} />
-            <Route exact path="/profile" >
-              <Profile user={user} />
-            </Route>
-
-
-            <Route path="/admin" component={Admin} />
-            <Route path="/hooks" component={Hooks} />
-            <Route path="/partners" component={Partners} />
-
-
-            <Route path="/" component={Error404} />
-          </Switch>
+              {!user && <Route path={["/", "/login"]} >
+                <Login onSubmit={signInWithEmailAndPassword} errorAuth={error} loadingAuth={loading} />
+              </Route>}
+            </Switch>
         }
       </div>
       {/* <AuthVerify logOut={logOut} /> */}

@@ -1,7 +1,8 @@
 
 import { gql, useQuery } from '@apollo/client';
+import Icon from '../global/Icon';
+import PersonName from '../items/PersonName';
 // import firebase from 'firebase/app';
-// import { useState } from 'react';
 
 const MY_HOOKS_QUERY = gql`
     query MY_HOOKS_QUERY {
@@ -25,49 +26,50 @@ const MY_HOOKS_QUERY = gql`
     }
 `;
 
-const MyHooks = () => {
+const MyHooks = (props) => {
     const { loading, error, data } = useQuery(MY_HOOKS_QUERY);
-    // const [fireToken, setFireToken] = useState('');
-    console.log("myHooks");
-    console.log(data);
+    // console.log("myHooks");
+    // console.log(data);
 
     if (loading) return <p>Loading...</p>;
     // if (error) return <p>Error: {error.message}</p>;
 
-    // const user = firebase.auth().currentUser;
-    // // let fireToken = null;
-    // if (user) {
-    //     user.getIdToken().then((token) => (
-    //         setFireToken(token)
-    //     ));
-    //     // console.log('fire token', fireToken);
-    // }
+    const handleClick = (hook) => {
+        props.setSelectedHook(hook);
+        console.log("handleClick", hook);
+    }
+
     return (
         <div className="myHooks">
             {/* {fireToken && <pstyle="">FireToken: {fireToken}</p>} */}
-            {error ? <p>Error: {error.message}</p> :
-                <table>
-                    <thead>
-                        <th>id</th>
-                        <th>hookType</th>
-                        <th>dateTime</th>
-                        <th>orgasm</th>
-                        <th>mood</th>
-                    </thead>
-                    <tbody>
+            {loading ?
+                <p>Loading...</p> :
+                error ?
+                    <p>Error: {error.message}</p> :
+                    <div className="hooksList">
                         {
                             data.myHooks.map(hook => (
-                                <tr key={hook.id}>
-                                    <td>{hook.id}</td>
-                                    <td>{hook.hookType}</td>
-                                    <td>{hook.dateTime}</td>
-                                    <td>{hook.orgasm ? "Yes" : "No"}</td>
-                                    <td>{hook.mood}</td>
-                                </tr>
+
+                                <div className={`hookItem ${props.selectedHook && props.selectedHook.id == hook.id ? "selected" : ""}`} key={hook.id} onClick={() => handleClick(hook)}>
+                                    <div className="hookColumn">
+                                        <p className="hookDate">{hook.dateTime}</p>
+                                        <PersonName />
+                                    </div>
+                                    <div className="hookColumn">
+                                        <div className="hookLocation">
+                                            <Icon type="location" />
+                                            <p>Lyon, France</p>
+                                        </div>
+                                    </div>
+                                    <div className="hookColumn">
+                                        <h4 className="hookType">{hook.hookType}</h4>
+                                    </div>
+                                </div>
                             ))
                         }
-                    </tbody>
-                </table>
+
+                    </div>
+
             }
         </div>
     );

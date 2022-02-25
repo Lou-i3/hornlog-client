@@ -66,6 +66,10 @@ div.app {
     border-radius: 10px;
 }
 
+table {
+    color: $color-main-black-20;
+}
+
 .error404 {
     @include flex(column);
 }

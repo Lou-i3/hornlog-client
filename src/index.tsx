@@ -34,14 +34,8 @@ const authLink = setContext(async (_, { headers }) => {
   let fireToken;
   if (user) {
     fireToken = await user.getIdToken()
-      // .then((token) => {
-      //   console.log(token);
-      //   fireToken = token
-      //   console.log('final token', `Bearer ${fireToken}`);
-        
-      // });
   }
-  console.log('final token', `Bearer ${fireToken}`);
+  // console.log('final token', `Bearer ${fireToken}`);
   return {
     headers: {
       ...headers,
