@@ -81,7 +81,7 @@ const Icon = (props) => {
                 <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" className="outlined">
                     <path d="M18.3139 4.375H1.68599C1.30335 4.375 0.993164 4.65482 0.993164 5V6.875C0.993164 7.22018 1.30335 7.5 1.68599 7.5H18.3139C18.6965 7.5 19.0067 7.22018 19.0067 6.875V5C19.0067 4.65482 18.6965 4.375 18.3139 4.375Z" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M17.6211 7.5V15C17.6211 15.1658 17.5481 15.3247 17.4182 15.4419C17.2883 15.5592 17.1121 15.625 16.9283 15.625H3.07173C2.88799 15.625 2.71176 15.5592 2.58183 15.4419C2.4519 15.3247 2.37891 15.1658 2.37891 15V7.5" strokeLinecap="round" strokeLinejoin="round" />
-                    <path path fillRule="evenodd" clip-rule="evenodd" d="M7.92188 10.625H12.0788" strokeLinecap="round" strokeLinejoin="round" />
+                    <path fillRule="evenodd" clipRule="evenodd" d="M7.92188 10.625H12.0788" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
 
             );
