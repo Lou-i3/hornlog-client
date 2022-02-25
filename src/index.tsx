@@ -25,27 +25,33 @@ const httpLink = createHttpLink({
   // credentials: 'include'
 });
 
-const authLink = setContext((_, { headers }) => {
+const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem('token');
 
-  // const fireToken = Firebase.token();
-  // console.log('fire token', fireToken);
   // return the headers to the context so httpLink can read them
   const user = firebase.auth().currentUser;
+  let fireToken;
   if (user) {
-    const fireToken = user.getIdToken(); 
-    console.log('fire token', fireToken);
+    fireToken = await user.getIdToken()
+      // .then((token) => {
+      //   console.log(token);
+      //   fireToken = token
+      //   console.log('final token', `Bearer ${fireToken}`);
+        
+      // });
   }
-  
-  
-
+  console.log('final token', `Bearer ${fireToken}`);
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      // authorization: token ? `Bearer ${token}` : "",
+      authorization: fireToken ? `Bearer ${fireToken}` : "",
     }
   }
+
+
+
 });
 
 const client = new ApolloClient({
