@@ -21,13 +21,13 @@ import firebase from 'firebase/app';
 
 
 const httpLink = createHttpLink({
-  uri: process.env.REACT_APP_API_URL || 'http://localhost:4000/',
+  uri: 'http://localhost:4000/' //process.env.REACT_APP_API_URL || 'http://localhost:4000/',
   // credentials: 'include'
 });
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
 
   // return the headers to the context so httpLink can read them
   const user = firebase.auth().currentUser;

@@ -102,7 +102,7 @@ const App: React.FC<WrappedComponentProps> = ({
             </Route>}
 
             {!user && <Route path={["/", "/login"]} >
-              <Login onSubmit={signInWithEmailAndPassword} errorAuth={error} />
+              <Login onSubmit={signInWithEmailAndPassword} errorAuth={error} loadingAuth={loading}/>
             </Route>}
 
 

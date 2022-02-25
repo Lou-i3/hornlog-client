@@ -1,4 +1,4 @@
-import Icon from "../global/Icon";
+// import Icon from "../global/Icon";
 import PartnerProfile from "../itemGroups/PartnerProfile";
 import Search from "../items/Search";
 

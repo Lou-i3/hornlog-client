@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 // import * as AuthService from "../../services/auth.service";
 // import IUser from '../types/user.type';
 import { Link } from "react-router-dom";
@@ -9,9 +9,9 @@ import { Link } from "react-router-dom";
 
 const Header = (props) => {
 
-    const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-    const [showAdminBoard, setShowAdminBoard] = useState(false);
-    const [currentUser, setCurrentUser] = useState(undefined);
+    // const [showModeratorBoard, setShowModeratorBoard] = useState(false);
+    // const [showAdminBoard, setShowAdminBoard] = useState(false);
+    // const [currentUser, setCurrentUser] = useState(undefined);
 
     useEffect(() => {
         console.log("Header useEffect");
@@ -19,13 +19,13 @@ const Header = (props) => {
         // const user = AuthService.getCurrentUser();
 
         if (props.user) {
-            setCurrentUser(props.user);
+            // setCurrentUser(props.user);
             // setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
             // setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
         } else {
-            setCurrentUser(undefined);
-            setShowModeratorBoard(false);
-            setShowAdminBoard(false);
+            // setCurrentUser(undefined);
+            // setShowModeratorBoard(false);
+            // setShowAdminBoard(false);
         }
 
         console.log("holaaaa");
@@ -34,16 +34,16 @@ const Header = (props) => {
         // return () => {
         //     EventBus.remove("logout", logOut);
         // };
-    }, [props.isLoggedIn]);
+    }, [props.isLoggedIn, props.user]);
 
-    const logOut = () => {
-        console.log(props.logout());
+    // const logOut = () => {
+    //     console.log(props.logout());
 
-        // AuthService.logout();
-        // setShowModeratorBoard(false);
-        // setShowAdminBoard(false);
-        // setCurrentUser(undefined);
-    };
+    //     // AuthService.logout();
+    //     // setShowModeratorBoard(false);
+    //     // setShowAdminBoard(false);
+    //     // setCurrentUser(undefined);
+    // };
 
     return (
         <header className="headerbar">
@@ -87,54 +87,6 @@ const Header = (props) => {
                                 </Link>
                             </div>
                         </div>
-                    )}
-                </div>
-
-                <div className="under-burger">
-                    <li className="header-item">
-                        <Link to={"/home"} className="header-link">
-                            Home
-                        </Link>
-                    </li>
-
-                    {showModeratorBoard && (
-                        <li className="header-item">
-                            <Link to={"/mod"} className="header-link">
-                                Moderator Board
-                            </Link>
-                        </li>
-                    )}
-
-                    {showAdminBoard && (
-                        <li className="header-item">
-                            <Link to={"/admin"} className="header-link">
-                                Admin Board
-                            </Link>
-                        </li>
-                    )}
-
-                    {currentUser && (
-                        <li className="header-item">
-                            <Link to={"/hooks"} className="header-link">
-                                Hooks
-                            </Link>
-                        </li>
-                    )}
-
-                    {currentUser && (
-                        <li className="header-item">
-                            <Link to={"/partners"} className="header-link">
-                                Partners
-                            </Link>
-                        </li>
-                    )}
-
-                    {currentUser && (
-                        <li className="header-item">
-                            <Link to={"/user"} className="header-link">
-                                User
-                            </Link>
-                        </li>
                     )}
                 </div>
             </div>

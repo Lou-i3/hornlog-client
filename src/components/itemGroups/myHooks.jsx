@@ -1,7 +1,7 @@
 
 import { gql, useQuery } from '@apollo/client';
-import firebase from 'firebase/app';
-import { useState } from 'react';
+// import firebase from 'firebase/app';
+// import { useState } from 'react';
 
 const MY_HOOKS_QUERY = gql`
     query MY_HOOKS_QUERY {
@@ -27,21 +27,21 @@ const MY_HOOKS_QUERY = gql`
 
 const MyHooks = () => {
     const { loading, error, data } = useQuery(MY_HOOKS_QUERY);
-    const [fireToken, setFireToken] = useState('');
+    // const [fireToken, setFireToken] = useState('');
     console.log("myHooks");
     console.log(data);
 
     if (loading) return <p>Loading...</p>;
     // if (error) return <p>Error: {error.message}</p>;
 
-    const user = firebase.auth().currentUser;
-    // let fireToken = null;
-    if (user) {
-        user.getIdToken().then((token) => (
-            setFireToken(token)
-        ));
-        // console.log('fire token', fireToken);
-    }
+    // const user = firebase.auth().currentUser;
+    // // let fireToken = null;
+    // if (user) {
+    //     user.getIdToken().then((token) => (
+    //         setFireToken(token)
+    //     ));
+    //     // console.log('fire token', fireToken);
+    // }
     return (
         <div className="myHooks">
             {/* {fireToken && <pstyle="">FireToken: {fireToken}</p>} */}

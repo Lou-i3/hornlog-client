@@ -4,36 +4,37 @@ import * as Yup from "yup";
 
 // import { login } from "../../services/auth.service";
 import { Link } from "react-router-dom";
-import { gql, useMutation } from "@apollo/client";
+// import { gql, useMutation } from "@apollo/client";
 
 
 import 'firebase/auth';
 
 
-const LoginMutation = gql`
-  mutation LoginQuery($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-      user {
-        id
-        email
-        role
-      }
-    }
-  }
-`;
+// const LoginMutation = gql`
+//   mutation LoginQuery($email: String!, $password: String!) {
+//     login(email: $email, password: $password) {
+//       token
+//       user {
+//         id
+//         email
+//         role
+//       }
+//     }
+//   }
+// `;
 
 type LoginProps = {
   onSubmit: (email: string, password: string) => void;
   errorAuth: string | undefined;
+  loadingAuth: boolean;
 
 };
 
 
-const Login = ({ onSubmit, errorAuth }: LoginProps) => {
+const Login = ({ onSubmit, errorAuth, loadingAuth }: LoginProps) => {
   // const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const [mutateFunction, { data, loading, error }] = useMutation(LoginMutation);
+  // const [mutateFunction, { data, loading, error }] = useMutation(LoginMutation);
 
 
   const initialValues: {
@@ -55,22 +56,22 @@ const Login = ({ onSubmit, errorAuth }: LoginProps) => {
     setMessage("");
     // setLoading(true);
 
-    mutateFunction( {
-      variables: {
-        email: username,
-        password: password
-      }
-    }).then(data => {
-      console.log(data);
-      localStorage.setItem("token", data.data.login.token);
-      localStorage.setItem("user", JSON.stringify(data.data.login.user));
-      // Props.setIsLoggedIn(true);
-    }).catch(err => {
-      console.log(err.message);
-    });
+    // mutateFunction( {
+    //   variables: {
+    //     email: username,
+    //     password: password
+    //   }
+    // }).then(data => {
+    //   console.log(data);
+    //   localStorage.setItem("token", data.data.login.token);
+    //   localStorage.setItem("user", JSON.stringify(data.data.login.user));
+    //   // Props.setIsLoggedIn(true);
+    // }).catch(err => {
+    //   console.log(err.message);
+    // });
 
-    console.log("LoginQuery");
-    console.log(data);
+    // console.log("LoginQuery");
+    // console.log(data);
 
 
     onSubmit(username, password);
@@ -159,8 +160,8 @@ const Login = ({ onSubmit, errorAuth }: LoginProps) => {
                 </div>
                 <div className="form-group">
 
-                  <button type="submit" className="button-primary button" disabled={loading}>
-                    {loading && (
+                  <button type="submit" className="button-primary button" disabled={loadingAuth}>
+                    {loadingAuth && (
                       <span className="spinner-border spinner-border-sm"></span>
                     )}
                     <span>Login</span>
