@@ -1,5 +1,6 @@
 import Icon from "../global/Icon";
 import PartnerProfile from "../itemGroups/PartnerProfile";
+import Search from "../items/Search";
 
 const Partners = () => {
     return (
@@ -13,7 +14,8 @@ const Partners = () => {
                     <div className="partners">
                         <h1>Partners</h1>
                         {/* <div className="search"></div> */}
-                        <input type="search" />
+                        {/* <input type="search" /> */}
+                        <Search />
                     </div>
 
                 </div>

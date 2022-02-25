@@ -70,32 +70,25 @@ div.app {
     @include flex(column);
 }
 
-input[type=search] {
+.search {
+    position: relative;
     width: 100%;
-    border: 1px solid $color-main-black-20;
-    box-sizing: border-box;
-    border-radius: 15px;
-    background-color: transparent;
-    padding: 10px;
-    color: $color-main-black-20;
-    @include flex(column);
-    gap: 30px;
+    & svg {
+        width: 20px;
+        height: 20px;
+        fill: $color-main-black-20;
+        position: absolute;
+        top: calc(50% - 10px);
+        left: 15px;
+    }
+    & input[type="search"] {
+        // height: 110%;
+        width: 100%;
+        border: none;
+        color: $color-main-black-20;
+        background-color: transparent;
+        padding: 15px 50px;
+        border: 1px solid $color-main-black-20;
+        border-radius: 15px;
+    }
 }
-
-// .search {
-//     @include flex(column, center, flex-start);
-//     width: 100%;
-//     border: 1px solid $color-main-black-20;
-//     box-sizing: border-box;
-//     border-radius: 15px;
-//     background-color: transparent;
-//     padding: 10px;
-//     & .search-item {
-//         @include flex();
-//         padding: 10px;
-//         gap: 20px;
-//         color: $color-main-black-20;
-//         & .icon {
-//             color: $color-main-black-20;
-//         }
-//     }

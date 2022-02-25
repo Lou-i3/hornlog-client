@@ -20,13 +20,7 @@
             & svg {
                 width: 20px;
                 height: 20px;
-                &.filled {
-                    fill: $color-blue;
-                }
-                &.outlined {
-                    stroke: $color-blue;
-                    fill: transparent;
-                }
+                @include icon($color-blue);
             }
             &.menuItem.active {
                 background-color: $color-main-black;
