@@ -35,4 +35,4 @@ ENV FIREBASE_MESUREMENT_ID id
 EXPOSE 80
 WORKDIR /usr/share/nginx/html
 #RUN chmod +x env.sh
-CMD ["/bin/sh", "-c", "runtime-env-cra", "&&", "nginx", "-g", "daemon off;"]
+CMD ["/bin/sh", "-c", "runtime-env-cra && nginx -g \"daemon off;\""]
