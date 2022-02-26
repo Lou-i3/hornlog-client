@@ -18,7 +18,8 @@ import { setContext } from '@apollo/client/link/context';
 import firebase from 'firebase/app';
 
 
-
+console.log("api key: ", process.env.REACT_APP_FIREBASE_API_KEY);
+console.log("coucouuuu");
 
 const httpLink = createHttpLink({
   uri: process.env.REACT_APP_API_URL || 'http://localhost:4000/',

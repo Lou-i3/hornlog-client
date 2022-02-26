@@ -28,6 +28,7 @@ import Loading from './components/pages/Loading';
 
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+console.log("api key: ", process.env.REACT_APP_FIREBASE_API_KEY);
 
 const firebaseAppAuth = firebaseApp.auth();
 
@@ -49,7 +50,7 @@ function OkQuery(_props: { user: any; }) {
     console.log(_props.user)
     console.log("user: " + _props.user.currentUser);
   }
-
+  console.log("api key: ", process.env.REACT_APP_FIREBASE_API_KEY);
   return (
     <div className="okQuery">
       <p>OkQuery</p>
