@@ -1,3 +1,3 @@
 interface Window {
-    _env_ : any
+    __RUNTIME_CONFIG__ : any
   }

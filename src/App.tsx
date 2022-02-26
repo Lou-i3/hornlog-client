@@ -31,11 +31,11 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 
 // require('dotenv').config({ path: "./.env" });
-// console.log("api key (react app): ", window._env_.REACT_APP_FIREBASE_API_KEY);
-// console.log("api url: ", window._env_.REACT_APP_API_URL);
-console.log("api url: ", window._env_.API_URL);
-console.log("api key: ", window._env_.FIREBASE_API_KEY);
-console.log("api key: ", window._env_.FIREBASE_API_KEY);
+// console.log("api key (react app): ", window.__RUNTIME_CONFIG__.REACT_APP_FIREBASE_API_KEY);
+// console.log("api url: ", window.__RUNTIME_CONFIG__.REACT_APP_API_URL);
+console.log("api url: ", window.__RUNTIME_CONFIG__.API_URL);
+console.log("api key: ", window.__RUNTIME_CONFIG__.FIREBASE_API_KEY);
+console.log("api key: ", window.__RUNTIME_CONFIG__.FIREBASE_API_KEY);
 
 const firebaseAppAuth = firebaseApp.auth();
 
@@ -57,7 +57,7 @@ function OkQuery(_props: { user: any; }) {
     console.log(_props.user)
     console.log("user: " + _props.user.currentUser);
   }
-  console.log("api key: ", window._env_.FIREBASE_API_KEY);
+  console.log("api key: ", window.__RUNTIME_CONFIG__.FIREBASE_API_KEY);
   return (
     <div className="okQuery">
       <p>OkQuery</p>

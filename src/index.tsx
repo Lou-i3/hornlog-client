@@ -18,11 +18,11 @@ import { setContext } from '@apollo/client/link/context';
 import firebase from 'firebase/app';
 
 
-// console.log("api key: ", window._env_.FIREBASE_API_KEY);
+// console.log("api key: ", window.__RUNTIME_CONFIG__.FIREBASE_API_KEY);
 console.log("coucouuuu");
 
 const httpLink = createHttpLink({
-  uri: window._env_.API_URL || 'http://localhost:4000/',
+  uri: window.__RUNTIME_CONFIG__.API_URL || 'http://localhost:4000/',
   // credentials: 'include'
 });
 

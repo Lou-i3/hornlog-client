@@ -11,9 +11,9 @@ RUN npm run build
 # production environment
 FROM nginx:stable-alpine
 COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /usr/src/app/.env.example /usr/share/nginx/html/.env
 
-
-COPY ./env.sh /usr/share/nginx/html
+#COPY ./env.sh /usr/share/nginx/html
 
 # if using React Router, add the following line:
 # RUN rm -v /etc/nginx/nginx.conf
@@ -34,5 +34,5 @@ ENV FIREBASE_MESUREMENT_ID id
 
 EXPOSE 80
 WORKDIR /usr/share/nginx/html
-RUN chmod +x env.sh
-CMD ["/bin/sh", "-c", "/usr/share/nginx/html/env.sh", "&&", "nginx", "-g", "daemon off;"]
+#RUN chmod +x env.sh
+CMD ["/bin/sh", "-c", "runtime-env-cra", "&&", "nginx", "-g", "daemon off;"]
