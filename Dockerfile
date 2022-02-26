@@ -14,7 +14,6 @@ COPY --from=build /app/build /usr/share/nginx/html
 
 
 COPY ./env.sh /usr/share/nginx/html
-RUN chmod +x env.sh
 
 # if using React Router, add the following line:
 # RUN rm -v /etc/nginx/nginx.conf
@@ -34,4 +33,6 @@ ENV FIREBASE_APP_ID aoo id
 ENV FIREBASE_MESUREMENT_ID id
 
 EXPOSE 80
+WORKDIR /usr/share/nginx/html
+RUN chmod +x env.sh
 CMD ["/bin/sh", "-c", "/usr/share/nginx/html/env.sh", "&&", "nginx", "-g", "daemon off;"]
