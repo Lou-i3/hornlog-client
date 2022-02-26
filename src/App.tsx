@@ -28,7 +28,9 @@ import Loading from './components/pages/Loading';
 
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-console.log("api key: ", process.env.REACT_APP_FIREBASE_API_KEY);
+console.log("api key (react app): ", process.env.REACT_APP_FIREBASE_API_KEY);
+console.log("api url: ", process.env.REACT_APP_API_URL);
+console.log("api key: ", process.env.FIREBASE_API_KEY);
 
 const firebaseAppAuth = firebaseApp.auth();
 
