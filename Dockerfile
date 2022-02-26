@@ -23,6 +23,13 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx/nginx.conf /etc/nginx/conf.d
 # COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
+# install nodejs & npm
+RUN apk add --update nodejs
+RUN apk add --update npm
+
+# install runtime-env-cra package
+RUN npm i -g runtime-env-cra
+
 ENV API_URL api url
 ENV FIREBASE_API_KEY api key
 ENV FIREBASE_AUTH_DOMAIN auth
