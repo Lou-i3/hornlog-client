@@ -3,7 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 // import { login } from "../../services/auth.service";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 // import { gql, useMutation } from "@apollo/client";
 
 
@@ -34,6 +34,7 @@ type LoginProps = {
 const Login = ({ onSubmit, errorAuth, loadingAuth }: LoginProps) => {
   // const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const history = useHistory();
   // const [mutateFunction, { data, loading, error }] = useMutation(LoginMutation);
 
 
@@ -75,7 +76,10 @@ const Login = ({ onSubmit, errorAuth, loadingAuth }: LoginProps) => {
 
 
     onSubmit(username, password);
-
+    if (window.location.href.includes("/login")) {
+            history.push("/profile");
+            
+}
     // login(username, password).then(
     //   () => {
     //     if (window.location.href.includes("/login")) {

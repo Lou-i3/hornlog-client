@@ -1,5 +1,6 @@
 
 import { gql, useQuery } from '@apollo/client';
+import { useEffect } from 'react';
 import Icon from '../global/Icon';
 import PersonName from '../items/PersonName';
 // import firebase from 'firebase/app';
@@ -31,13 +32,21 @@ const MyHooks = (props) => {
     // console.log("myHooks");
     // console.log(data);
 
-    if (loading) return <p>Loading...</p>;
+    // if (loading) return <p>Loading...</p>;
     // if (error) return <p>Error: {error.message}</p>;
 
     const handleClick = (hook) => {
         props.setSelectedHook(hook);
-        console.log("handleClick", hook);
+        // console.log("handleClick", hook);
     }
+
+    useEffect(() => {
+            console.log("useEffect myHooks");
+            // console.log(data);
+            if(data && props.selectedHook) {
+                if (props.selectedHook.id in data.myHooks) { console.log("selectedHook in data.myHooks"); }
+            }
+        },[props.selectedHook]);
 
     return (
         <div className="myHooks">

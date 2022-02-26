@@ -96,3 +96,12 @@ table {
         border-radius: 15px;
     }
 }
+
+textarea {
+    width: 100%;
+    color: $color-main-black-20;
+    background-color: transparent;
+    padding: 15px;
+    border: 1px solid $color-main-black-20;
+    border-radius: 15px;
+}

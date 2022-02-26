@@ -51,7 +51,7 @@ const Hooks = () => {
 
                     {displayMode == "view" && <HookDetails hook={selectedHook} />}
                     {displayMode == "none" && <p>Select a hook to see details</p>}
-                    {(displayMode == "edit" || displayMode == "new") && <HookEditNew displayMode={displayMode}/>}
+                    {(displayMode == "edit" || displayMode == "new") && <HookEditNew displayMode={displayMode} setDisplayMode={setDisplayMode} setSelectedHook={setSelectedHook}/>}
 
                 </div>
             </div>

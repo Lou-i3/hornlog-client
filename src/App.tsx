@@ -47,7 +47,7 @@ function OkQuery(_props: { user: any; }) {
   const handleClick = () => {
     console.log("Clicked");
     console.log(_props.user)
-    console.log("user: " + _props.user.currentUser)
+    console.log("user: " + _props.user.currentUser);
   }
 
   return (
@@ -89,7 +89,7 @@ const App: React.FC<WrappedComponentProps> = ({
 
       <OkQuery user={user} />
 
-      <Nav />
+      { user && <Nav /> }
       <div className="content">
 
         <Header isLoggedIn={!(user === null)} logOut={signOut} user={user} />

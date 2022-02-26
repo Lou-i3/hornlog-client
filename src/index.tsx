@@ -21,7 +21,7 @@ import firebase from 'firebase/app';
 
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000/' //process.env.REACT_APP_API_URL || 'http://localhost:4000/',
+  uri: process.env.REACT_APP_API_URL || 'http://localhost:4000/',
   // credentials: 'include'
 });
 

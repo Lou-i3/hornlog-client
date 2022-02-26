@@ -1,4 +1,5 @@
 import Icon from "../global/Icon";
+import ChoicePill from "../items/ChoicePill";
 
 const HookDetails = (props) => {
     const hook = {
@@ -48,15 +49,16 @@ const HookDetails = (props) => {
             </div>
 
             <div className="info">
-                <div className="info-item">
+                <div className="infoItem">
                     <p>at</p>
                     <p><b>{props.hook.dateTime}</b></p>
                 </div>
-                <h3 className="hookType">{props.hook.hookType}</h3>
+                <ChoicePill text={props.hook.hookType} selected={true}/>
+                {/* <h3 className="hookType">{props.hook.hookType}</h3> */}
 
-                <div className="info-item">
+                <div className="infoItem">
                     <p> with</p>
-                    <div className="partner-item">
+                    <div className="partnerItem">
                         <img src="/Ellipse 4.png" alt="" className="profile-pic" />
                         <p>{hook.partner}</p>
                     </div>
@@ -66,19 +68,19 @@ const HookDetails = (props) => {
                     </div>
                 </div>
 
-                <div className="info-item">
+                <div className="infoItem">
                     <Icon type="location" />
                     <p>{hook.location}</p>
                 </div>
-                <div className="info-item">
+                <div className="infoItem">
                     <p>Protection Type</p>
                     <Icon type={iconType} />
                 </div>
-                <div className="info-item">
+                <div className="infoItem">
                     <Icon type="mood" />
                     <p>{props.hook.mood}</p>
                 </div>
-                <div className="info-item">
+                <div className="infoItem">
                     <p>Grade</p>
                     <div className="icones">
                         <Icon type="star" />
@@ -88,11 +90,11 @@ const HookDetails = (props) => {
                         <Icon type="star" />
                     </div>
                 </div>
-                <div className="info-item">
+                <div className="infoItem">
                     <Icon type="duration" />
                     <p>{props.hook.duration}</p>
                 </div>
-                <div className="info-item">
+                <div className="infoItem">
                     <p>Notes</p>
                     <p>{props.hook.notes}</p>
                 </div>

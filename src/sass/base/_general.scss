@@ -7,3 +7,17 @@
     }
     // & p.name {}
 }
+
+.choicePill {
+    @include flex(row, center, center);
+    padding: 10px;
+    background-color: $color-secondary-black;
+    border-radius: 5px;
+    width: fit-content;
+    &.selected {
+        background-color: $color-main-black-50;
+    }
+    &.edit {
+        cursor: pointer;
+    }
+}

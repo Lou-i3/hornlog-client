@@ -86,8 +86,11 @@
             gap: 20px;
             & svg {
                 @include icon();
-                height: 40px;
-                width: 40px;
+                height: 30px;
+                width: 30px;
+            }
+            &.edit {
+                cursor: pointer;
             }
         }
     }
@@ -95,29 +98,30 @@
         @include flex(column, center, flex-start);
         width: 100%;
         gap: 10px;
-        & .hookType {
-            @include flex(column, top);
-            background-color: $color-main-black-50;
-            padding: 10px;
-            border-radius: 5px;
-        }
         & .location {
             @include flex(column, top);
             background-color: $color-main-black-50;
             padding: 10px;
             border-radius: 5px;
         }
-        & .info-item {
+        & .infoItem {
             @include flex(row);
             padding: 10px;
             gap: 20px;
             & svg {
                 @include icon();
-                height: 40px;
-                width: 40px;
+                height: 30px;
+                width: 30px;
+            }
+            &.hookType {
+                @include flex(row, flex-start, center);
+                flex-wrap: wrap;
+                // background-color: $color-main-black-50;
+                // padding: 10px;
+                // border-radius: 5px;
             }
         }
-        & .partner-item {
+        & .partnerItem {
             @include flex(row);
             padding: 10px;
             gap: 20px;
@@ -130,8 +134,8 @@
                 @include flex(row);
                 gap: 20px;
                 & svg {
-                    height: 20px;
-                    width: 20px;
+                    height: 30px;
+                    width: 30px;
                 }
             }
         }
