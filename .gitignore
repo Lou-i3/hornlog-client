@@ -21,7 +21,7 @@
 
 env-config*
 /public/env-config*
-/public/runtime-env*
+#/public/runtime-env*
 
 npm-debug.log*
 yarn-debug.log*

@@ -18,8 +18,8 @@ import { setContext } from '@apollo/client/link/context';
 import firebase from 'firebase/app';
 
 
-console.log("windows.R: ", window.__RUNTIME_CONFIG__);
-console.log("coucouuuu");
+// console.log("windows.R: ", window.__RUNTIME_CONFIG__);
+// console.log("coucouuuu");
 
 const httpLink = createHttpLink({
   uri: window.__RUNTIME_CONFIG__.API_URL || 'http://localhost:4000/',

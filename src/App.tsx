@@ -33,9 +33,9 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 // require('dotenv').config({ path: "./.env" });
 // console.log("api key (react app): ", window.__RUNTIME_CONFIG__.REACT_APP_FIREBASE_API_KEY);
 // console.log("api url: ", window.__RUNTIME_CONFIG__.REACT_APP_API_URL);
-console.log("api url: ", window.__RUNTIME_CONFIG__.API_URL);
-console.log("api key: ", window.__RUNTIME_CONFIG__.FIREBASE_API_KEY);
-console.log("api key: ", window.__RUNTIME_CONFIG__.FIREBASE_API_KEY);
+// console.log("api url: ", window.__RUNTIME_CONFIG__.API_URL);
+// console.log("api key: ", window.__RUNTIME_CONFIG__.FIREBASE_API_KEY);
+// console.log("api key: ", window.__RUNTIME_CONFIG__.FIREBASE_API_KEY);
 
 const firebaseAppAuth = firebaseApp.auth();
 
