@@ -24,11 +24,11 @@ COPY nginx/nginx.conf /etc/nginx/conf.d
 # COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # install nodejs & npm
-RUN apk add --update nodejs
-RUN apk add --update npm
+#RUN apk add --update nodejs
+#RUN apk add --update npm
 
 # install runtime-env-cra package
-RUN npm i -g runtime-env-cra
+#RUN npm i -g runtime-env-cra
 
 ENV API_URL api url
 ENV FIREBASE_API_KEY api key
@@ -42,4 +42,4 @@ ENV FIREBASE_MESUREMENT_ID id
 EXPOSE 80
 WORKDIR /usr/share/nginx/html
 #RUN chmod +x env.sh
-CMD ["/bin/sh", "-c", "runtime-env-cra && nginx -g \"daemon off;\""]
+CMD ["/bin/sh", "-c", "./set-env.sh && nginx -g \"daemon off;\""]
