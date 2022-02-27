@@ -142,7 +142,7 @@ const HookEditNew = (props) => {
                 <div className="infoItem hookType">
                     {
                         hookTypes.map(hookType => (
-                            <ChoicePill text={hookType.text} selected={hookType.selected} edit={true} onClick={() => {
+                            <ChoicePill text={hookType.text} selected={hookType.selected} edit={true} keyProp={hookType.id} onClick={() => {
                                 tempArray = [...hookTypes];
                                 tempArray.forEach(hookTypeLoop => {
                                     hookTypeLoop.selected = false;
@@ -168,8 +168,8 @@ const HookEditNew = (props) => {
                 </div>
                 <div className="infoItem">
                     {
-                        locationTypes.map((locationType, index) => (
-                            <ChoicePill text={locationType.text} selected={locationType.selected} edit={true} onClick={() => {
+                        locationTypes.map(locationType => (
+                            <ChoicePill text={locationType.text} selected={locationType.selected} edit={true} keyProp={locationType.id} onClick={() => {
                                 tempArray = [...locationTypes];
                                 tempArray.forEach(locationTypeLoop => {
                                     locationTypeLoop.selected = false;

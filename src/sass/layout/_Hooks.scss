@@ -13,6 +13,7 @@
             @include flex(column, center, flex-start);
             gap: 20px;
             width: 100%;
+            overflow: hidden;
             & .title {
                 @include flex(row, space-between, center);
                 width: 100%;
@@ -42,6 +43,8 @@
 
 .myHooks {
     width: 100%;
+    flex: 1;
+    overflow: scroll;
     & .hooksList {
         @include flex(column);
         gap: 20px;

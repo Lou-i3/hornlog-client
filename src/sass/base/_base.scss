@@ -28,7 +28,7 @@ div.app {
 
 .content-inner {
     @include flex();
-    height: 100%;
+    height: calc(100% - $size-header-height);
     width: 100%;
     background-color: $color-main-black;
     box-shadow: -5px -5px 15px rgba(20, 20, 20, 0.35);
