@@ -42,4 +42,5 @@ ENV FIREBASE_MESUREMENT_ID id
 EXPOSE 80
 WORKDIR /usr/share/nginx/html
 #RUN chmod +x env.sh
+ENTRYPOINT [ "/set-env.sh"]
 CMD ["/bin/sh", "-c", "./set-env.sh && nginx -g \"daemon off;\""]
