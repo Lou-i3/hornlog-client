@@ -72,6 +72,9 @@ table {
 
 .error404 {
     @include flex(column);
+    padding: 60px;
+    gap: 30px;
+    color: $color-blue;
 }
 
 .search {

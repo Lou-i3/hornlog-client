@@ -1,8 +1,11 @@
-const Error404 = () => {
-    return (< div className="content-inner error404" >
+import Illustration from "../global/Illustration";
 
+const Error404 = () => {
+    return (
+    < div className="content-inner error404" >
+       <Illustration type = "error404" />
         
-        <p> These are uncharted waters.</p>
+        <h3> These are uncharted waters.</h3>
 
     </div>
     );

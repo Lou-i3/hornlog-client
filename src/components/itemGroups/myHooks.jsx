@@ -57,29 +57,38 @@ const MyHooks = (props) => {
                 <p>Loading...</p> :
                 error ?
                     <p>Error: {error.message}</p> :
-                    <div className="hooksList">
-                        {
-                            data.myHooks.map(hook => (
+                    <table className="hooksList">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Who</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                data.myHooks.map(hook => (
 
-                                <div className={`hookItem ${props.selectedHook && props.selectedHook.id === hook.id ? "selected" : ""}`} key={hook.id} onClick={() => handleClick(hook)}>
-                                    <div className="hookColumn">
-                                        <p className="hookDate">{hook.dateTime}</p>
-                                        <PersonName />
-                                    </div>
-                                    <div className="hookColumn">
-                                        <div className="hookLocation">
-                                            <Icon type="location" />
-                                            <p>Lyon, France</p>
-                                        </div>
-                                    </div>
-                                    <div className="hookColumn">
-                                        <h4 className="hookType">{hook.hookType}</h4>
-                                    </div>
-                                </div>
-                            ))
-                        }
+                                    <tr className={`hookItem ${props.selectedHook && props.selectedHook.id === hook.id ? "selected" : ""}`} key={hook.id} onClick={() => handleClick(hook)}>
 
-                    </div>
+                                        <td className="hookColumn">
+                                            <p className="hookDate">{hook.dateTime}</p>
+                                        </td>
+                                        <td className="hookColumn">
+                                            <div className="hookLocation">
+                                                <PersonName />
+
+                                            </div>
+                                        </td>
+                                        <td className="hookColumn">
+                                            <h4 className="hookType">{hook.hookType}</h4>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+
+                    </table>
 
             }
         </div>

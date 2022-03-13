@@ -21,3 +21,12 @@
         cursor: pointer;
     }
 }
+
+.illustration {
+    & .filled {
+        fill: $color-accent;
+    }
+    & .outlined {
+        outline: $color-accent;
+    }
+}

@@ -1,10 +1,17 @@
-$color-main: #234c64;
+* {
+    --color-accent: #B7D0F1;
+}
+
+// $color-main: #234c64;
+$color-main: --color-main;
 $color-main-black: #141414;
 $color-main-black-20: #F6F6F6;
 $color-main-black-50: #898989;
 $color-secondary-black: #373737;
 $color-secondary-black-50: #CDCDCD;
-$color-blue: #B7D0F1;
+// $color-blue: #B7D0F1;
+$color-blue: var(--color-accent);
+$color-accent: var(--color-accent);
 $color-red: #F2564F;
 $font-main: "Cantarell",
 sans-serif;

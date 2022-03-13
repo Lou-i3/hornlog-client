@@ -39,11 +39,16 @@ const HookDetails = (props) => {
         }
     }
 
+    const date = new Date(props.hook.dateTime);
+    console.log(props.hook.dateTime)
+    console.log(date);
+    console.log(date.toLocaleString('fr-FR'));
+
     if(props.hook) return (
 
         <div className="hookDetails">
             <div className="title">
-                <h1 className="date">{props.hook.dateTime}</h1>
+                <h1 className="date">{Date(props.hook.dateTime).toLocaleString('fr-FR')}</h1>
                 <div className="icones">
                     <Icon type="apple" />
                     <Icon type="edit" />

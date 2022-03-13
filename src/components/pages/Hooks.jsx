@@ -5,6 +5,7 @@ import Search from "../items/Search";
 import { useState, useEffect } from 'react';
 import HookEditNew from "../itemGroups/HookEditNew";
 import Icon from "../global/Icon";
+import Illustration from "../global/Illustration";
 
 const Hooks = () => {
     const [selectedHook, setSelectedHook] = useState(null);
@@ -50,8 +51,13 @@ const Hooks = () => {
                 <div className={`right-side side ${displayMode}`}>
 
                     {displayMode === "view" && <HookDetails hook={selectedHook} />}
-                    {displayMode === "none" && <p>Select a hook to see details</p>}
-                    {(displayMode === "edit" || displayMode === "new") && <HookEditNew displayMode={displayMode} setDisplayMode={setDisplayMode} setSelectedHook={setSelectedHook}/>}
+                    {displayMode === "none" &&
+                        <div className="none">
+                            <Illustration type="hooksNoSelection" />
+                            <p>Select a hook to see details</p>
+                        </div>
+                    }
+                    {(displayMode === "edit" || displayMode === "new") && <HookEditNew displayMode={displayMode} setDisplayMode={setDisplayMode} setSelectedHook={setSelectedHook} />}
 
                 </div>
             </div>
