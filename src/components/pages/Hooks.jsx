@@ -21,7 +21,7 @@ const Hooks = () => {
             // setDisplayMode("none");
         }
 
-    }, [selectedHook]);
+    }, [selectedHook, displayMode]);
 
     const handleClickNew = () => {
         setSelectedHook(null);
@@ -49,9 +49,9 @@ const Hooks = () => {
                 </div>
                 <div className={`right-side side ${displayMode}`}>
 
-                    {displayMode == "view" && <HookDetails hook={selectedHook} />}
-                    {displayMode == "none" && <p>Select a hook to see details</p>}
-                    {(displayMode == "edit" || displayMode == "new") && <HookEditNew displayMode={displayMode} setDisplayMode={setDisplayMode} setSelectedHook={setSelectedHook}/>}
+                    {displayMode === "view" && <HookDetails hook={selectedHook} />}
+                    {displayMode === "none" && <p>Select a hook to see details</p>}
+                    {(displayMode === "edit" || displayMode === "new") && <HookEditNew displayMode={displayMode} setDisplayMode={setDisplayMode} setSelectedHook={setSelectedHook}/>}
 
                 </div>
             </div>
