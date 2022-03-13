@@ -50,9 +50,9 @@ const Header = (props) => {
             <div className="headerbar-inner">
                 <div className="left-section">
 
-                    {!props.isLoggedIn && <Link to={"/"} className="headerbar-brand">
+                    {!props.isLoggedIn && <div className="headerbar-brand">
                         HornLog
-                    </Link>
+                    </div>
                     }
                 </div>
                 <div className="center">
@@ -81,11 +81,11 @@ const Header = (props) => {
                                 </Link>
                             </div>
 
-                            <div className="header-item">
+                            {/* <div className="header-item">
                                 <Link to={"/register"} className="header-link">
                                     Register
                                 </Link>
-                            </div>
+                            </div> */}
                         </div>
                     )}
                 </div>

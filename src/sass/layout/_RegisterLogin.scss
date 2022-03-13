@@ -8,11 +8,12 @@
     border-radius: 30px 30px 0px 0px;
     & .register-inner,
     .login-inner {
-        padding: 60px;
+        padding: 30px;
         background-color: $color-secondary-black;
         border-radius: 40px;
         border: 1px solid #373737;
         box-shadow: inset 0px 4px 10px rgba(0, 0, 0, 0.25);
-        min-width: 530px;
+        min-width: 35%;
+        max-width: 90%;
     }
 }

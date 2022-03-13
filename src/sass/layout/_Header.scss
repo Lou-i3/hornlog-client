@@ -28,14 +28,12 @@
                 font-size: 18px;
                 font-weight: regular;
             }
-            &.headerbar-brand {
-                font-size: 35px;
-                font-weight: 400;
-                text-decoration: none;
-            }
-            &:hover {
-                color: white;
-            }
+        }
+        & div.headerbar-brand {
+            font-size: 35px;
+            font-weight: 400;
+            text-decoration: none;
+            color: white;
         }
     }
 }
