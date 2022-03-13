@@ -3,6 +3,7 @@ import Icon from "../global/Icon";
 import ChoicePill from "../items/ChoicePill";
 import { gql, useMutation } from '@apollo/client';
 
+import MY_HOOKS_QUERY from "./myHooks";
 
 // const LoginMutation = gql`
 //   mutation LoginQuery($email: String!, $password: String!) {
@@ -26,9 +27,17 @@ const NewHookMutation = gql`
     }
     `;
 
+const EditHookMutation = gql`
+mutation EditHookMutation($data: HookUpdateInput!) {
+    editHook(data: $data) {
+     
+        id
+    }
+}
+`;
 
 const HookEditNew = (props) => {
-    const [mutateFctNewHook, { dataNewHook, loadingNewHook, errorNewHook }] = useMutation(NewHookMutation);
+    const [mutateFctNewHook, { dataNewHook, loadingNewHook, errorNewHook }] = useMutation(NewHookMutation, { refetchQueries: [{ query: MY_HOOKS_QUERY }] });
     const [locationTypes, setLocationTypes] = useState([
         {
             id: 1,
@@ -123,6 +132,7 @@ const HookEditNew = (props) => {
     };
 
     let tempArray = [];
+    let key;
     return (
         <div className="hookDetails">
             <div className="title">
@@ -142,16 +152,18 @@ const HookEditNew = (props) => {
                 <div className="infoItem hookType">
                     {
                         hookTypes.map(hookType => (
-                            <ChoicePill text={hookType.text} selected={hookType.selected} edit={true} keyProp={hookType.id} onClick={() => {
-                                tempArray = [...hookTypes];
-                                tempArray.forEach(hookTypeLoop => {
-                                    hookTypeLoop.selected = false;
-                                    if (hookType.id == hookTypeLoop.id) {
-                                        hookTypeLoop.selected = true;
-                                    }
-                                });
-                                setHookTypes(tempArray);
-                            }} />
+                            <div key={hookType.id} >
+                                <ChoicePill text={hookType.text} selected={hookType.selected} edit={true} key={key} onClick={() => {
+                                    tempArray = [...hookTypes];
+                                    tempArray.forEach(hookTypeLoop => {
+                                        hookTypeLoop.selected = false;
+                                        if (hookType.id === hookTypeLoop.id) {
+                                            hookTypeLoop.selected = true;
+                                        }
+                                    });
+                                    setHookTypes(tempArray);
+                                }} />
+                            </div>
                         ))
                     }
                 </div>
@@ -173,7 +185,7 @@ const HookEditNew = (props) => {
                                 tempArray = [...locationTypes];
                                 tempArray.forEach(locationTypeLoop => {
                                     locationTypeLoop.selected = false;
-                                    if (locationType.text == locationTypeLoop.text) {
+                                    if (locationType.text === locationTypeLoop.text) {
                                         locationTypeLoop.selected = true;
                                     }
                                 });

@@ -5,7 +5,7 @@ import Icon from '../global/Icon';
 import PersonName from '../items/PersonName';
 // import firebase from 'firebase/app';
 
-const MY_HOOKS_QUERY = gql`
+export const MY_HOOKS_QUERY = gql`
     query MY_HOOKS_QUERY {
         myHooks {
             id
@@ -41,12 +41,14 @@ const MyHooks = (props) => {
     }
 
     useEffect(() => {
-            console.log("useEffect myHooks");
-            // console.log(data);
-            if(data && props.selectedHook) {
-                if (props.selectedHook.id in data.myHooks) { console.log("selectedHook in data.myHooks"); }
-            }
-        },[props.selectedHook]);
+        console.log("useEffect myHooks");
+        // const { loading, error, data } = useQuery(MY_HOOKS_QUERY);
+
+        // console.log(data);
+        if (data && props.selectedHook) {
+            if (props.selectedHook.id in data.myHooks) { console.log("selectedHook in data.myHooks"); }
+        }
+    }, [props.selectedHook, data]);
 
     return (
         <div className="myHooks">
@@ -59,7 +61,7 @@ const MyHooks = (props) => {
                         {
                             data.myHooks.map(hook => (
 
-                                <div className={`hookItem ${props.selectedHook && props.selectedHook.id == hook.id ? "selected" : ""}`} key={hook.id} onClick={() => handleClick(hook)}>
+                                <div className={`hookItem ${props.selectedHook && props.selectedHook.id === hook.id ? "selected" : ""}`} key={hook.id} onClick={() => handleClick(hook)}>
                                     <div className="hookColumn">
                                         <p className="hookDate">{hook.dateTime}</p>
                                         <PersonName />
