@@ -27,10 +27,13 @@ const HookDetails = (props) => {
         switch (props.hook.protectionType) {
             case "Protected":
                 iconType = "condom"
+                break;
             case "Unprotected":
                 iconType = "nocondom"
+                break;
             case "not_required":
                 iconType = "pill"
+                break;
             default:
                 break;
         }
