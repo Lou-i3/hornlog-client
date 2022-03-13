@@ -22,7 +22,7 @@ import firebase from 'firebase/app';
 // console.log("coucouuuu");
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000/',
+  uri: window.__RUNTIME_CONFIG__.API_URL || 'http://localhost:4000/',
   // credentials: 'include'
 });
 
