@@ -25,6 +25,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseConfig from './firebaseConfig';
 import Loading from './components/pages/Loading';
+import ForgotPassword from './components/pages/ForgotPassword';
 
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -81,6 +82,7 @@ const App: React.FC<WrappedComponentProps> = ({
 }) => {
 
   useEffect(() => {
+    // console.log(user?.getIdToken());
     if (user) {
       // setisLoggedIn(true);
     }
@@ -97,14 +99,14 @@ const App: React.FC<WrappedComponentProps> = ({
 
       <OkQuery user={user} />
 
-      { user && <Nav /> }
+      {user && <Nav />}
       <div className="content">
 
         <Header isLoggedIn={!(user === null)} logOut={signOut} user={user} />
         {/* {console.log("user exist: " + !(user === null))}
         {console.log("user ", user)} */}
 
-        { (loading || user === undefined)  ?
+        {(loading || user === undefined) ?
           <Loading /> :
           user ?
             <Switch>
@@ -123,13 +125,19 @@ const App: React.FC<WrappedComponentProps> = ({
             :
             <Switch>
               {console.log("user ", user)}
-              {!user && <Route exact path="/register">
+              {/* {!user && <Route exact path="/register">
                 <Register onSubmit={createUserWithEmailAndPassword} errorAuth={error} />
+              </Route>} */}
+
+              {!user && <Route exact path={"/forgotPassword"} >
+                <ForgotPassword />
               </Route>}
 
               {!user && <Route path={["/", "/login"]} >
                 <Login onSubmit={signInWithEmailAndPassword} errorAuth={error} loadingAuth={loading} />
               </Route>}
+
+
             </Switch>
         }
       </div>

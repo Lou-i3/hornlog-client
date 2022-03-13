@@ -46,3 +46,13 @@ h4 {
     font-size: 12px;
     line-height: 17px;
 }
+
+a {
+    width: 100%;
+    font-family: $font-main;
+    font-style: underline;
+    color: $color-blue;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 21px;
+}

@@ -85,7 +85,7 @@ const Login = ({ onSubmit, errorAuth, loadingAuth }: LoginProps) => {
               <div className="formFooter">
 
                 <div className="form-group forgotPassword">
-                  <p>Forgot your password? Sorry.</p>
+                  <Link to="/forgotPassword" >Forgot your password?</Link>
                 </div>
 
                 <div className="form-line">
