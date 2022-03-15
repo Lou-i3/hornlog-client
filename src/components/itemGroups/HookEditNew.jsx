@@ -136,8 +136,10 @@ const HookEditNew = (props) => {
     return (
         <div className="hookDetails">
             <div className="title">
-                <h2>{props.displayMode} Hook</h2>
-                <h1 className="date">Date</h1>
+                {/* <h2>{props.displayMode} Hook</h2> */}
+                <h1 className="date">
+                <input type="date" placeholder="date" />
+                    </h1>
                 <div className="icones">
                     <Icon type="save" onClick={() => handleSave()} />
                 </div>
@@ -148,6 +150,7 @@ const HookEditNew = (props) => {
             <div className="info">
                 <div className="infoItem">
                     <p>at</p>
+                    <input type="time" placeholder="time" />
                 </div>
                 <div className="infoItem hookType">
                     {

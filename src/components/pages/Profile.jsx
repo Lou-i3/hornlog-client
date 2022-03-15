@@ -1,6 +1,7 @@
 import React from "react";
 import { gql, useQuery } from '@apollo/client';
 import { useEffect, useState } from "react";
+import { formatDateTime } from "../../helpers";
 
 // import { useState } from 'react';
 
@@ -70,7 +71,7 @@ const Profile = (props) => {
                   </div>
                   <div className="profileItem">
                     <h4>Since</h4>
-                    <p>{me.since}</p>
+                    <p>{formatDateTime(me.since, "date")}</p>
                   </div>
                 </div>
               </div>

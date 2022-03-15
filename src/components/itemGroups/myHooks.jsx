@@ -1,6 +1,7 @@
 
 import { gql, useQuery } from '@apollo/client';
 import { useEffect } from 'react';
+import { formatDateTime } from '../../helpers';
 import Icon from '../global/Icon';
 import PersonName from '../items/PersonName';
 // import firebase from 'firebase/app';
@@ -72,7 +73,7 @@ const MyHooks = (props) => {
                                     <tr className={`hookItem ${props.selectedHook && props.selectedHook.id === hook.id ? "selected" : ""}`} key={hook.id} onClick={() => handleClick(hook)}>
 
                                         <td className="hookColumn">
-                                            <p className="hookDate">{hook.dateTime}</p>
+                                            <p className="hookDate">{ formatDateTime(hook.dateTime, 'date')}</p>
                                         </td>
                                         <td className="hookColumn">
                                             <div className="hookLocation">

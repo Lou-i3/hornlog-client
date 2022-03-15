@@ -1,3 +1,4 @@
+import { formatDateTime } from "../../helpers";
 import Icon from "../global/Icon";
 import ChoicePill from "../items/ChoicePill";
 
@@ -39,16 +40,11 @@ const HookDetails = (props) => {
         }
     }
 
-    const date = new Date(props.hook.dateTime);
-    console.log(props.hook.dateTime)
-    console.log(date);
-    console.log(date.toLocaleString('fr-FR'));
-
     if(props.hook) return (
 
         <div className="hookDetails">
             <div className="title">
-                <h1 className="date">{Date(props.hook.dateTime).toLocaleString('fr-FR')}</h1>
+                <h1 className="date">{formatDateTime(props.hook.dateTime, 'longdate')}</h1>
                 <div className="icones">
                     <Icon type="apple" />
                     <Icon type="edit" />
@@ -59,7 +55,7 @@ const HookDetails = (props) => {
             <div className="info">
                 <div className="infoItem">
                     <p>at</p>
-                    <p><b>{props.hook.dateTime}</b></p>
+                    <p><b>{formatDateTime(props.hook.dateTime, 'time')}</b></p>
                 </div>
                 <ChoicePill text={props.hook.hookType} selected={true}/>
                 {/* <h3 className="hookType">{props.hook.hookType}</h3> */}
