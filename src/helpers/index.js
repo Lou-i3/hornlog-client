@@ -51,6 +51,12 @@ export const formatDateTime = (dateTimeIn, format) => {
             outDateTime = dateTime.toLocaleString('en-UK', dateOptions);
             return outDateTime;
 
+        case 'shortdate':
+            const dateOptionsShort = { dateStyle: 'short' };
+
+            outDateTime = dateTime.toLocaleString('en-UK', dateOptionsShort);
+            return outDateTime;
+
         case 'time':
             outDateTime = dateTime.toLocaleString('en-UK', timeOptions);
             return outDateTime;

@@ -97,7 +97,7 @@ const App: React.FC<WrappedComponentProps> = ({
   return (
     <div className='app'>
 
-      <OkQuery user={user} />
+      {/* <OkQuery user={user} /> */}
 
       {user && <Nav />}
       <div className="content">

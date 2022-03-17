@@ -1,4 +1,5 @@
-.hooks-page-inner {
+.hooks-page-inner,
+.partners-page-inner {
     @include flex(row);
     height: 100%;
     width: 100%;
@@ -9,7 +10,8 @@
     }
     & .left-side {
         @include flex(column, flex-start);
-        & .hooks {
+        & .hooks,
+        .partners {
             @include flex(column, center, flex-start);
             gap: 20px;
             width: 100%;
@@ -48,41 +50,11 @@
     }
 }
 
-.myHooks {
+.myHooks,
+.myPartners {
     width: 100%;
     flex: 1;
     overflow: scroll;
-    & .hooksList {
-        // @include flex(column);
-        // gap: 20px;
-        border-spacing: 0 20px;
-        & .hookItem {
-            // @include flex(row, space-between);
-            // width: 100%;
-            // padding: 10px 20px;
-            background-color: $color-secondary-black;
-            box-shadow: inset 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            border-radius: 15px;
-            & .hookColumn {
-                // @include flex(column, center, flex-start);
-                // gap: 10px;
-                padding: 10px;
-                text-align: center;
-                &:first-child {
-                    padding-left: 20px;
-                    border-radius: 15px 0px 0px 15px;
-                }
-                &:last-child {
-                    padding-right: 20px;
-                    border-radius: 0px 15px 15px 0px;
-                }
-            }
-            &.selected {
-                background-color: $color-main-black-50;
-            }
-        }
-    }
 }
 
 .hookDetails {

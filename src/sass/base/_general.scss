@@ -30,3 +30,40 @@
         outline: $color-accent;
     }
 }
+
+.list {
+    border-spacing: 0 20px;
+    width: 100%;
+    & .listItem {
+        background-color: $color-secondary-black;
+        box-shadow: inset 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        border-radius: 15px;
+        & .listColumn {
+            padding: 10px;
+            text-align: center;
+            &:first-child {
+                padding-left: 20px;
+                border-radius: 15px 0px 0px 15px;
+            }
+            &:last-child {
+                padding-right: 20px;
+                border-radius: 0px 15px 15px 0px;
+            }
+        }
+        &.selected {
+            background-color: $color-main-black-50;
+        }
+    }
+}
+
+svg {
+    @include icon();
+    height: 20px;
+    width: 20px;
+}
+
+svg.illustration {
+    height: unset;
+    width: unset;
+}

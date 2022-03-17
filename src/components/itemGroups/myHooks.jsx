@@ -58,7 +58,7 @@ const MyHooks = (props) => {
                 <p>Loading...</p> :
                 error ?
                     <p>Error: {error.message}</p> :
-                    <table className="hooksList">
+                    <table className="list">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -70,18 +70,18 @@ const MyHooks = (props) => {
                             {
                                 data.myHooks.map(hook => (
 
-                                    <tr className={`hookItem ${props.selectedHook && props.selectedHook.id === hook.id ? "selected" : ""}`} key={hook.id} onClick={() => handleClick(hook)}>
+                                    <tr className={`listItem ${props.selectedHook && props.selectedHook.id === hook.id ? "selected" : ""}`} key={hook.id} onClick={() => handleClick(hook)}>
 
-                                        <td className="hookColumn">
+                                        <td className="listColumn">
                                             <p className="hookDate">{ formatDateTime(hook.dateTime, 'date')}</p>
                                         </td>
-                                        <td className="hookColumn">
+                                        <td className="listColumn">
                                             <div className="hookLocation">
                                                 <PersonName />
 
                                             </div>
                                         </td>
-                                        <td className="hookColumn">
+                                        <td className="listColumn">
                                             <h4 className="hookType">{hook.hookType}</h4>
                                         </td>
                                     </tr>
