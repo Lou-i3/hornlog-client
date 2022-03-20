@@ -16,7 +16,6 @@ import Profile from "./components/pages/Profile";
 import Error404 from './components/pages/error404';
 import Hooks from './components/pages/Hooks';
 import Partners from './components/pages/Partners';
-import Admin from './components/pages/Admin';
 
 import { gql, useQuery } from '@apollo/client';
 
@@ -26,6 +25,7 @@ import 'firebase/auth';
 import firebaseConfig from './firebaseConfig';
 import Loading from './components/pages/Loading';
 import ForgotPassword from './components/pages/ForgotPassword';
+import Settings from './components/pages/Settings';
 
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -116,9 +116,9 @@ const App: React.FC<WrappedComponentProps> = ({
                 <Profile user={user} />
               </Route>
 
-              <Route path="/admin" component={Admin} />
               <Route path="/hooks" component={Hooks} />
               <Route path="/partners" component={Partners} />
+              <Route path="/settings" component={Settings} />
 
               <Route path="/" component={Error404} />
             </Switch>

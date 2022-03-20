@@ -10,14 +10,14 @@ const Nav = () => {
         },
         {
             Name: "Profile",
-            Icon: "profile",
+            Icon: "user",
             Url: "/profile"
         },
-        {
-            Name: "Admin",
-            Icon: "admin",
-            Url: "/admin"
-        },
+        // {
+        //     Name: "Admin",
+        //     Icon: "admin",
+        //     Url: "/admin"
+        // },
         {
             Name: "Partners",
             Icon: "partners",

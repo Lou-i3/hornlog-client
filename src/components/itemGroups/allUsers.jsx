@@ -1,16 +1,14 @@
 import { gql, useQuery } from '@apollo/client';
+import { formatDateTime } from '../../helpers';
+import Icon from '../global/Icon';
 
 const ALL_USERS_QUERY = gql`
     query ALL_USERS_QUERY {
         allUsers {
             id
-            username
-            displayName
             email
             role
-            createdAt
-            updatedAt
-            
+            lastLoginAt
         }
     }
 `;
@@ -22,31 +20,42 @@ const AllUsers = () => {
     if (error) return <p>Error: {error.message}</p>;
 
     return (
-        <div className="allUsers">
-            <table>
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>username</th>
-                        <th>displayName</th>
-                        <th>email</th>
-                        <th>role</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        data.allUsers.map(user => (
-                            <tr key={user.id}>
-                                <td>{user.id}</td>
-                                <td>{user.username}</td>
-                                <td>{user.displayName}</td>
-                                <td>{user.email}</td>
-                                <td>{user.role}</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
+        <div className="settingsBlock">
+            <div className="settingsBlockHeader">
+                <div className="title">
+                    <Icon type="user" />
+
+                    <p>All Users</p>
+
+                </div>
+                {/* <Icon type="edit" /> */}
+
+            </div>
+
+            <div className="allUsers">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><h3>Email</h3></th>
+                            <th><h3>Last Activity</h3></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            data.allUsers.map(user => (
+                                <tr key={user.id}>
+                                    {/* <td>{user.id}</td> */}
+                                    {/* <td>{user.username}</td> */}
+                                    {/* <td>{user.displayName}</td> */}
+                                    <td className='listColumn'>{user.email}</td>
+                                    <td>{formatDateTime(user.lastLoginAt, 'shortdate')}</td>
+                                    {/* <td>{user.role}</td> */}
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }
