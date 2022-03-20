@@ -71,6 +71,7 @@ const GendersEdit = (props) => {
 
     const handleClickEdit = () => {
         setDisplayMode("edit");
+        console.log((props.type === "app" ? data.appGenders : data.myGenders).length === 0);
     }
 
     const handleClickSave = () => {
@@ -176,26 +177,36 @@ const GendersEdit = (props) => {
                             <p>Loading...</p> :
                             error ?
                                 <p>Error: {error.message}</p> :
-                                (props.type === "app" ?
-                                    data.appGenders :
-                                    data.myGenders).map(gender => (
-                                        <Fragment key={gender.id}>
-                                            <div className="itemContainer">
-                                            <input type="text" className={`gender existingGender ${props.type}`} key={gender.id} genderid={gender.id} defaultValue={gender.label} disabled={readOnly} />
-                                            { displayMode === "edit" ? <Icon type="bin" onClick={() => handleClickDelete(gender.id)}/> : null }
-                                            </div>
-                                            
+                                <Fragment>
+                                    {
+                                        (props.type === "app" ?
+                                            data.appGenders :
+                                            data.myGenders).map(gender => (
+                                                <Fragment key={gender.id}>
+                                                    <div className="itemContainer">
+                                                        <input type="text" className={`gender existingGender ${props.type}`} key={gender.id} genderid={gender.id} defaultValue={gender.label} disabled={readOnly} />
+                                                        {displayMode === "edit" ? <Icon type="bin" onClick={() => handleClickDelete(gender.id)} /> : null}
 
-                                            <div className="separator"></div>
-                                        </Fragment>
-                                    ))
+                                                    </div>
+
+
+                                                    <div className="separator"></div>
+                                                </Fragment>
+                                            ))
+                                    }
+                                    {
+                                        displayMode === "view" && ((props.type === "app" ? data.appGenders : data.myGenders).length === 0) ?
+                                            <p>Nothing here...</p> :
+                                            null
+                                    }
+                                </Fragment>
 
                     }
                     {
                         newData ?
                             newData.map((gender, index) => (
                                 <Fragment key={"new" + index}>
-                                    <div className="itemContainer">  
+                                    <div className="itemContainer">
                                         <input type="text" className={`gender newGender ${props.type}`} key={"new" + index}></input>
                                     </div>
                                     <div className="separator"></div>
