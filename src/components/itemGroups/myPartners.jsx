@@ -44,6 +44,7 @@ const MyPartners = (props) => {
 
     const handleClick = (partner) => {
         props.setSelectedPartner(partner);
+        props.setDisplayMode("view");
         // console.log("handleClick", partner);
     }
 

@@ -17,6 +17,7 @@ const APP_GENDERS_QUERY = gql`
         appGenders {
             id
             label
+            hasPeople
         }
     }
 `;
@@ -183,9 +184,10 @@ const GendersEdit = (props) => {
                                             data.appGenders :
                                             data.myGenders).map(gender => (
                                                 <Fragment key={gender.id}>
+                                                    {console.log("testounet, ",gender)}
                                                     <div className="itemContainer">
                                                         <input type="text" className={`gender existingGender ${props.type}`} key={gender.id} genderid={gender.id} defaultValue={gender.label} disabled={readOnly} />
-                                                        {displayMode === "edit" ? <Icon type="bin" onClick={() => handleClickDelete(gender.id)} /> : null}
+                                                        {displayMode === "edit" && !gender.hasPeople ? <Icon type="bin" onClick={() => handleClickDelete(gender.id)} /> : null}
 
                                                     </div>
 

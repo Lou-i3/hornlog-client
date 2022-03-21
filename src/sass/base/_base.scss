@@ -112,6 +112,23 @@ table {
     }
 }
 
+input[type="text"],
+input[type="date"],
+input[type="address"],
+input[type="number"],
+input[type="time"] {
+    width: 100%;
+    border: none;
+    color: $color-main-black-50;
+    background-color: transparent;
+    padding: 2px 0px;
+    border-bottom: 0.5px solid $color-main-black-50;
+    &:focus-visible {
+        outline: none;
+        border-bottom: 1px solid $color-main-black-20;
+    }
+}
+
 textarea {
     width: 100%;
     color: $color-main-black-20;

@@ -14,16 +14,21 @@ const Partners = () => {
         console.log("useEffect");
         console.log(selectedPartner);
 
-        if (selectedPartner) {
+        if (selectedPartner && ["none", "view"].includes(displayMode)) {
             setDisplayMode("view");
             console.log("setDisplayMode", displayMode);
-        } else {
+        }  else if (displayMode === "new") {
             // setDisplayMode("none");
+            console.log("setDisplayMode", displayMode);
+            setSelectedPartner(null);
+
         }
 
     }, [selectedPartner, displayMode]);
 
     const handleClickNew = () => {
+        setDisplayMode("view");
+
         setSelectedPartner(null);
         setDisplayMode("new");
     }
@@ -41,13 +46,13 @@ const Partners = () => {
                             </div>
                         </div>
                         <Search />
-                        <MyPartners selectedPartner={selectedPartner} setSelectedPartner={setSelectedPartner} />
+                        <MyPartners selectedPartner={selectedPartner} setSelectedPartner={setSelectedPartner} setDisplayMode={setDisplayMode}/>
                     </div>
-                    
+
 
                 </div>
                 <div className="right-side side">
-                    {displayMode === "view" && <Profile partner={selectedPartner} person={selectedPartner.person}/>}
+                    {["view", "edit", "new"].includes(displayMode) && <Profile partner={selectedPartner} person={selectedPartner ? selectedPartner.person : null} displayMode={displayMode} setDisplayMode={setDisplayMode} setSelectedPartner={setSelectedPartner} />}
                     {displayMode === "none" &&
                         <div className="none">
                             <Illustration type="partnersNoSelection" />
