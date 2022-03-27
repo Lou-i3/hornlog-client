@@ -43,6 +43,7 @@ const MyPartners = (props) => {
     const { loadingQuery, error, data } = useQuery(MY_PARTNERS_QUERY);
     const [sortColumn, setSortColumn] = useState();
     const [sortType, setSortType] = useState();
+    const [tableData, setTableData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     // console.log("myPartners");
@@ -73,15 +74,24 @@ const MyPartners = (props) => {
                 props.setSelectedPartner(data.myPartners[selectedPartnerIndex]);
             }
         }
+
+        getData();
     }, [props.selectedPartner, data, loadingQuery]);
 
-    const getData = () => {
-        // console.log("getData");
-        let tableData = [];
+    useEffect(() => {
+        console.log("searchTerms: ", props.searchTerms);
+        getData();
+    }, [props.searchTerms]);
+
+    const getData = (sortColumnLocal, sortTypeLocal) => {
+        console.log("getData");
+        setLoading(true);
+        let tableDataLocal = [];
 
         if (data && data.myPartners) {
+            console.log("found Data");
             data.myPartners.forEach(partner => {
-                tableData.push({
+                tableDataLocal.push({
                     id: partner.id,
                     name: partner.person.nickName ?
                         partner.person.nickName :
@@ -91,16 +101,17 @@ const MyPartners = (props) => {
                         "Never",
                 });
             });
-            if (sortColumn && sortType) {
-                // console.log("sortColumn", sortColumn);
+            console.log("sortColumn", sortColumnLocal);
+            console.log("sortType", sortTypeLocal);
+            if (sortColumnLocal && sortTypeLocal) {
+                console.log("sortColumn", sortColumnLocal);
                 // console.log("sortType", sortType);
 
-                const sortedData = [...tableData];
+                // const sortedData = [...tableDataLocal];
 
-
-                const output = sortedData.sort((a, b) => {
-                    let x = a[sortColumn];
-                    let y = b[sortColumn];
+                tableDataLocal = tableDataLocal.sort((a, b) => {
+                    let x = a[sortColumnLocal];
+                    let y = b[sortColumnLocal];
 
                     if (typeof x === 'string') {
                         x = x.charCodeAt();
@@ -114,21 +125,43 @@ const MyPartners = (props) => {
                         return y - x;
                     }
                 });
-                console.log("output", output);
-                return output;
-
+                // tableDataLocal = output;
+                // console.log("output", output);
+                // setTableData(output);
             }
-            return tableData;
-        }
-        return tableData;
+            if (props.searchTerms != "") {
+                let filteredData = [...tableDataLocal];
 
+                filteredData = tableDataLocal.filter(x => {
+                    // console.log("search: ", props.searchTerms);
+                    // console.log("x.name: ", x.name);
+                    // console.log("includes: ", x.name.toLowerCase().includes(props.searchTerms.toLowerCase()));
+                    let output = false; 
+                    if (x.name.toLowerCase().includes(props.searchTerms.toLowerCase())) {
+                        output = true;
+                    } else if (x.lastHook.toLowerCase().includes(props.searchTerms.toLowerCase())) {
+                        output = true;
+                    }
+                    return output;
+                });
+                console.log("filteredData", filteredData);
+                tableDataLocal = filteredData;
+                // return filteredData;
+            }
+        }
+        setTableData(tableDataLocal);
+        setLoading(false);
     };
 
     const handleSortColumn = (sortColumn, sortType) => {
         console.log("handlesortColumn");
+        console.log("sortColumn", sortColumn);
+        console.log("sortType", sortType);
+
         setSortColumn(sortColumn);
         setSortType(sortType);
         setLoading(true);
+        getData(sortColumn, sortType);
         setTimeout(() => {
             setLoading(false);
             setSortColumn(sortColumn);
@@ -145,66 +178,64 @@ const MyPartners = (props) => {
                 error ?
                     console.log(error) &&
                     <p>Error: {error.message}</p> :
-                    // <table className="list">
-                    <Table
-                        // virtualized
-                        data={getData()}
-                        sortColumn={sortColumn}
-                        sortType={sortType}
-                        id="table"
-                        bordered={false}
-                        // width={auto}
-                        // height={"100%"}
-                        // autoHeight={true}
-                        onSortColumn={handleSortColumn}
-                        loading={loading}
-                        rowClassName={(rowData) => (rowData && props.selectedPartner && rowData["id"] === props.selectedPartner.id ? "selected" : "")}
-                        onRowClick={data => {
-                            console.log(data);
-                            const partner = data;
-                            handleClick(partner)
-                        }}
-                    >
-
-
-                        <Column 
-                        // resizable
-                        width={100}
-                        flexGrow={1} 
-                        sortable
-                        align='center'>
-                            <HeaderCell >
-                                Name
-                            </HeaderCell>
-                            <Cell dataKey="name" color='white'> 
-                                {/* <img src="/Ellipse 4.png" alt="" width="30px" className="profilePic" /> */}
-                                {
-                                    rowdata => <p>{
-                                        rowdata.name
-                                    }</p>
-                                }
-                            </Cell>
-                        </Column>
-                        <Column 
-                        flexGrow={1} 
-                        sortable
-                        align='center'
+                        <Table
+                            // virtualized
+                            data={tableData}
+                            sortColumn={sortColumn}
+                            sortType={sortType}
+                            id="table"
+                            bordered={false}
+                            // width={auto}
+                            // height={"100%"}
+                            // autoHeight={true}
+                            onSortColumn={handleSortColumn}
+                            loading={loading}
+                            rowClassName={(rowData) => (rowData && props.selectedPartner && rowData["id"] === props.selectedPartner.id ? "selected" : "")}
+                            onRowClick={data => {
+                                console.log(data);
+                                const partner = data;
+                                handleClick(partner)
+                            }}
                         >
-                            <HeaderCell>
-                                Last Hook
-                            </HeaderCell>
-                            <Cell dataKey='lastHook'>{rowData => rowData.lastHook}
-                            </Cell>
-                        </Column>
 
-                        {/* <tr className={`listItem ${props.selectedPartner && props.selectedPartner.id === partner.id ? "selected" : ""}`} key={partner.id} onClick={() => handleClick(partner)}>
+
+                            <Column
+                                // resizable
+                                width={100}
+                                flexGrow={1}
+                                sortable
+                                align='center'>
+                                <HeaderCell >
+                                    Name
+                                </HeaderCell>
+                                <Cell dataKey="name" color='white'>
+                                    {/* <img src="/Ellipse 4.png" alt="" width="30px" className="profilePic" /> */}
+                                    {
+                                        rowdata => <p>{
+                                            rowdata.name
+                                        }</p>
+                                    }
+                                </Cell>
+                            </Column>
+                            <Column
+                                flexGrow={1}
+                                sortable
+                                align='center'
+                            >
+                                <HeaderCell>
+                                    Last Hook
+                                </HeaderCell>
+                                <Cell dataKey='lastHook'>{rowData => rowData.lastHook}
+                                </Cell>
+                            </Column>
+
+                            {/* <tr className={`listItem ${props.selectedPartner && props.selectedPartner.id === partner.id ? "selected" : ""}`} key={partner.id} onClick={() => handleClick(partner)}>
 
                                         
                                     </tr> */}
 
 
-                    </Table>
-
+                        </Table>
             }
         </div >
     );

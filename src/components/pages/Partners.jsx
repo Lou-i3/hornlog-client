@@ -9,6 +9,7 @@ import MyPartners from "../itemGroups/myPartners";
 const Partners = () => {
     const [displayMode, setDisplayMode] = useState("none");
     const [selectedPartner, setSelectedPartner] = useState(null);
+    const [searchTerms, setSearchTerms] = useState("");
 
     useEffect(() => {
         console.log("useEffect Partners");
@@ -55,8 +56,8 @@ const Partners = () => {
                                 <Icon type="plus" />
                             </div>
                         </div>
-                        <Search />
-                        <MyPartners selectedPartner={selectedPartner} setSelectedPartner={setSelectedPartner} setDisplayMode={setDisplayMode} />
+                        <Search setSearchTerms={setSearchTerms} />  
+                        <MyPartners selectedPartner={selectedPartner} setSelectedPartner={setSelectedPartner} setDisplayMode={setDisplayMode} searchTerms={searchTerms} />
                     </div>
 
 
