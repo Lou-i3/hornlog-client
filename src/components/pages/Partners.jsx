@@ -11,13 +11,13 @@ const Partners = () => {
     const [selectedPartner, setSelectedPartner] = useState(null);
 
     useEffect(() => {
-        console.log("useEffect");
-        console.log(selectedPartner);
+        console.log("useEffect Partners");
+        console.log("selected Partner: ", selectedPartner);
 
         if (selectedPartner && ["none", "view"].includes(displayMode)) {
             setDisplayMode("view");
             console.log("setDisplayMode", displayMode);
-        }  else if (displayMode === "new") {
+        }else if (displayMode === "new") {
             // setDisplayMode("none");
             console.log("setDisplayMode", displayMode);
             setSelectedPartner(null);
@@ -25,6 +25,16 @@ const Partners = () => {
         }
 
     }, [selectedPartner, displayMode]);
+
+    // useEffect(() => {
+    //     if (selectedPartner && ["none", "view"].includes(displayMode)) {
+    //         setDisplayMode("between");
+    //         console.log("setDisplayMode", displayMode);
+    //     } else if (selectedPartner && ["between"].includes(displayMode)) {
+    //         setDisplayMode("view");
+    //         console.log("setDisplayMode", displayMode);
+    //     }
+    // }, [selectedPartner]);
 
     const handleClickNew = () => {
         setDisplayMode("view");
@@ -46,7 +56,7 @@ const Partners = () => {
                             </div>
                         </div>
                         <Search />
-                        <MyPartners selectedPartner={selectedPartner} setSelectedPartner={setSelectedPartner} setDisplayMode={setDisplayMode}/>
+                        <MyPartners selectedPartner={selectedPartner} setSelectedPartner={setSelectedPartner} setDisplayMode={setDisplayMode} />
                     </div>
 
 

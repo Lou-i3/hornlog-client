@@ -2,14 +2,18 @@ import { useEffect } from 'react';
 import { Switch, Route } from "react-router-dom";
 
 // import logo from './logo.svg';
+// import 'rsuite/dist/rsuite.min.css'; // or 'rsuite/dist/rsuite.min.css'
+import 'rsuite-table/dist/css/rsuite-table.min.css';
+
 import './sass/App.scss';
+
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 import Header from './components/global/Header';
 import Nav from './components/global/Nav';
 
 import Login from "./components/pages/Login";
-import Register from "./components/pages/Register";
+// import Register from "./components/pages/Register";
 
 import Home from "./components/pages/Home";
 import Profile from "./components/pages/Profile";

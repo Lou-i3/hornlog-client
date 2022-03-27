@@ -37,7 +37,7 @@ div.app {
 }
 
 .button {
-    @include flex (row, center, center);
+    @include flex(row, center, center);
     width: 100%;
     border-radius: 15px;
     text-decoration: none;
@@ -50,7 +50,7 @@ div.app {
     border: none;
     cursor: pointer;
     & svg {
-        @include icon ($color-main-black);
+        @include icon($color-main-black);
     }
     &.inactive {
         background-color: $color-main-black-50;
@@ -113,27 +113,36 @@ table {
 }
 
 input[type="text"],
+textarea,
 input[type="date"],
 input[type="address"],
 input[type="number"],
 input[type="time"] {
     width: 100%;
     border: none;
-    color: $color-main-black-50;
+    color: $color-main-black-20;
     background-color: transparent;
     padding: 2px 0px;
-    border-bottom: 0.5px solid $color-main-black-50;
+    //border-bottom: 0.5px solid $color-main-black-50;
+    &::-webkit-calendar-picker-indicator {
+        background: none;
+        z-index: 1;
+    }
     &:focus-visible {
         outline: none;
         border-bottom: 1px solid $color-main-black-20;
     }
+    &:-webkit-autofill {
+        border: none;
+        border-bottom: 1px solid $color-main-black-20;
+        transition: background-color 5000s ease-in-out 0s;
+        -webkit-text-fill-color: $color-main-black-20;
+    }
 }
 
 textarea {
-    width: 100%;
-    color: $color-main-black-20;
-    background-color: transparent;
-    padding: 15px;
-    border: 1px solid $color-main-black-20;
-    border-radius: 15px;
+    // height: 100px;
+    // max-width: 200px;
+    // max-height: 100px;
+    resize: none;
 }

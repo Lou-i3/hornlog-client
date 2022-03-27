@@ -8,6 +8,7 @@ const MY_GENDERS_QUERY = gql`
         myGenders {
             id
             label
+            hasPeople
         }
     }
 `;

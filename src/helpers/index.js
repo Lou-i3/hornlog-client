@@ -1,6 +1,7 @@
 export const formatDateTime = (dateTimeIn, format) => {
 
     const dateTime = new Date(dateTimeIn);
+    // console.log(dateTime);
 
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const timeOptions = { hour: '2-digit', minute: '2-digit' };
@@ -61,6 +62,16 @@ export const formatDateTime = (dateTimeIn, format) => {
             outDateTime = dateTime.toLocaleString('en-UK', timeOptions);
             return outDateTime;
 
+        case 'techdate':
+            if (isValidDate(dateTime)) {
+                const offset = dateTime.getTimezoneOffset()
+                outDateTime = new Date(dateTime.getTime() - (offset * 60 * 1000))
+
+                outDateTime = outDateTime.toISOString().split('T')[0];
+                return outDateTime;
+            } else {
+                return dateTimeIn;
+            }
 
         default:
             outDateTime = dateTime.toLocaleString('en-UK', dateOptions);
@@ -69,3 +80,7 @@ export const formatDateTime = (dateTimeIn, format) => {
     }
 
 };
+
+function isValidDate(d) {
+    return d instanceof Date && !isNaN(d);
+}
