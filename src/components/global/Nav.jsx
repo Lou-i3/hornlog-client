@@ -33,6 +33,11 @@ const Nav = () => {
             Icon: "settings",
             Url: "/settings"
         },
+        {
+            Name: "Icons",
+            Icon: "icons",
+            Url: "/icons"
+        },
 
     ];
     return (
