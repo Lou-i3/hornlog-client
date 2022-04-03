@@ -30,6 +30,7 @@ import firebaseConfig from './firebaseConfig';
 import Loading from './components/pages/Loading';
 import ForgotPassword from './components/pages/ForgotPassword';
 import Settings from './components/pages/Settings';
+import Icons from './components/pages/Icons';
 
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -123,6 +124,7 @@ const App: React.FC<WrappedComponentProps> = ({
               <Route path="/hooks" component={Hooks} />
               <Route path="/partners" component={Partners} />
               <Route path="/settings" component={Settings} />
+              <Route path="/icons" component={Icons} />
 
               <Route path="/" component={Error404} />
             </Switch>
