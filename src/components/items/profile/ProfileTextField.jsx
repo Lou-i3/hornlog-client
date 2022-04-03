@@ -2,17 +2,18 @@ import { Field } from "formik";
 
 const ProfileTextField = (props) => {
     const { readOnly, values } = props;
-    return ( 
+    return (
         <Field
-        name="firstName"
-        type="text"
-        key={(readOnly ? "readonly" : "active") + (person && person.firstName)}
-        className="form-control"
-        placeholder="First Name"
-        disabled={readOnly}
-        value={values.firstName} 
-    />
+            name="nickName"
+            type="text"
+            key={"nickName" + (readOnly ? "readonly" : "active") + (person && person.nickName)}
+            className="form-control"
+            placeholder="Nickname"
+            disabled={readOnly}
+            value={values.nickName}
+
+        />
     );
 }
- 
+
 export default ProfileTextField;

@@ -27,7 +27,8 @@ div.app {
 }
 
 .content-inner {
-    @include flex();
+    @include flex(column, flex-start, flex-start);
+    gap: 20px;
     height: calc(100% - $size-header-height);
     width: 100%;
     background-color: $color-main-black;
@@ -114,6 +115,7 @@ table {
 
 input[type="text"],
 textarea,
+select,
 input[type="date"],
 input[type="address"],
 input[type="number"],
@@ -123,14 +125,16 @@ input[type="time"] {
     color: $color-main-black-20;
     background-color: transparent;
     padding: 2px 0px;
-    //border-bottom: 0.5px solid $color-main-black-50;
+    &:not(:disabled) {
+        border-bottom: 0.5px solid $color-main-black-50;
+    }
     &::-webkit-calendar-picker-indicator {
         background: none;
         z-index: 1;
     }
     &:focus-visible {
         outline: none;
-        border-bottom: 1px solid $color-main-black-20;
+        border-bottom: 0.5px solid $color-main-black-20;
     }
     &:-webkit-autofill {
         border: none;

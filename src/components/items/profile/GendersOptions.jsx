@@ -1,23 +1,10 @@
 import { Fragment, useEffect } from "react";
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { ACCESSIBLE_GENDERS_QUERY } from "../../../helpers/queries";
 
 
-const ACCESSIBLE_GENDERS_QUERY = gql`
-    query ACCESSIBLE_GENDERS_QUERY {
-        accessibleGenders {
-            id
-            label
-        }
-    }
-    `;
-
-
-const GendersOptions = (props) => {
+const GendersOptions = () => {
     const { loading, error, data } = useQuery(ACCESSIBLE_GENDERS_QUERY);
-    const selectedId = props.selectedId
-
-    // loading && return <p>Loading options...</p>
-
 
     useEffect(() => {
         console.log("coucou Genders Options: ", data);

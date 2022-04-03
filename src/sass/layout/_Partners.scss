@@ -1,27 +1,28 @@
-.partners-page-inner {
-    @include flex();
-    height: 100%;
-    width: 100%;
-    gap: 20px;
-    & .side {
-        @include flex(row, center, flex-start);
-        gap: 20px;
-        &.left-side {
-            flex: 1;
-        }
-        &.right-side {
-            flex: 2;
-            width: 100%;
-            & .none {
-                height: 100%;
-            }
-        }
-    }
-}
-
+// Repeated in Hooks
+//.partners-page-inner {
+//     @include flex();
+//     height: 100%;
+//     width: 100%;
+//     gap: 20px;
+//     & .side {
+//         @include flex(row, center, flex-start);
+//         gap: 20px;
+//         &.left-side {
+//             flex: 1;
+//         }
+//         &.right-side {
+//             flex: 2;
+//             width: 100%;
+//             & .none {
+//                 height: 100%;
+//             }
+//         }
+//     }
+// }
 .profile {
-    @include flex(row, flex-start);
+    @include flex(row, flex-start, flex-start);
     width: 100%;
+    height: 100%;
     & form {
         @include flex(row);
         gap: 20px;

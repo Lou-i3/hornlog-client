@@ -2,8 +2,8 @@
 import { gql, useQuery } from '@apollo/client';
 import { Fragment, useEffect, useState } from 'react';
 import { formatDateTime } from '../../helpers';
-import Icon from '../global/Icon';
-import PersonName from '../items/PersonName';
+// import Icon from '../global/Icon';
+// import PersonName from '../items/PersonName';
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 // import { Column } from 'rsuite/Table/Column';
 // import { Column, HeaderCell, Cell } from 'rsuite';
@@ -29,6 +29,12 @@ export const MY_PARTNERS_QUERY = gql`
                 nationality
                 sexuality
                 sexPosition
+                contactInfos {
+                    id
+                    contactType
+                    info
+                    designation
+                }
             }
             hooks {
                 id
@@ -39,8 +45,10 @@ export const MY_PARTNERS_QUERY = gql`
     }
 `;
 
+
+
 const MyPartners = (props) => {
-    const { loadingQuery, error, data } = useQuery(MY_PARTNERS_QUERY);
+    const { loading: loadingQuery, error, data } = useQuery(MY_PARTNERS_QUERY);
     const [sortColumn, setSortColumn] = useState();
     const [sortType, setSortType] = useState();
     const [tableData, setTableData] = useState([]);
@@ -48,9 +56,6 @@ const MyPartners = (props) => {
 
     // console.log("myPartners");
     // console.log(data);
-
-    // if (loading) return <p>Loading...</p>;
-    // if (error) return <p>Error: {error.message}</p>;
 
     const handleClick = (partner) => {
         props.setSelectedPartner(partner);
@@ -76,7 +81,7 @@ const MyPartners = (props) => {
         }
 
         getData();
-    }, [props.selectedPartner, data, loadingQuery]);
+    }, [props.selectedPartner, data, loadingQuery, props]);
 
     useEffect(() => {
         console.log("searchTerms: ", props.searchTerms);
@@ -129,7 +134,7 @@ const MyPartners = (props) => {
                 // console.log("output", output);
                 // setTableData(output);
             }
-            if (props.searchTerms != "") {
+            if (props.searchTerms !== "") {
                 let filteredData = [...tableDataLocal];
 
                 filteredData = tableDataLocal.filter(x => {
@@ -178,6 +183,8 @@ const MyPartners = (props) => {
                 error ?
                     console.log(error) &&
                     <p>Error: {error.message}</p> :
+                    <Fragment>
+                        {/* <div onClick={() => {}}>Coucou</div> */}
                         <Table
                             // virtualized
                             data={tableData}
@@ -236,6 +243,8 @@ const MyPartners = (props) => {
 
 
                         </Table>
+
+                        </Fragment>
             }
         </div >
     );

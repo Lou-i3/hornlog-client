@@ -1,11 +1,14 @@
 
 import { Fragment, useEffect, useState } from "react";
-import { formatDateTime } from "../../helpers";
+import { enumLabel, formatDateTime } from "../../helpers";
 import Icon from "../global/Icon";
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import { Form, Formik, Field } from "formik";
 import { MY_PARTNERS_QUERY } from "./myPartners";
 import GendersOptions from "../items/profile/GendersOptions";
+import SexualityOptions from "../items/profile/SexualityOptions";
+import PositionOptions from "../items/profile/PositionOptions";
+import ContactItems from "../items/profile/ContactItems";
 
 
 const NewPartnerMutation = gql`
@@ -32,8 +35,8 @@ const Profile = (props) => {
     const [readOnly, setReadOnly] = useState(props.displayMode === "view");
     const [person, setPerson] = useState(props.person);
 
-    const [mutateFctNewPartner, { dataNewPartner, loadingNewPartner, errorNewPartner }] = useMutation(NewPartnerMutation, { refetchQueries: [{ query: MY_PARTNERS_QUERY }] });
-    const [mutateFctEditPartner, { dataEditPartner, loadingEditPartner, errorEditPartner }] = useMutation(EditPartnerMutation, { refetchQueries: [{ query: MY_PARTNERS_QUERY }] });
+    const [mutateFctNewPartner] = useMutation(NewPartnerMutation, { refetchQueries: [{ query: MY_PARTNERS_QUERY }] });
+    const [mutateFctEditPartner] = useMutation(EditPartnerMutation, { refetchQueries: [{ query: MY_PARTNERS_QUERY }] });
 
 
     useEffect(() => {
@@ -44,8 +47,6 @@ const Profile = (props) => {
         } else {
             setPerson(props.person);
         }
-
-        // document.querySelector("input[name='firstName']").value = ""
 
     }, [props.displayMode, props.person, props.partner]);
 
@@ -59,16 +60,27 @@ const Profile = (props) => {
         setReadOnly(true);
         console.log("handleClickSave", values);
 
-        const data = {
+
+
+        let data = {
             firstName: values.firstName,
             lastName: values.lastName,
             nickName: values.nickName,
             birthday: new Date(values.birthday),
             nationality: values.nationality,
+            // sexuality: values.sexuality,
             notes: values.notes,
             how: values.how,
-            genderId: 24
+            genderId: Number(values.genderId)
+        };
+
+        if (values.sexuality !== '') {
+            data.sexuality = values.sexuality;
         }
+        if (values.sexPosition !== '') {
+            data.sexPosition = values.sexPosition;
+        }
+
         console.log(new Date(values.birthday))
 
         if (props.displayMode === "new") {
@@ -115,19 +127,23 @@ const Profile = (props) => {
                     birthday: person.birthday === null ? "" : person.birthday,
                     nationality: person.nationality === null ? "" : person.nationality,
                     sexuality: person.sexuality === null ? "" : person.sexuality,
+                    sexPosition: person.sexPosition === null ? "" : person.sexPosition,
                     notes: person.notes === null ? "" : person.notes,
                     how: person.how === null ? "" : person.how,
-                    genderId: person ? person.genderId : ""
+                    genderId: person && person.gender ? person.gender.id : "",
+                    contactInfosPhone: [...person.contactInfos.filter((info) => { return info.contactType === "Phone" })],
                 } : {
                     firstName: "",
                     lastName: "",
                     nickName: "",
                     birthday: "",
                     nationality: "",
-                    sexuality: "",
+                    sexuality: "0",
+                    sexPosition: "0",
                     notes: "",
                     how: "",
-                    genderId: "0"
+                    genderId: "0",
+                    contactInfosPhone: [],
                 }}
                 onSubmit={(values) => {
                     props.displayMode === "view" ?
@@ -136,7 +152,7 @@ const Profile = (props) => {
 
                 }}  >
                 {({ handleSubmit, values }) => (
-                    // console.log(values),
+                    // console.log("form values: ", values),
                     <Form>
 
                         <Fragment>
@@ -196,19 +212,20 @@ const Profile = (props) => {
                                 </div>
                                 <div className="info">
                                     <div className="column left">
-                                        <div className="infoGroup phone">
-                                            <div className="infoItem">
-                                                <Icon type="phone" />
-                                                <div className="infoTexts">
-                                                    <h4 className="label">
-                                                        Phone</h4>
-                                                    <p className="value">
-                                                    </p>
-                                                </div>
+                                        {
+                                            (values.contactInfosPhone.count > 0 || props.displayMode !== "view") &&
+                                            <div className="infoGroup phone">
 
+                                                <ContactItems
+                                                    type="Phone"
+                                                    displayMode={props.displayMode}
+                                                    values={values}
+                                                    readOnly={readOnly}
+                                                />
 
                                             </div>
-                                        </div>
+                                        }
+
                                         <div className="infoGroup email">
                                             <div className="infoItem">
                                                 <Icon type="email" />
@@ -224,7 +241,7 @@ const Profile = (props) => {
                                         </div>
                                         {
                                             (props.displayMode === "view" ?
-                                                values.notes != "" && true :
+                                                values.notes !== "" && true :
                                                 true) &&
                                             <div className="infoGroup note">
                                                 <div className="infoItem">
@@ -254,7 +271,7 @@ const Profile = (props) => {
                                         }
                                         {
                                             (props.displayMode === "view" ?
-                                                values.how != "" && true :
+                                                values.how !== "" && true :
                                                 true) &&
                                             <div className="infoGroup how">
                                                 <div className="infoItem">
@@ -379,13 +396,13 @@ const Profile = (props) => {
                                             <div className="column right">
                                                 <div className="infoGroup sexuality">
                                                     <div className="infoItem sexuality">
-                                                        <Icon type={(values.sexuality && values.sexuality === "straight") ? "sexualityStraight" : "sexuality"} />
+                                                        <Icon type={(values.sexuality && values.sexuality === "Straight") ? "sexualityStraight" : "sexuality"} />
                                                         <div className="infoTexts">
                                                             <h4 className="label">Sexuality</h4>
                                                             <p className="value">
                                                                 {
                                                                     props.displayMode === "view" ?
-                                                                        person.sexuality :
+                                                                        enumLabel(person.sexuality) :
                                                                         <Field
                                                                             name="sexuality"
                                                                             as="select"
@@ -395,10 +412,12 @@ const Profile = (props) => {
                                                                                 props.displayMode === "new" &&
                                                                                 <option disabled value="0"> -- select an option -- </option>
                                                                             }
-                                                                            <option value="straight">Straight</option>
-                                                                            <option value="Gay">Gay</option>
+                                                                            <SexualityOptions />
+                                                                            {/* <option value="straight">Straight</option>
+                                                                            <option value="Gay">Gay</option> */}
                                                                         </Field>
                                                                 }
+
                                                             </p>
 
                                                         </div>
@@ -413,7 +432,7 @@ const Profile = (props) => {
                                                                 {props.displayMode === "view" ?
                                                                     person.gender.label :
                                                                     <Field
-                                                                        name="gender"
+                                                                        name="genderId"
                                                                         as="select"
                                                                         value={values.genderId}
                                                                     >
@@ -433,7 +452,22 @@ const Profile = (props) => {
                                                         <Icon type="position" />
                                                         <div className="infoTexts">
                                                             <h4 className="label">Position</h4>
-                                                            <p className="value">{person ? person.sexPosition : null}</p>
+                                                            <p className="value">
+                                                                {props.displayMode === "view" ?
+                                                                    enumLabel(person.sexPosition) :
+                                                                    <Field
+                                                                        name="sexPosition"
+                                                                        as="select"
+                                                                        value={values.sexPosition}
+                                                                    >
+                                                                        {
+                                                                            props.displayMode === "new" &&
+                                                                            <option disabled value="0"> -- select an option -- </option>
+                                                                        }
+                                                                        <PositionOptions />
+                                                                    </Field>
+                                                                }
+                                                            </p>
                                                         </div>
                                                     </div>
 

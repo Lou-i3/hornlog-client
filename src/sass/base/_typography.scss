@@ -9,6 +9,12 @@ div {
     color: $color-main-black-20;
 }
 
+input,
+textarea,
+select {
+    font-family: monospace;
+}
+
 p {
     font-family: $font-main;
     font-style: normal;

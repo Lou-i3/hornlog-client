@@ -44,7 +44,7 @@ const HookDetails = (props) => {
 
         <div className="hookDetails">
             <div className="title">
-                <h1 className="date">{formatDateTime(props.hook.dateTime, 'longdate')}</h1>
+                <h2 className="date">{formatDateTime(props.hook.dateTime, 'longdate')}</h2>
                 <div className="icones">
                     <Icon type="apple" />
                     <Icon type="edit" />

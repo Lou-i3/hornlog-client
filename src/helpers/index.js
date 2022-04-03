@@ -84,3 +84,14 @@ export const formatDateTime = (dateTimeIn, format) => {
 function isValidDate(d) {
     return d instanceof Date && !isNaN(d);
 }
+
+export const enumLabel = (enumValue) => {
+
+    if (enumValue) {
+        const label = enumValue
+            .replace("_", " ")
+            .replace(/\b\w/g, l => l.toUpperCase());
+
+        return label
+    }
+}

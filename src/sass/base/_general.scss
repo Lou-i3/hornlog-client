@@ -97,6 +97,9 @@ div.rs-table {
     }
     & .rs-table-cell {
         background: transparent;
+        & .rs-table-cell-content {
+            @include flex();
+        }
     }
     & .rs-table-loader-wrapper {
         background: $color-main-black;
