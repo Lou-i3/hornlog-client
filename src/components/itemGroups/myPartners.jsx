@@ -5,45 +5,11 @@ import { formatDateTime } from '../../helpers';
 // import Icon from '../global/Icon';
 // import PersonName from '../items/PersonName';
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
+import { MY_PARTNERS_QUERY } from '../../helpers/queries';
 // import { Column } from 'rsuite/Table/Column';
 // import { Column, HeaderCell, Cell } from 'rsuite';
 // import firebase from 'firebase/app';
 
-export const MY_PARTNERS_QUERY = gql`
-    query MY_PARTNERS_QUERY {
-        myPartners {
-            id
-            person {
-                id
-                firstName
-                lastName
-                nickName
-                how
-                notes
-                picture
-                gender {
-                    id
-                    label
-                }
-                birthday
-                nationality
-                sexuality
-                sexPosition
-                contactInfos {
-                    id
-                    contactType
-                    info
-                    designation
-                }
-            }
-            hooks {
-                id
-                dateTime
-            }
-            
-        }
-    }
-`;
 
 
 
@@ -178,13 +144,13 @@ const MyPartners = (props) => {
     return (
         <div className="myPartners">
             {/* {fireToken && <pstyle="">FireToken: {fireToken}</p>} */}
-            {loadingQuery ?
-                <p>Loading...</p> :
+            {/* {loadingQuery ?
+                <p>Loading...</p> : */
                 error ?
                     console.log(error) &&
                     <p>Error: {error.message}</p> :
                     <Fragment>
-                        {/* <div onClick={() => {}}>Coucou</div> */}
+                        {/* <div onClick={() => {console.log(error)}}>Coucou</div> */}
                         <Table
                             // virtualized
                             data={tableData}

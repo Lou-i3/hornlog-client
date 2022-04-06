@@ -7,21 +7,21 @@ const ContactItems = (props) => {
 
     const fieldName = `contactInfos${type}`;
 
-    const iconForType = (type) => {
+    const iconForType = (type, designation) => {
         switch (type) {
             case "Email":
                 return "email";
             case "Phone":
                 return "phone";
             case "social_media":
-                return type.designation;
+                return designation.toLowerCase();
             default:
                 return type;
         }
     }
 
     const handleClickNew = (arrayHelpers) => {
- 
+
         arrayHelpers.push({
             id: null,
             type: type,
@@ -46,7 +46,7 @@ const ContactItems = (props) => {
                                         index !== 0 && <div className="infoSeparator" ></div>
                                     }
                                     <div className="infoItem" key={index}>
-                                        <Icon type={iconForType(type)} />
+                                        <Icon type={iconForType(type, item.designation)} />
 
                                         <div className="infoTexts">
                                             {
@@ -81,7 +81,10 @@ const ContactItems = (props) => {
                                             }
 
                                         </div>
-                                        <Icon type="bin" onClick={() => arrayHelpers.remove(index)} />
+                                        {
+                                            displayMode !== "view" &&
+                                            <Icon type="bin" onClick={() => arrayHelpers.remove(index)} />
+                                        }
                                     </div>
                                 </Fragment>
                                 : null
@@ -91,7 +94,7 @@ const ContactItems = (props) => {
                     {
                         displayMode !== "view" &&
                         <Fragment>
-                            { values[fieldName].length > 0 && <div className="infoSeparator" ></div> }
+                            {values[fieldName].length > 0 && <div className="infoSeparator" ></div>}
 
                             <div className="new" onClick={() => handleClickNew(arrayHelpers)}>
                                 <p>New</p>

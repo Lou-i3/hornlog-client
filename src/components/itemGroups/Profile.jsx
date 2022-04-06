@@ -4,11 +4,12 @@ import { enumLabel, formatDateTime } from "../../helpers";
 import Icon from "../global/Icon";
 import { gql, useMutation } from '@apollo/client';
 import { Form, Formik, Field } from "formik";
-import { MY_PARTNERS_QUERY } from "./myPartners";
+// import { MY_PARTNERS_QUERY } from "./myPartners";
 import GendersOptions from "../items/profile/GendersOptions";
 import SexualityOptions from "../items/profile/SexualityOptions";
 import PositionOptions from "../items/profile/PositionOptions";
 import ContactItems from "../items/profile/ContactItems";
+import { MY_PARTNERS_QUERY } from "../../helpers/queries";
 
 
 const NewPartnerMutation = gql`
@@ -60,8 +61,6 @@ const Profile = (props) => {
         setReadOnly(true);
         console.log("handleClickSave", values);
 
-
-
         let data = {
             firstName: values.firstName,
             lastName: values.lastName,
@@ -71,6 +70,9 @@ const Profile = (props) => {
             // sexuality: values.sexuality,
             notes: values.notes,
             how: values.how,
+            newContactInfos: [],
+            // updatedContactInfos: [],
+            // deletedContactInfos: [],
             genderId: Number(values.genderId)
         };
 
@@ -81,7 +83,42 @@ const Profile = (props) => {
             data.sexPosition = values.sexPosition;
         }
 
-        console.log(new Date(values.birthday))
+        let ContactInfosValues = [...values.contactInfosPhone, ...values.contactInfosEmail, ...values.contactInfossocial_media];
+
+        if (person) {
+            data.updatedContactInfos = [];
+            data.deletedContactInfos = [];
+        }
+
+        ContactInfosValues.forEach(contactInfos => {
+            if (contactInfos.id) {
+
+                data.updatedContactInfos.push({
+                    id: parseInt(contactInfos.id),
+                    type: contactInfos.type,
+                    info: contactInfos.info,
+                    designation: contactInfos.designation
+                });
+            } else {
+                data.newContactInfos.push({
+                    type: contactInfos.type,
+                    info: contactInfos.info,
+                    designation: contactInfos.designation
+                });
+            }
+        });
+
+        person && person.contactInfos.forEach(contactInfos => {
+            if (!ContactInfosValues.find(contactInfos2 => contactInfos2.id === contactInfos.id)) {
+                data.deletedContactInfos.push({
+                    id: parseInt(contactInfos.id)
+                });
+            }
+        });
+
+        console.log(new Date(values.birthday));
+
+        props.setDisplayMode("loading");
 
         if (props.displayMode === "new") {
             mutateFctNewPartner({
@@ -91,6 +128,8 @@ const Profile = (props) => {
             }).then(res => {
                 console.log(res);
                 props.setSelectedPartner(res.data.addPartner);
+                props.setDisplayMode("view");
+
             }).catch(err => {
                 console.log(err);
             });
@@ -104,12 +143,12 @@ const Profile = (props) => {
             }).then(res => {
                 console.log(res);
                 // props.setSelectedPartner(res.data.editPartner);
+                props.setDisplayMode("view");
             }).catch(err => {
                 console.log(err);
             });
 
         }
-        props.setDisplayMode("loading");
 
         console.log(data);
 
@@ -131,7 +170,9 @@ const Profile = (props) => {
                     notes: person.notes === null ? "" : person.notes,
                     how: person.how === null ? "" : person.how,
                     genderId: person && person.gender ? person.gender.id : "",
-                    contactInfosPhone: [...person.contactInfos.filter((info) => { return info.contactType === "Phone" })],
+                    contactInfosPhone: [...person.contactInfos.filter((info) => { return info.type === "Phone" })],
+                    contactInfosEmail: [...person.contactInfos.filter((info) => { return info.type === "Email" })],
+                    contactInfossocial_media: [...person.contactInfos.filter((info) => { return info.type === "social_media" })],
                 } : {
                     firstName: "",
                     lastName: "",
@@ -144,6 +185,8 @@ const Profile = (props) => {
                     how: "",
                     genderId: "0",
                     contactInfosPhone: [],
+                    contactInfosEmail: [],
+                    contactInfossocial_media: [],
                 }}
                 onSubmit={(values) => {
                     props.displayMode === "view" ?
@@ -213,7 +256,7 @@ const Profile = (props) => {
                                 <div className="info">
                                     <div className="column left">
                                         {
-                                            (values.contactInfosPhone.count > 0 || props.displayMode !== "view") &&
+                                            (values.contactInfosPhone.length > 0 || props.displayMode !== "view") &&
                                             <div className="infoGroup phone">
 
                                                 <ContactItems
@@ -226,19 +269,20 @@ const Profile = (props) => {
                                             </div>
                                         }
 
-                                        <div className="infoGroup email">
-                                            <div className="infoItem">
-                                                <Icon type="email" />
-                                                <div className="infoTexts">
-                                                    <h4 className="label">
-                                                        Email</h4>
-                                                    <p className="value">
-                                                    </p>
-                                                </div>
+                                        {
+                                            (values.contactInfosEmail.length > 0 || props.displayMode !== "view") &&
+                                            <div className="infoGroup email">
 
+                                                <ContactItems
+                                                    type="Email"
+                                                    displayMode={props.displayMode}
+                                                    values={values}
+                                                    readOnly={readOnly}
+                                                />
 
                                             </div>
-                                        </div>
+                                        }
+
                                         {
                                             (props.displayMode === "view" ?
                                                 values.notes !== "" && true :
@@ -380,18 +424,19 @@ const Profile = (props) => {
 
                                                     </div>
                                                 }
-                                                <div className="infoGroup social">
-                                                    <div className="infoItem">
-                                                        <Icon type="snapchat" />
-                                                        <div className="infoTexts">
-                                                            <h4 className="label">
-                                                                Snapchat</h4>
-                                                        </div>
-                                                        <p className="value">
-                                                        </p>
+                                                {
+                                                    (values.contactInfossocial_media.length > 0 || props.displayMode !== "view") &&
+                                                    <div className="infoGroup social_media">
+
+                                                        <ContactItems
+                                                            type="social_media"
+                                                            displayMode={props.displayMode}
+                                                            values={values}
+                                                            readOnly={readOnly}
+                                                        />
 
                                                     </div>
-                                                </div>
+                                                }
                                             </div>
                                             <div className="column right">
                                                 <div className="infoGroup sexuality">
