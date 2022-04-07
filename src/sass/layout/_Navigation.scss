@@ -4,6 +4,12 @@
     width: $size-nav-width;
     background-color: $color-secondary-black;
     padding: 50px 0px;
+    & .logo {
+        width: 100px;
+        height: 100px;
+        // fill: $color-accent;
+        // filter: invert(75%) sepia(48%) saturate(171%) hue-rotate(176deg) brightness(102%) contrast(89%);
+    }
     & .menu {
         @include flex(column, flex-start, flex-start);
         gap: 10px;

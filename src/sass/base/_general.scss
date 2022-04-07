@@ -116,3 +116,42 @@ svg.illustration {
     height: unset;
     width: unset;
 }
+
+// Style for profilePicture
+.profilePicContainer {
+    // @include flex(column, center, center);
+    // width: 100%;
+    // height: 100%;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    & img,
+    button {
+        top: 0;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+    }
+    & img {
+        object-fit: cover;
+    }
+    & input[type='file'] {
+        display: none;
+    }
+    & button.profilePicEditButton {
+        background-color: transparent;
+        border: none;
+        & svg {
+            display: none;
+        }
+        &:hover {
+            background-color: black;
+            opacity: 0.5;
+            & svg {
+                display: inline;
+            }
+        }
+    }
+}

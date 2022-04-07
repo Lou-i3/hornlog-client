@@ -42,6 +42,7 @@ const Nav = () => {
     ];
     return (
         <div className="nav">
+            <img src="/logo.svg" alt="" className="logo" />
             <h1>HornLog</h1>
             <div className="menu">
                 {

@@ -10,6 +10,7 @@ import SexualityOptions from "../items/profile/SexualityOptions";
 import PositionOptions from "../items/profile/PositionOptions";
 import ContactItems from "../items/profile/ContactItems";
 import { MY_PARTNERS_QUERY } from "../../helpers/queries";
+import ProfilePicture from "../items/profile/ProfilePicture";
 
 
 const NewPartnerMutation = gql`
@@ -39,6 +40,7 @@ const Profile = (props) => {
     const [mutateFctNewPartner] = useMutation(NewPartnerMutation, { refetchQueries: [{ query: MY_PARTNERS_QUERY }] });
     const [mutateFctEditPartner] = useMutation(EditPartnerMutation, { refetchQueries: [{ query: MY_PARTNERS_QUERY }] });
 
+    const [profilePicture, setProfilePicture] = useState("");
 
     useEffect(() => {
         setReadOnly(props.displayMode === "view");
@@ -115,6 +117,11 @@ const Profile = (props) => {
                 });
             }
         });
+
+        console.log("######## profilePicture: ", profilePicture);
+        if (profilePicture !== "") {
+            data.picture = profilePicture;
+        }
 
         console.log(new Date(values.birthday));
 
@@ -206,7 +213,14 @@ const Profile = (props) => {
                                         {["edit", "new"].includes(props.displayMode) && <Icon type="save" /*onClick={() => handleClickSave()} */ />}
                                     </Field>
                                     <div className="personHeader">
-                                        <img src="/Ellipse 4.png" alt="" className="profilePic" />
+
+                                        <ProfilePicture
+                                            displayMode={props.displayMode}
+                                            profilePicture={profilePicture}
+                                            setProfilePicture={setProfilePicture}
+                                            person={person}
+                                        />
+
                                         <h2 className="name">
                                             {
                                                 props.displayMode === "view" ?
