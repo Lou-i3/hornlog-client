@@ -4,31 +4,43 @@ import Icon from "../../global/Icon";
 const ProfilePicture = (props) => {
     const { displayMode, profilePicture, setProfilePicture, person } = props;
 
-    const initialPic = person && person.picture ? person.picture : "";
+    let initialPic = person && person.picture ? person.picture : "";
     const [pictureSrc, setPictureSrc] = useState(initialPic === "" ? "/Ellipse 4.png" : initialPic);
     const hiddenFileInput = useRef(null);
 
     useEffect(() => {
-        console.log("ProfilePicture useState");
+        // console.log("ProfilePicture useState");
         if (pictureSrc !== "/Ellipse 4.png") {
-            console.log("ProfilePicture useState: ", pictureSrc);
+            // console.log("ProfilePicture useState: ", pictureSrc);
             setProfilePicture(pictureSrc);
         }
+        
+        
     }, [pictureSrc]);
 
     useEffect(() => {
         if (displayMode === "new") {
             setPictureSrc("/Ellipse 4.png");
         }
-    }, [displayMode]);
+        initialPic = person && person.picture ? person.picture : "";
+        setPictureSrc(initialPic === "" ? "/Ellipse 4.png" : initialPic);
+
+    }, [displayMode, person]);
 
 
     const handlePictureSelected = (event) => {
-        console.log("handlePictureSelected");
+        // console.log("handlePictureSelected");
+
+        if(event.target.files[0].size > 1048576){
+            alert("File is too big! \nShould be less than 1MB");
+            event.target.value = "";
+            return
+         };
+
         const file = event.target.files[0];
         // var src = URL.createObjectURL(file);
         // setPictureSrc(src);
-        console.log("file", file);
+        // console.log("file", file);
 
         getBase64(file)
             .then(result => {
@@ -37,19 +49,10 @@ const ProfilePicture = (props) => {
                 const base64URL = result;
                 console.log("base64URL", base64URL);
                 setPictureSrc(base64URL);
-
-                // this.setState({
-                //     base64URL: result,
-                //     file
-                // });
             })
             .catch(err => {
                 console.log(err);
             });
-
-        // this.setState({
-        //     file: e.target.files[0]
-        // });
 
     };
 

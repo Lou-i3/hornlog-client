@@ -58,7 +58,7 @@
 }
 
 div.rs-table {
-    height: 100%!important;
+    height: 100% !important;
     border: none;
     & div[role="scrollbar"] {
         display: none;
@@ -93,7 +93,7 @@ div.rs-table {
         }
     }
     & .rs-table-body-row-wrapper {
-        height: 100%!important;
+        height: 100% !important;
     }
     & .rs-table-cell {
         background: transparent;
@@ -137,7 +137,7 @@ svg.illustration {
     & img {
         object-fit: cover;
     }
-    & input[type='file'] {
+    & input[type="file"] {
         display: none;
     }
     & button.profilePicEditButton {
@@ -153,5 +153,25 @@ svg.illustration {
                 display: inline;
             }
         }
+    }
+}
+
+// Style for Pic & Name
+.picAndName {
+    @include flex(row, flex-start, center);
+    gap: 10px;
+    width: 100%;
+    padding: 10px 0px;
+    & img {
+        width: 35px;
+        height: 35px;
+        border-radius: 100%;
+        object-fit: cover;
+    }
+    & .name {
+        @include flex(column, center, center);
+        gap: 10px;
+        width: 100%;
+        padding: 10px 0px;
     }
 }

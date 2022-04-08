@@ -3,7 +3,8 @@ import { gql, useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { formatDateTime } from '../../helpers';
 import Icon from '../global/Icon';
-import PersonName from '../items/PersonName';
+import PictureAndName from '../items/profile/PictureAndName';
+import HookDetails from './HookDetails';
 // import firebase from 'firebase/app';
 
 export const MY_HOOKS_QUERY = gql`
@@ -23,6 +24,16 @@ export const MY_HOOKS_QUERY = gql`
             addToAppleHealth
             mood
             archived
+            partners {
+                id
+                person {
+                    id
+                    firstName
+                    lastName
+                    nickName
+                    picture
+                }
+            }
             
         }
     }
@@ -32,9 +43,6 @@ const MyHooks = (props) => {
     const { loading, error, data } = useQuery(MY_HOOKS_QUERY);
     // console.log("myHooks");
     // console.log(data);
-
-    // if (loading) return <p>Loading...</p>;
-    // if (error) return <p>Error: {error.message}</p>;
 
     const handleClick = (hook) => {
         props.setSelectedHook(hook);
@@ -57,7 +65,7 @@ const MyHooks = (props) => {
             {loading ?
                 <p>Loading...</p> :
                 error ?
-                    <p>Error: {error.message}</p> :
+                    <p>Error: {error.message}{console.log(error)}</p> :
                     <table className="list">
                         <thead>
                             <tr>
@@ -73,11 +81,17 @@ const MyHooks = (props) => {
                                     <tr className={`listItem ${props.selectedHook && props.selectedHook.id === hook.id ? "selected" : ""}`} key={hook.id} onClick={() => handleClick(hook)}>
 
                                         <td className="listColumn">
-                                            <p className="hookDate">{ formatDateTime(hook.dateTime, 'date')}</p>
+                                            <p className="hookDate">{formatDateTime(hook.dateTime, 'date')}</p>
                                         </td>
                                         <td className="listColumn">
                                             <div className="hookLocation">
-                                                <PersonName />
+                                                {
+                                                    hook.partners[0] &&
+                                                    <PictureAndName
+                                                        partner={hook.partners[0]}
+                                                    />
+                                                }
+
 
                                             </div>
                                         </td>

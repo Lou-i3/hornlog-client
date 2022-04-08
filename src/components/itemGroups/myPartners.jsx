@@ -6,6 +6,7 @@ import { formatDateTime } from '../../helpers';
 // import PersonName from '../items/PersonName';
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 import { MY_PARTNERS_QUERY } from '../../helpers/queries';
+import PictureAndName from '../items/profile/PictureAndName';
 // import { Column } from 'rsuite/Table/Column';
 // import { Column, HeaderCell, Cell } from 'rsuite';
 // import firebase from 'firebase/app';
@@ -26,7 +27,7 @@ const MyPartners = (props) => {
     const handleClick = (partner) => {
         props.setSelectedPartner(partner);
         props.setDisplayMode("view");
-        // console.log("handleClick", partner);
+        console.log("handleClick", partner);
     }
 
     useEffect(() => {
@@ -67,6 +68,7 @@ const MyPartners = (props) => {
                     name: partner.person.nickName ?
                         partner.person.nickName :
                         partner.person.firstName + " " + partner.person.lastName,
+                    profilePic: partner.person.picture ? partner.person.picture : "/Ellipse 4.png",
                     lastHook: partner.hooks[0] ?
                         formatDateTime(partner.hooks[0].dateTime, 'date') :
                         "Never",
@@ -107,7 +109,7 @@ const MyPartners = (props) => {
                     // console.log("search: ", props.searchTerms);
                     // console.log("x.name: ", x.name);
                     // console.log("includes: ", x.name.toLowerCase().includes(props.searchTerms.toLowerCase()));
-                    let output = false; 
+                    let output = false;
                     if (x.name.toLowerCase().includes(props.searchTerms.toLowerCase())) {
                         output = true;
                     } else if (x.lastHook.toLowerCase().includes(props.searchTerms.toLowerCase())) {
@@ -184,9 +186,11 @@ const MyPartners = (props) => {
                                 <Cell dataKey="name" color='white'>
                                     {/* <img src="/Ellipse 4.png" alt="" width="30px" className="profilePic" /> */}
                                     {
-                                        rowdata => <p>{
-                                            rowdata.name
-                                        }</p>
+                                        rowdata => <PictureAndName
+                                            profilePic={rowdata.profilePic}
+                                            name={rowdata.name}
+                                        />
+
                                     }
                                 </Cell>
                             </Column>
@@ -210,7 +214,7 @@ const MyPartners = (props) => {
 
                         </Table>
 
-                        </Fragment>
+                    </Fragment>
             }
         </div >
     );
