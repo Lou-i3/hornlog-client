@@ -40,7 +40,7 @@
     & .right-side {
         @include flex(column, center, center);
         width: 100%;
-        flex: 2;
+        flex: 1;
         & .none {
             @include flex(column, center);
             gap: 30px;
@@ -53,6 +53,15 @@
         & svg {
             width: 100%;
         }
+    }
+}
+
+.myHooks {
+    & .choicePill {
+        background-color: $color-main-black-50;
+    }
+    & .selected .choicePill {
+        background-color: $color-secondary-black;
     }
 }
 

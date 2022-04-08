@@ -46,6 +46,37 @@ export const MY_PARTNERS_QUERY = gql `
     }
 `;
 
+export const MY_HOOKS_QUERY = gql `
+    query MY_HOOKS_QUERY {
+        myHooks {
+            id
+            createdAt
+            updatedAt
+            hookType
+            dateTime
+            duration
+            orgasm
+            porn
+            note
+            grade
+            protectionType
+            addToAppleHealth
+            mood
+            archived
+            partners {
+                id
+                person {
+                    id
+                    firstName
+                    lastName
+                    nickName
+                    picture
+                }
+            }
+            
+        }
+    }
+`;
 
 export const ENUM_VALUES_QUERY = gql `
 query ENUM_VALUES_QUERY($enumName: String!) {

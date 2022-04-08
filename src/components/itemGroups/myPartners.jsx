@@ -1,14 +1,11 @@
 
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Fragment, useEffect, useState } from 'react';
-import { formatDateTime } from '../../helpers';
+import { formatDateTime } from '../../helpers/helpers';
 // import Icon from '../global/Icon';
-// import PersonName from '../items/PersonName';
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 import { MY_PARTNERS_QUERY } from '../../helpers/queries';
 import PictureAndName from '../items/profile/PictureAndName';
-// import { Column } from 'rsuite/Table/Column';
-// import { Column, HeaderCell, Cell } from 'rsuite';
 // import firebase from 'firebase/app';
 
 
@@ -145,7 +142,6 @@ const MyPartners = (props) => {
 
     return (
         <div className="myPartners">
-            {/* {fireToken && <pstyle="">FireToken: {fireToken}</p>} */}
             {/* {loadingQuery ?
                 <p>Loading...</p> : */
                 error ?

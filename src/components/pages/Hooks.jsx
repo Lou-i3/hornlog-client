@@ -10,16 +10,21 @@ import Illustration from "../global/Illustration";
 const Hooks = () => {
     const [selectedHook, setSelectedHook] = useState(null);
     const [displayMode, setDisplayMode] = useState("none");
+    const [searchTerms, setSearchTerms] = useState("");
+
 
     useEffect(() => {
-        console.log("useEffect");
+        console.log("useEffect hooks, selectedHook: ");
         console.log(selectedHook);
 
-        if (selectedHook) {
+        if (selectedHook && ["none", "view"].includes(displayMode)) {
             setDisplayMode("view");
             console.log("setDisplayMode", displayMode);
-        } else {
+        } else if (displayMode === "new") {
             // setDisplayMode("none");
+            console.log("setDisplayMode", displayMode);
+            setSelectedHook(null);
+
         }
 
     }, [selectedHook, displayMode]);
@@ -43,21 +48,28 @@ const Hooks = () => {
 
                             </div>
                         </div>
-                        <Search />
-                        <MyHooks selectedHook={selectedHook} setSelectedHook={setSelectedHook} />
+                        <Search setSearchTerms={setSearchTerms} />
+                        <MyHooks selectedHook={selectedHook} setSelectedHook={setSelectedHook} searchTerms={searchTerms} />
                     </div>
 
                 </div>
                 <div className={`right-side side ${displayMode}`}>
 
-                    {displayMode === "view" && <HookDetails hook={selectedHook} />}
+                    {
+                        ["view", "edit", "new"].includes(displayMode) &&
+                        <HookDetails
+                            hook={selectedHook}
+                            displayMode={displayMode}
+                            setDisplayMode={setDisplayMode}
+                        />
+                    }
                     {displayMode === "none" &&
                         <div className="none">
                             <Illustration type="hooksNoSelection" />
                             <p>Select a hook to see details</p>
                         </div>
                     }
-                    {(displayMode === "edit" || displayMode === "new") && <HookEditNew displayMode={displayMode} setDisplayMode={setDisplayMode} setSelectedHook={setSelectedHook} />}
+                    {/* {(displayMode === "edit" || displayMode === "new") && <HookEditNew displayMode={displayMode} setDisplayMode={setDisplayMode} setSelectedHook={setSelectedHook} />} */}
 
                 </div>
             </div>

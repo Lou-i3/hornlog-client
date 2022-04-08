@@ -1,7 +1,7 @@
 import React from "react";
 import { gql, useQuery } from '@apollo/client';
 import { useEffect, useState } from "react";
-import { formatDateTime } from "../../helpers";
+import { formatDateTime } from "../../helpers/helpers";
 
 // import { useState } from 'react';
 

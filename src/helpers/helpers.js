@@ -38,12 +38,12 @@ export const formatDateTime = (dateTimeIn, format) => {
             }
             // var now = new Date();
             // d.setDate(d.getDate() - 2);
-            console.log('format')
-                // console.log(d);
-                // console.log(outDateTime);
-                // if (dates.dateTime < d) {
-                //     outDateTime = 'Yesterday';
-                // }
+            // console.log('format')
+            // console.log(d);
+            // console.log(outDateTime);
+            // if (dates.dateTime < d) {
+            //     outDateTime = 'Yesterday';
+            // }
 
             return outDateTime;
 
@@ -88,9 +88,15 @@ function isValidDate(d) {
 export const enumLabel = (enumValue) => {
 
     if (enumValue) {
-        const label = enumValue
-            .replace("_", " ")
-            .replace(/\b\w/g, l => l.toUpperCase());
+
+        const words = enumValue.split("_");
+
+        const label = words.map((word) => {
+            return word[0].toUpperCase() + word.substring(1);
+        }).join(" ");
+
+        // console.log("words", words);
+        // console.log("label", label);
 
         return label
     }

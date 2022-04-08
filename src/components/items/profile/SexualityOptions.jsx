@@ -2,7 +2,7 @@ import { Fragment } from "react";
 
 import { useQuery } from '@apollo/client';
 import { ENUM_VALUES_QUERY } from "../../../helpers/queries";
-import { enumLabel } from "../../../helpers";
+import { enumLabel } from "../../../helpers/helpers";
 
 const SexualityOptions = () => {
     const { loading, error, data } = useQuery(ENUM_VALUES_QUERY, {

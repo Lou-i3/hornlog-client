@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-import { formatDateTime } from '../../helpers';
+import { formatDateTime } from '../../helpers/helpers';
 import Icon from '../global/Icon';
 
 const ALL_USERS_QUERY = gql`

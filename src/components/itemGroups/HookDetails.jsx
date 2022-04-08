@@ -1,27 +1,23 @@
-import { formatDateTime } from "../../helpers";
+import { Field, Form, Formik } from "formik";
+import { useEffect, useState } from "react";
+import { formatDateTime } from "../../helpers/helpers.js";
 import Icon from "../global/Icon";
 import ChoicePill from "../items/ChoicePill";
+import PictureAndName from "../items/profile/PictureAndName.jsx";
 
 const HookDetails = (props) => {
-    const hook = {
-        createdAt: "22 Octobre 2021",
-        partner: "Draco Malfoy",
-        updatedAt: "12 Janvier 2022",
-        hookType: "One Night Stand",
-        date: "22 Octobre 2021",
-        time: "10:04 am",
-        duration: "40 mins",
-        orgasm: "Yes",
-        porn: "Yes",
-        notes: "Sooooo Gooooood",
-        grade: "",
-        locationType: "Their Place",
-        location: "97 place Stanislas, Nancy, 54000 France",
-        protectionType: "Condom",
-        addToAppleHealth: "Yes",
-        mood: "Good",
-        archived: "Yes",
-    }
+    const { displayMode, setDisplayMode } = props;
+    const [readOnly, setReadOnly] = useState(displayMode === "view");
+    const [hook, setHook] = useState(props.hook);
+
+    useEffect(() => {
+        // console.log("useEffect HookDetails");
+        // console.log(hook);
+        setHook(props.hook);
+        setReadOnly(displayMode === "view");
+
+    }, [props.hook, displayMode]);
+
     let iconType;
 
     if (props.hook) {
@@ -40,74 +36,106 @@ const HookDetails = (props) => {
         }
     }
 
-    if(props.hook) return (
+    const handleClickEdit = (values) => {
+        setReadOnly(false);
+        setDisplayMode("edit");
+    }
 
+    const handleClickSave = (values) => {
+        setReadOnly(true);
+        setDisplayMode("view");
+    }
+
+    return (
+        (hook || displayMode === "new") &&
         <div className="hookDetails">
-            <div className="title">
-                <h2 className="date">{formatDateTime(props.hook.dateTime, 'longdate')}</h2>
-                <div className="icones">
-                    <Icon type="apple" />
-                    <Icon type="edit" />
-                    <Icon type="archive" />
-                </div>
-            </div>
+            <Formik
+                enableReinitialize
+                initialValues={hook ? {
+                    date: formatDateTime(hook.date, 'dateTime'),
+                } : {
+                    date: "",
+                }}
+                onSubmit={(values) => {
+                    displayMode === "view" ?
+                        handleClickEdit(values) :
+                        handleClickSave(values);
 
-            <div className="info">
-                <div className="infoItem">
-                    <p>at</p>
-                    <p><b>{formatDateTime(props.hook.dateTime, 'time')}</b></p>
-                </div>
-                <ChoicePill text={props.hook.hookType} selected={true}/>
-                {/* <h3 className="hookType">{props.hook.hookType}</h3> */}
+                }}  >
+                {({ handleSubmit, values }) => (
+                    // console.log("form values: ", values),
+                    <Form>
+                        <div className="title">
+                            <h2 className="date">{formatDateTime(hook.date, 'longdate')}</h2>
+                            <div className="icones">
+                                <Icon type="apple" />
+                                <Field as="span" onClick={handleSubmit}>
+                                    {displayMode === "view" && <Icon type="edit" />}
+                                    {["edit", "new"].includes(displayMode) && <Icon type="save" />}
+                                </Field>
+                                <Icon type="archive" />
+                            </div>
+                        </div>
 
-                <div className="infoItem">
-                    <p> with</p>
-                    <div className="partnerItem">
-                        <img src="/Ellipse 4.png" alt="" className="profile-pic" />
-                        <p>{hook.partner}</p>
-                    </div>
-                    <p> at</p>
-                    <div className="location">
-                        <p>{hook.locationType}</p>
-                    </div>
-                </div>
+                        <div className="info">
+                            <div className="infoItem">
+                                <p>at</p>
+                                <p><b>{formatDateTime(hook.date, 'time')}</b></p>
+                            </div>
+                            <ChoicePill text={hook.hookType} selected={true} />
 
-                <div className="infoItem">
-                    <Icon type="location" />
-                    <p>{hook.location}</p>
-                </div>
-                <div className="infoItem">
-                    <p>Protection Type</p>
-                    <Icon type={iconType} />
-                </div>
-                <div className="infoItem">
-                    <Icon type="mood" />
-                    <p>{props.hook.mood}</p>
-                </div>
-                <div className="infoItem">
-                    <p>Grade</p>
-                    <div className="icones">
-                        <Icon type="star" />
-                        <Icon type="star" />
-                        <Icon type="star" />
-                        <Icon type="star" />
-                        <Icon type="star" />
-                    </div>
-                </div>
-                <div className="infoItem">
-                    <Icon type="duration" />
-                    <p>{props.hook.duration}</p>
-                </div>
-                <div className="infoItem">
-                    <p>Notes</p>
-                    <p>{props.hook.notes}</p>
-                </div>
-            </div>
+                            <div className="infoItem">
+                                <p> with</p>
+                                <div className="partnerItem">
+                                    {/* <img src="/Ellipse 4.png" alt="" className="profile-pic" /> */}
+                                    {/* <p>{hook.partner}</p> */}
+                                    <PictureAndName partner={hook.partners[0]} />
+                                </div>
+                                <p> at</p>
+                                <div className="location">
+                                    <p>{hook.locationType}</p>
+                                </div>
+                            </div>
+
+                            <div className="infoItem">
+                                <Icon type="location" />
+                                {/* <p>{hook.location}</p> */}
+                            </div>
+                            <div className="infoItem">
+                                <p>Protection Type</p>
+                                <Icon type={iconType} />
+                            </div>
+                            <div className="infoItem">
+                                <Icon type="mood" />
+                                <p>{hook.mood}</p>
+                            </div>
+                            <div className="infoItem">
+                                <p>Grade</p>
+                                <div className="icones">
+                                    <Icon type="star" />
+                                    <Icon type="star" />
+                                    <Icon type="star" />
+                                    <Icon type="star" />
+                                    <Icon type="star" />
+                                </div>
+                            </div>
+                            <div className="infoItem">
+                                <Icon type="duration" />
+                                <p>{hook.duration}</p>
+                            </div>
+                            <div className="infoItem">
+                                <p>Notes</p>
+                                <p>{hook.note}</p>
+                            </div>
+                        </div>
+                    </Form>
+
+                )}
+            </Formik>
+
         </div>
-
-
     );
-    else return <p>No Hook Selected</p>;
+
 }
 
 export default HookDetails;

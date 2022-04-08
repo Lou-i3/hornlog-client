@@ -2,21 +2,9 @@ import { useState } from "react";
 import Icon from "../global/Icon";
 import ChoicePill from "../items/ChoicePill";
 import { gql, useMutation } from '@apollo/client';
+import { MY_HOOKS_QUERY } from "../../helpers/queries";
 
-import MY_HOOKS_QUERY from "./myHooks";
 
-// const LoginMutation = gql`
-//   mutation LoginQuery($email: String!, $password: String!) {
-//     login(email: $email, password: $password) {
-//       token
-//       user {
-//         id
-//         email
-//         role
-//       }
-//     }
-//   }
-// `;
 
 const NewHookMutation = gql`
     mutation NewHookMutation($data: HookCreateInput!) {
