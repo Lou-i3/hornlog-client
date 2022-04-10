@@ -65,7 +65,7 @@ const MyPartners = (props) => {
                     name: partner.person.nickName ?
                         partner.person.nickName :
                         partner.person.firstName + " " + partner.person.lastName,
-                    profilePic: partner.person.picture ? partner.person.picture : "/Ellipse 4.png",
+                    profilePic: partner.person.picture ? partner.person.picture : "",
                     lastHook: partner.hooks[0] ?
                         formatDateTime(partner.hooks[0].dateTime, 'date') :
                         "Never",
@@ -118,9 +118,12 @@ const MyPartners = (props) => {
                 tableDataLocal = filteredData;
                 // return filteredData;
             }
+            setTableData(tableDataLocal);
+
+            setLoading(false);
+
         }
         setTableData(tableDataLocal);
-        setLoading(false);
     };
 
     const handleSortColumn = (sortColumn, sortType) => {

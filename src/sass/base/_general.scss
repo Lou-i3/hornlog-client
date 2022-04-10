@@ -14,11 +14,16 @@
     background-color: $color-secondary-black;
     border-radius: 5px;
     width: fit-content;
+    gap: 10px;
     &.selected {
         background-color: $color-main-black-50;
     }
     &.edit {
         cursor: pointer;
+    }
+    & svg {
+        height: 20px;
+        width: 20px !important;
     }
 }
 
@@ -76,6 +81,9 @@ div.rs-table {
             background: transparent;
         }
     }
+    & .rs-table-body-wheel-area {
+        height: 100%;
+    }
     & .rs-table-row:not(.rs-table-row-header) {
         // border: 10px solid transparent;
         position: relative;
@@ -86,8 +94,8 @@ div.rs-table {
         box-shadow: inset 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
         cursor: pointer;
         border-radius: 15px;
-        margin: -20px 0;
-        top: 20px;
+        margin: -25px 0;
+        top: 30px;
         &.selected {
             background-color: $color-main-black-50;
         }
@@ -167,6 +175,14 @@ svg.illustration {
         height: 35px;
         border-radius: 100%;
         object-fit: cover;
+    }
+    & .noPic {
+        @include flex();
+        width: 35px;
+        height: 35px;
+        border-radius: 100%;
+        object-fit: cover;
+        background-color: $color-main-black-50;
     }
     & .name {
         @include flex(column, center, center);

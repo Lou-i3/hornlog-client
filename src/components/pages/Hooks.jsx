@@ -29,6 +29,17 @@ const Hooks = () => {
 
     }, [selectedHook, displayMode]);
 
+    useEffect(() => {
+        if (selectedHook && ["none", "view", "new"].includes(displayMode)) {
+            setDisplayMode("view");
+            console.log("setDisplayMode", displayMode);
+        } else if (selectedHook && ["edit"].includes(displayMode)) {
+            setDisplayMode("view");
+            console.log("setDisplayMode", displayMode);
+        }
+    }, [selectedHook]);
+
+
     const handleClickNew = () => {
         setSelectedHook(null);
         // setSelectedHook("none");
@@ -61,6 +72,7 @@ const Hooks = () => {
                             hook={selectedHook}
                             displayMode={displayMode}
                             setDisplayMode={setDisplayMode}
+                            setSelectedHook={setSelectedHook}
                         />
                     }
                     {displayMode === "none" &&

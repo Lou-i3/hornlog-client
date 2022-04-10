@@ -73,6 +73,16 @@ export const formatDateTime = (dateTimeIn, format) => {
                 return dateTimeIn;
             }
 
+        case 'techtime':
+            if (isValidDate(dateTime)) {
+                const offset = dateTime.getTimezoneOffset()
+                outDateTime = new Date(dateTime.getTime() - (offset * 60 * 1000))
+
+                outDateTime = outDateTime.toISOString().split('T')[1].slice(0, -1);
+                return outDateTime;
+            } else {
+                return dateTimeIn;
+            }
         default:
             outDateTime = dateTime.toLocaleString('en-UK', dateOptions);
             return outDateTime;

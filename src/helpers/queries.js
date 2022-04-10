@@ -46,6 +46,21 @@ export const MY_PARTNERS_QUERY = gql `
     }
 `;
 
+export const MY_PARTNERS_MINI_QUERY = gql `
+    query MY_PARTNERS_MINI_QUERY {
+        myPartners {
+            id
+            person {
+                id
+                firstName
+                lastName
+                nickName
+                picture
+            }   
+        }
+    }
+`;
+
 export const MY_HOOKS_QUERY = gql `
     query MY_HOOKS_QUERY {
         myHooks {
@@ -59,7 +74,7 @@ export const MY_HOOKS_QUERY = gql `
             porn
             note
             grade
-            protectionType
+            protected
             addToAppleHealth
             mood
             archived

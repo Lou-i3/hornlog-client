@@ -2,13 +2,11 @@
 import { gql, useQuery } from '@apollo/client';
 import { Fragment, useEffect, useState } from 'react';
 import { Cell, Column, HeaderCell, Table } from 'rsuite-table';
-import { formatDateTime } from '../../helpers/helpers';
+import { enumLabel, formatDateTime } from '../../helpers/helpers';
 import { MY_HOOKS_QUERY } from '../../helpers/queries';
 import Icon from '../global/Icon';
-import HookTypePill from '../items/hooks/HookTypePill';
+import ChoicePill from '../items/ChoicePill';
 import PictureAndName from '../items/profile/PictureAndName';
-import HookDetails from './HookDetails';
-// import firebase from 'firebase/app';
 
 const MyHooks = (props) => {
     const { loading: loadingQuery, error, data } = useQuery(MY_HOOKS_QUERY);
@@ -18,8 +16,13 @@ const MyHooks = (props) => {
     const [loading, setLoading] = useState(true);
 
     const handleClick = (hook) => {
-        props.setSelectedHook(hook);
-        // console.log("handleClick", hook);
+        // props.setSelectedHook(hook);
+        // if (hook.id in data.myHooks) { 
+            console.log("selectedHook in data.myHooks"); 
+            props.setSelectedHook(data.myHooks.filter((hookItem) => hookItem.id === hook.id)[0]);
+        // }
+    
+        console.log("handleClick, selectedHook: ", props.selectedHook);
     }
 
     useEffect(() => {
@@ -28,7 +31,10 @@ const MyHooks = (props) => {
 
         // console.log(data);
         if (data && props.selectedHook) {
-            if (props.selectedHook.id in data.myHooks) { console.log("selectedHook in data.myHooks"); }
+        //     if (props.selectedHook.id in data.myHooks) { 
+        //         console.log("selectedHook in data.myHooks"); 
+        //         props.setSelectedHook(data.myHooks.filter((value, index, self) => self.id === props.selectedHook.id)[0]);
+        //     }
         }
         getData();
     }, [props.selectedHook, data]);
@@ -46,6 +52,8 @@ const MyHooks = (props) => {
         let tableDataLocal = [];
 
         if (data && data.myHooks) {
+            tableDataLocal = [];
+
             console.log("found Data");
             console.log(data.myHooks);
             data.myHooks.forEach(hook => {
@@ -111,9 +119,11 @@ const MyHooks = (props) => {
                 tableDataLocal = filteredData;
                 // return filteredData;
             }
+        setTableData(tableDataLocal);
+            setLoading(false);
+
         }
         setTableData(tableDataLocal);
-        setLoading(false);
     };
 
     const handleSortColumn = (sortColumn, sortType) => {
@@ -135,11 +145,12 @@ const MyHooks = (props) => {
     return (
         <div className="myHooks">
             {/* {fireToken && <pstyle="">FireToken: {fireToken}</p>} */}
-            {loadingQuery ?
-                <p>Loading...</p> :
+            {/* {loadingQuery ?
+                <p>Loading...</p> : */
                 error ?
                     <p>Error: {error.message}{console.log(error)}</p> :
                     <Fragment>
+                        {/* <div onClick={() => setLoading(true)} >Coucou</div> */}
                         <Table
                             data={tableData}
                             sortColumn={sortColumn}
@@ -188,6 +199,7 @@ const MyHooks = (props) => {
                                                 <PictureAndName
                                                     key={index}
                                                     partner={partner}
+                                                    onlyPic={rowdata.partners.length > 1}
                                                 />
                                             )
 
@@ -204,8 +216,9 @@ const MyHooks = (props) => {
                                 </HeaderCell>
                                 <Cell dataKey='hookType'>{
                                     rowData =>
-                                        <HookTypePill
-                                            hookType={rowData.hookType} />
+                                        <ChoicePill
+                                            text={enumLabel(rowData.hookType)} 
+                                            />
                                 }
                                 </Cell>
                             </Column>
