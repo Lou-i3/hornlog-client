@@ -15,8 +15,8 @@ const HookDetails = (props) => {
     const [readOnly, setReadOnly] = useState(displayMode === "view");
     const [hook, setHook] = useState(props.hook);
 
-    const [mutateFctNewHook] = useMutation(NewHookMutation, { refetchQueries: [{ query: MY_HOOKS_QUERY }, { query: MY_PARTNERS_QUERY}] });
-    const [mutateFctEditHook] = useMutation(EditHookMutation, { refetchQueries: [{ query: MY_HOOKS_QUERY },{ query: MY_PARTNERS_QUERY}] });
+    const [mutateFctNewHook] = useMutation(NewHookMutation, { refetchQueries: [{ query: MY_HOOKS_QUERY }, { query: MY_PARTNERS_QUERY }] });
+    const [mutateFctEditHook] = useMutation(EditHookMutation, { refetchQueries: [{ query: MY_HOOKS_QUERY }, { query: MY_PARTNERS_QUERY }] });
 
     useEffect(() => {
         // console.log("useEffect HookDetails");
@@ -60,57 +60,67 @@ const HookDetails = (props) => {
 
         let data = {
             hookType: values.hookType,
-            protected: values.protected,
+            // protected: values.protected,
             dateTime: new Date(values.date + "T" + values.time),
         }
 
+        // protected 
+        if (values.protected !=="") {
+            data.protected = values.protected;
+        }
+
         // partners 
-        let additionalPartners = values.partners.filter(partner => {
-            return partner.id !== "new" && hook.partners.filter(hookPartner => {
-                return partner.id === hookPartner.id;
-            }).length === 0
-        });
-
-        if (additionalPartners && additionalPartners.length > 0) {
-            data.additionalPartners = additionalPartners.map(partner => {
-                return {
-                    id: parseInt(partner.id),
-                }
+        if (values.partners) {
+            let additionalPartners = values.partners.filter(partner => {
+                return partner.id !== "new" && hook.partners.filter(hookPartner => {
+                    return partner.id === hookPartner.id;
+                }).length === 0
             });
+
+            if (additionalPartners && additionalPartners.length > 0) {
+                data.additionalPartners = additionalPartners.map(partner => {
+                    return {
+                        id: parseInt(partner.id),
+                    }
+                });
+            }
+            let removedPartners;
+            if (hook) {
+
+                removedPartners = hook.partners.filter(partner => {
+                    return values.partners.filter(hookPartner => {
+                        return partner.id === hookPartner.id;
+                    }).length === 0
+                });
+
+                if (removedPartners && removedPartners.length > 0) {
+                    data.removedPartners = removedPartners.map(partner => {
+                        return {
+                            id: parseInt(partner.id),
+                        }
+                    });
+                }
+            }
+            let newPartners = values.partners.filter(partner => {
+                return partner.id === "new"
+            });
+
+            if (newPartners && newPartners.length > 0) {
+                data.newPartners = newPartners.map(partner => {
+                    return {
+                        nickName: partner.name,
+                    }
+                });
+            }
+
+            console.log("values for partners");
+            console.log("additionalPartners: ", additionalPartners);
+            console.log("removedPartners: ", removedPartners);
+            console.log("newPartners: ", newPartners);
+
+            // if ( hook.partners.includes(values.partners) ) 
         }
 
-        let removedPartners = hook.partners.filter(partner => {
-            return values.partners.filter(hookPartner => {
-                return partner.id === hookPartner.id;
-            }).length === 0
-        });
-
-        if (removedPartners && removedPartners.length > 0) {
-            data.removedPartners = removedPartners.map(partner => {
-                return {
-                    id: parseInt(partner.id),
-                }
-            });
-        }
-
-        let newPartners = values.partners.filter(partner => {
-            return partner.id === "new"
-        });
-
-        if (newPartners && newPartners.length > 0) {
-            data.newPartners = newPartners.map(partner => {
-                return {
-                    nickName: partner.name,
-                }
-            });
-        }
-
-        console.log("values for partners");
-        console.log("additionalPartners: ", additionalPartners);
-        console.log("removedPartners: ", removedPartners);
-        console.log("newPartners: ", newPartners);
-
-        // if ( hook.partners.includes(values.partners) ) 
 
 
         setDisplayMode("loading");

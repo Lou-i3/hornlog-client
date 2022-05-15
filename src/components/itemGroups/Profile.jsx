@@ -78,10 +78,10 @@ const Profile = (props) => {
             genderId: Number(values.genderId)
         };
 
-        if (values.sexuality !== '') {
+        if ( !["0", ""].includes(values.sexuality) ) {
             data.sexuality = values.sexuality;
         }
-        if (values.sexPosition !== '') {
+        if ( !["0", ""].includes(values.sexPosition) ) {
             data.sexPosition = values.sexPosition;
         }
 
@@ -141,7 +141,7 @@ const Profile = (props) => {
                 console.log(err);
             });
         } else if (props.displayMode === "edit") {
-            data.id = parseInt(person.id);
+            data.id = parseInt(props.partner.id);
             console.log("edit data: ", data);
             mutateFctEditPartner({
                 variables: {
@@ -159,6 +159,17 @@ const Profile = (props) => {
 
         console.log(data);
 
+    }
+
+    function validateGender(value) {
+        let error;
+        if (!value || value === "0") {
+            error = 'Required';
+        }
+        // else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+        //   error = 'Invalid email address';
+        // }
+        return error;
     }
 
     return (
@@ -201,7 +212,7 @@ const Profile = (props) => {
                         handleClickSave(values);
 
                 }}  >
-                {({ handleSubmit, values }) => (
+                {({ handleSubmit, values, errors, touched }) => (
                     // console.log("form values: ", values),
                     <Form>
 
@@ -483,24 +494,31 @@ const Profile = (props) => {
                                                     </div>
                                                     <div className="infoSeparator" ></div>
 
-                                                    <div className="infoItem gender">
+                                                    <div className={`infoItem gender ${touched.genderId && errors.genderId ? "error" : ""}`}>
                                                         <Icon type="genders" />
                                                         <div className="infoTexts">
                                                             <h4 className="label">Gender</h4>
                                                             <p className="value">
                                                                 {props.displayMode === "view" ?
-                                                                    person.gender.label :
-                                                                    <Field
-                                                                        name="genderId"
-                                                                        as="select"
-                                                                        value={values.genderId}
-                                                                    >
+                                                                    person && person.gender && person.gender.label :
+                                                                    <Fragment>
+                                                                        <Field
+                                                                            name="genderId"
+                                                                            as="select"
+                                                                            value={values.genderId}
+                                                                            validate={validateGender}
+                                                                        >
+                                                                            {
+                                                                                props.displayMode === "new" &&
+                                                                                <option disabled value="0"> -- select an option -- </option>
+                                                                            }
+                                                                            <GendersOptions />
+                                                                        </Field>
                                                                         {
-                                                                            props.displayMode === "new" &&
-                                                                            <option disabled value="0"> -- select an option -- </option>
+                                                                            touched.genderId && errors.genderId &&
+                                                                            <div className="error">Required</div>
                                                                         }
-                                                                        <GendersOptions />
-                                                                    </Field>
+                                                                    </Fragment>
                                                                 }
                                                             </p>
                                                         </div>
