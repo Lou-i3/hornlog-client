@@ -1,12 +1,22 @@
 import Icon from "./Icon";
 import { NavLink } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
 
 const Nav = () => {
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        window.addEventListener("resize", () => {
+            setWindowWidth(window.innerWidth);
+        });
+    }, []);
+
     const menuItems = [
         {
             Name: "Dashboard",
             Icon: "dashboard",
-            Url: "/home"
+            Url: "/home",
+            mobile: 'left'
         },
         {
             Name: "Profile",
@@ -21,17 +31,20 @@ const Nav = () => {
         {
             Name: "Partners",
             Icon: "partners",
-            Url: "/partners"
+            Url: "/partners",
+            mobile: 'left'
         },
         {
             Name: "Hooks",
             Icon: "hooks",
-            Url: "/hooks"
+            Url: "/hooks",
+            mobile: 'right'
         },
         {
             Name: "Settings",
             Icon: "settings",
-            Url: "/settings"
+            Url: "/settings",
+            mobile: 'right'
         },
         {
             Name: "Icons",
@@ -42,19 +55,50 @@ const Nav = () => {
     ];
     return (
         <div className="nav">
-            <img src="/logo.svg" alt="" className="logo" />
-            <h1>HornLog</h1>
-            <div className="menu">
-                {
-                    menuItems.map((item, index) => (
-                       
-                        <NavLink className="menuItem" to={item.Url} key={index}>
-                            <Icon type={item.Icon} />
-                            <h3>{item.Name}</h3>
-                        </NavLink>
-                    ))
-                }
-            </div>
+            {
+                windowWidth > 767 ?
+                    <Fragment>
+                        <img src="/logo.svg" alt="" className="logo" />
+                        <h1>HornLog</h1>
+                        <div className="menu">
+                            {
+                                menuItems.map((item, index) => (
+
+                                    <NavLink className="menuItem" to={item.Url} key={index}>
+                                        <Icon type={item.Icon} />
+                                        <h3>{item.Name}</h3>
+                                    </NavLink>
+                                ))
+                            }
+                        </div>
+                    </Fragment>
+                    :
+                    <Fragment>
+                        <div className="mobileMenu">
+                            {
+                                menuItems.map((item, index) => (
+                                    item.mobile === "left" &&
+                                    <NavLink className="menuItem" to={item.Url} key={index}>
+                                        <Icon type={item.Icon} />
+                                        {/* <h3>{item.Name}</h3> */}
+                                    </NavLink>
+                                ))
+                            }
+                            <img src="/logo.svg" alt="" className="logo" />
+                            {
+                                menuItems.map((item, index) => (
+                                    item.mobile === "right" &&
+                                    <NavLink className="menuItem" to={item.Url} key={index}>
+                                        <Icon type={item.Icon} />
+                                        {/* <h3>{item.Name}</h3> */}
+                                    </NavLink>
+                                ))
+                            }
+                        </div>
+
+                    </Fragment>
+            }
+
 
 
 

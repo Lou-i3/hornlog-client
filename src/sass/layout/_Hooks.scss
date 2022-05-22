@@ -53,6 +53,19 @@
     }
 }
 
+@media (max-width: $breakpoint-mobile) {
+    .hooks-page-inner,
+    .partners-page-inner {
+        &.view,
+        &.edit,
+        &.new {
+            & .left-side {
+                display: none;
+            }
+        }
+    }
+}
+
 .myHooks {
     & .choicePill {
         background-color: $color-main-black-50;

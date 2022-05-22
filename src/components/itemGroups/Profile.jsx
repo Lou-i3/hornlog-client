@@ -78,10 +78,10 @@ const Profile = (props) => {
             genderId: Number(values.genderId)
         };
 
-        if ( !["0", ""].includes(values.sexuality) ) {
+        if (!["0", ""].includes(values.sexuality)) {
             data.sexuality = values.sexuality;
         }
-        if ( !["0", ""].includes(values.sexPosition) ) {
+        if (!["0", ""].includes(values.sexPosition)) {
             data.sexPosition = values.sexPosition;
         }
 
@@ -219,10 +219,20 @@ const Profile = (props) => {
                         <Fragment>
                             <div className="column left">
                                 <div className="header">
-                                    <Field as="span" onClick={handleSubmit}>
-                                        {props.displayMode === "view" && <Icon type="edit" /*onClick={() => handleClickEdit()} */ />}
-                                        {["edit", "new"].includes(props.displayMode) && <Icon type="save" /*onClick={() => handleClickSave()} */ />}
-                                    </Field>
+                                    <div className="actionIcons">
+                                        <span className="mobileBack">
+                                            <Icon type="arrowLeft" className="mobileBack" onClick={() => {
+                                                props.setSelectedPartner(null);
+                                                props.setDisplayMode("none");
+                                            }} />
+                                        </span>
+
+                                        <Field as="span" onClick={handleSubmit}>
+                                            {props.displayMode === "view" && <Icon type="edit" /*onClick={() => handleClickEdit()} */ />}
+                                            {["edit", "new"].includes(props.displayMode) && <Icon type="save" /*onClick={() => handleClickSave()} */ />}
+                                        </Field>
+                                    </div>
+
                                     <div className="personHeader">
 
                                         <ProfilePicture

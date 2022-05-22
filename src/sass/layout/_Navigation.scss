@@ -35,3 +35,40 @@
         }
     }
 }
+
+@media (max-width: $breakpoint-mobile) {
+    .nav {
+        position: fixed;
+        z-index: 999;
+        bottom: 0;
+        width: 100%;
+        height: $size-nav-mobile-height;
+        padding: 0px;
+        & .mobileMenu {
+            @include flex(row, space-around, flex-end);
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 15%, #000000 100%);
+            border-radius: 0px;
+            padding-bottom: 10px;
+            & .menuItem {
+                @include flex(row, center, center);
+                width: 50px;
+                height: 50px;
+                &.active {
+                    background-color: $color-main-black;
+                    border-radius: 20px;
+                    box-shadow: inset 0px 4px 4px rgba(240, 240, 240, 0.25);
+                    .svg {
+                        color: $color-accent;
+                    }
+                }
+            }
+            & .logo {
+                width: 50px;
+                height: 50px;
+                padding: 10px;
+            }
+        }
+    }
+}

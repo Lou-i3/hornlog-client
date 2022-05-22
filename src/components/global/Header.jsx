@@ -1,17 +1,12 @@
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 // import * as AuthService from "../../services/auth.service";
 // import IUser from '../types/user.type';
-import { Link } from "react-router-dom";
-
-
-// import EventBus from "../../common/EventBus";
+import { Link, NavLink } from "react-router-dom";
+import Icon from "./Icon";
 
 
 const Header = (props) => {
 
-    // const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-    // const [showAdminBoard, setShowAdminBoard] = useState(false);
-    // const [currentUser, setCurrentUser] = useState(undefined);
 
     useEffect(() => {
         // console.log("Header useEffect");
@@ -61,17 +56,26 @@ const Header = (props) => {
 
                 <div className="right-section">
                     {props.user ? (
-                        <div className="headerbar-header ml-auto">
-                            <li className="header-item">
+                        <div className="right-section-inner">
+
+                            <NavLink className="headerItem" to="/profile">
+                                <Icon type="user" />
+                                <h3>{props.user.firstName}</h3>
+                            </NavLink>
+                            <a className="headerItem" onClick={props.logOut}>
+                                <Icon type="logOut" />
+                            </a>
+
+                            {/* <li className="header-item">
                                 <Link to={"/profile"} className="header-link">
                                     {props.user.email}
                                 </Link>
-                            </li>
-                            <li className="header-item">
+                            </li> */}
+                            {/* <li className="header-item">
                                 <a href="/login" className="header-link" onClick={props.logOut}>
                                     LogOut {props.user.email}
                                 </a>
-                            </li>
+                            </li> */}
                         </div>
                     ) : (
                         <div className="right-section-inner">
