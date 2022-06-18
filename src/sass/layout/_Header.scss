@@ -37,3 +37,9 @@
         }
     }
 }
+
+@media (max-width: $breakpoint-mobile) {
+    .headerbar {
+        display: none;
+    }
+}

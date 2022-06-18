@@ -137,7 +137,8 @@ input[type="time"] {
     border: none;
     color: $color-main-black-20;
     background-color: transparent;
-    padding: 2px 0px;
+    padding: 2px 4px;
+    border-radius: 0;
     &:not(:disabled) {
         border-bottom: 0.5px solid $color-main-black-50;
     }
