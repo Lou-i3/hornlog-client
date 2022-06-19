@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import Illustration from "../global/Illustration";
+
 
 // import { getPublicContent } from "../../services/user.service";
 
@@ -22,10 +24,15 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>Home</h3>
-      </header>
+    <div className="content-inner home">
+
+
+        <h1>Home</h1>
+        <div className="emptyDashboardContainer">
+        <Illustration type = "EmptyDashboard" style="width=100%"/>
+        <h3>Under Construction...</h3>
+        </div>
+
     </div>
   );
 };

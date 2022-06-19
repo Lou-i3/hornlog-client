@@ -15,13 +15,13 @@ const Nav = () => {
         {
             Name: "Dashboard",
             Icon: "dashboard",
-            Url: "/home",
-            mobile: 'left'
+            Url: "/home"
         },
         {
             Name: "Profile",
             Icon: "user",
-            Url: "/profile"
+            Url: "/profile",
+            mobile: 'left'
         },
         // {
         //     Name: "Admin",
@@ -84,7 +84,9 @@ const Nav = () => {
                                     </NavLink>
                                 ))
                             }
-                            <img src="/logo.svg" alt="" className="logo" />
+                            <NavLink className="menuItem" to="/home">
+                                <img src="/logo.svg" alt="" className="logo" />
+                            </NavLink>
                             {
                                 menuItems.map((item, index) => (
                                     item.mobile === "right" &&

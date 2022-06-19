@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Capriola&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&family=Capriola&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 h1,
 h2,
 h3,
@@ -12,7 +13,7 @@ div {
 input,
 textarea,
 select {
-    font-family: monospace;
+    font-family: $font-main;
 }
 
 p {

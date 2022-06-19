@@ -170,6 +170,9 @@ const MyPartners = (props) => {
                                 const partner = data;
                                 handleClick(partner)
                             }}
+                            // fillHeight={true}
+                            // autoHeight={true}    
+
                         >
 
 

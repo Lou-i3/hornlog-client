@@ -83,6 +83,7 @@ div.rs-table {
     }
     & .rs-table-body-wheel-area {
         height: 100%;
+        //scroll-snap-type: y proximity;
     }
     & .rs-table-row:not(.rs-table-row-header) {
         // border: 10px solid transparent;

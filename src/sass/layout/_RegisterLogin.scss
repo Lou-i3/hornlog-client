@@ -20,3 +20,15 @@
         }
     }
 }
+
+@media (max-width: $breakpoint-mobile) {
+    .register,
+    .login {
+        border-radius: 0px;
+        height: 100%;
+        & .register-inner,
+        .login-inner {
+            width: 80%;
+        }
+    }
+}
