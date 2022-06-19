@@ -1,0 +1,42 @@
+.content {
+    & .content-inner {
+        & .profileHeader {
+            @include flex(row, space-between, center);
+            width: 100%;
+            & h1 {
+                width: 100%;
+            }
+            & .headerItem {
+                width: fit-content;
+                height: fit-content;
+                & svg {
+                    width: 35px;
+                    height: 35px;
+                }
+            }
+        }
+        & .profile {
+            @include flex(column, flex-start, flex-start);
+            gap: 20px;
+            & .profileItem {
+                @include flex(column, center, flex-start);
+                padding: 20px;
+                background-color: $color-secondary-black;
+                border-radius: 25px;
+                box-shadow: inset 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
+}
+
+@media (min-width: $breakpoint-mobile) {
+    .content {
+        & .content-inner {
+            & .profileHeader {
+                & .headerItem {
+                    display: none;
+                }
+            }
+        }
+    }
+}

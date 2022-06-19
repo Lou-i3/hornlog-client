@@ -10,6 +10,21 @@ export const ACCESSIBLE_GENDERS_QUERY = gql `
     }
     `;
 
+export const ME_QUERY = gql `
+    query ME_QUERY {
+        me {
+            id
+            createdAt
+            updatedAt
+            displayName
+            username
+            email
+            role
+            
+        }
+    }
+`;
+
 export const MY_PARTNERS_QUERY = gql `
     query MY_PARTNERS_QUERY {
         myPartners {

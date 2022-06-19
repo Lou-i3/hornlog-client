@@ -1,24 +1,13 @@
-import React from "react";
-import { gql, useQuery } from '@apollo/client';
+import React, { Fragment } from "react";
+import { useQuery } from '@apollo/client';
 import { useEffect, useState } from "react";
 import { formatDateTime } from "../../helpers/helpers";
+import { ME_QUERY } from "../../helpers/queries";
+import Icon from "../global/Icon";
 
 // import { useState } from 'react';
 
-const ME_QUERY = gql`
-    query ME_QUERY {
-        me {
-            id
-            createdAt
-            updatedAt
-            displayName
-            username
-            email
-            role
-            
-        }
-    }
-`;
+
 const Profile = (props) => {
   // const currentUser = getCurrentUser();
   const { loading, error, data } = useQuery(ME_QUERY);
@@ -46,11 +35,14 @@ const Profile = (props) => {
         error ? <p>Error: {error.message}</p> :
           me ?
             (
-              <div>
+              <Fragment>
 
                 {console.log("data", data)}
-                <header className="jumbotron">
-                  <h3>My Profile</h3>
+                <header className="profileHeader">
+                  <h1>My Profile</h1>
+                  <a className="headerItem" onClick={props.logOut}>
+                    <Icon type="logOut" />
+                  </a>
                 </header>
                 <div className="profile">
                   <div className="profileItem">
@@ -74,7 +66,7 @@ const Profile = (props) => {
                     <p>{formatDateTime(me.since, "date")}</p>
                   </div>
                 </div>
-              </div>
+              </Fragment>
             ) : null
       }
 

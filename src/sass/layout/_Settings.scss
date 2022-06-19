@@ -18,6 +18,11 @@
         border-radius: 15px;
         padding: 20px;
         box-shadow: inset 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+        & button {
+            & span {
+                color: $color-secondary-black;
+            }
+        }
         & .header {
             @include flex(column, center);
             gap: 10px;
@@ -93,6 +98,15 @@
                 }
             }
         }
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .settingsWrapper {
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-bottom: calc($size-nav-mobile-height + env(safe-area-inset-bottom));
+        padding-top: 10px;
     }
 }
 

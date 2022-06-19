@@ -116,9 +116,11 @@ const App: React.FC<WrappedComponentProps> = ({
           user ?
             <Switch>
 
-              <Route exact path={["/", "/home"]} component={Home} />
+              <Route exact path={["/", "/home"]} >
+                <Home />
+              </Route>
               <Route exact path="/profile" >
-                <Profile user={user} />
+                <Profile user={user} logOut={signOut} />
               </Route>
 
               <Route path="/hooks" component={Hooks} />
