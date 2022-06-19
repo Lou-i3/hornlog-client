@@ -183,6 +183,7 @@ svg.illustration {
         height: 35px;
         border-radius: 100%;
         object-fit: cover;
+        aspect-ratio: 1;
         background-color: $color-main-black-50;
     }
     & .name {

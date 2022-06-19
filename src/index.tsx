@@ -61,7 +61,7 @@ document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <BrowserRouter>
+    <BrowserRouter >
       <App />
     </BrowserRouter>
   </ApolloProvider>,

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Switch, Route } from "react-router-dom";
 
 // import logo from './logo.svg';
@@ -86,6 +86,8 @@ const App: React.FC<WrappedComponentProps> = ({
   loading,
 }) => {
 
+  const [pageLoading, setPageLoading] = useState(false);
+
   useEffect(() => {
     // console.log(user?.getIdToken());
     if (user) {
@@ -104,7 +106,7 @@ const App: React.FC<WrappedComponentProps> = ({
 
       {/* <OkQuery user={user} /> */}
 
-      {user && <Nav />}
+      {user && <Nav setPageLoading={setPageLoading}/>}
       <div className="content">
 
         <Header isLoggedIn={!(user === null)} logOut={signOut} user={user} />
@@ -113,23 +115,27 @@ const App: React.FC<WrappedComponentProps> = ({
 
         {(loading || user === undefined) ?
           <Loading /> :
-          user ?
-            <Switch>
+          user ? (
+            pageLoading
+              ? <Loading />
+              : <Switch>
+                <Route exact path={["/", "/home"]} >
+                  <Home />
+                </Route>
+                <Route exact path="/profile" >
+                  <Profile user={user} logOut={signOut} />
+                </Route>
 
-              <Route exact path={["/", "/home"]} >
-                <Home />
-              </Route>
-              <Route exact path="/profile" >
-                <Profile user={user} logOut={signOut} />
-              </Route>
+                <Route path="/hooks" >
+                  <Hooks key={`${Date.now()}`} />
+                </Route>
+                <Route path="/partners" component={Partners} />
+                <Route path="/settings" component={Settings} />
+                <Route path="/icons" component={Icons} />
 
-              <Route path="/hooks" component={Hooks} />
-              <Route path="/partners" component={Partners} />
-              <Route path="/settings" component={Settings} />
-              <Route path="/icons" component={Icons} />
-
-              <Route path="/" component={Error404} />
-            </Switch>
+                <Route path="/" component={Error404} />
+              </Switch>
+          )
             :
             <Switch>
               {console.log("user ", user)}

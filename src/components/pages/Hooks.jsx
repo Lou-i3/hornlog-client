@@ -11,7 +11,13 @@ const Hooks = () => {
     const [selectedHook, setSelectedHook] = useState(null);
     const [displayMode, setDisplayMode] = useState("none");
     const [searchTerms, setSearchTerms] = useState("");
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+    useEffect(() => {
+        window.addEventListener("resize", () => {
+            setWindowWidth(window.innerWidth);
+        });
+    }, []);
 
     useEffect(() => {
         console.log("useEffect hooks, selectedHook: ");
@@ -41,6 +47,8 @@ const Hooks = () => {
 
 
     const handleClickNew = () => {
+        setDisplayMode("view");
+
         setSelectedHook(null);
         // setSelectedHook("none");
         setDisplayMode("new");
@@ -64,6 +72,8 @@ const Hooks = () => {
                     </div>
 
                 </div>
+               { 
+               (windowWidth > 767 || (windowWidth < 767 && ["view", "edit", "new"].includes(displayMode))) &&
                 <div className={`right-side side ${displayMode}`}>
 
                     {
@@ -84,6 +94,7 @@ const Hooks = () => {
                     {/* {(displayMode === "edit" || displayMode === "new") && <HookEditNew displayMode={displayMode} setDisplayMode={setDisplayMode} setSelectedHook={setSelectedHook} />} */}
 
                 </div>
+                }
             </div>
 
             {/* <div className="filter">

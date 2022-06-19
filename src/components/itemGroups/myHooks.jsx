@@ -14,6 +14,13 @@ const MyHooks = (props) => {
     const [sortType, setSortType] = useState();
     const [tableData, setTableData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        window.addEventListener("resize", () => {
+            setWindowWidth(window.innerWidth);
+        });
+    }, []);
 
     const handleClick = (hook) => {
         // props.setSelectedHook(hook);
@@ -199,7 +206,7 @@ const MyHooks = (props) => {
                                                 <PictureAndName
                                                     key={index}
                                                     partner={partner}
-                                                    onlyPic={rowdata.partners.length > 1}
+                                                    onlyPic={rowdata.partners.length > 1 || windowWidth < 767}
                                                 />
                                             )
 
