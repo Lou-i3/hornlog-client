@@ -1,14 +1,15 @@
 
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Fragment, useEffect, useState } from 'react';
 import { Cell, Column, HeaderCell, Table } from 'rsuite-table';
 import { enumLabel, formatDateTime } from '../../helpers/helpers';
 import { MY_HOOKS_QUERY } from '../../helpers/queries';
-import Icon from '../global/Icon';
+
 import ChoicePill from '../items/ChoicePill';
 import PictureAndName from '../items/profile/PictureAndName';
 
 const MyHooks = (props) => {
+    // eslint-disable-next-line
     const { loading: loadingQuery, error, data } = useQuery(MY_HOOKS_QUERY);
     const [sortColumn, setSortColumn] = useState();
     const [sortType, setSortType] = useState();
@@ -44,12 +45,14 @@ const MyHooks = (props) => {
         //     }
         }
         getData();
+        // eslint-disable-next-line
     }, [props.selectedHook, data]);
 
     // Use effet for Search 
     useEffect(() => {
         console.log("searchTerms: ", props.searchTerms);
         getData();
+        // eslint-disable-next-line
     }, [props.searchTerms]);
 
 
@@ -185,7 +188,7 @@ const MyHooks = (props) => {
                                 </HeaderCell>
                                 <Cell dataKey="date" color='white'>
                                     {
-                                        rowdata => rowdata.date
+                                        rowdata => <p>{rowdata.date}</p>
 
                                     }
                                 </Cell>

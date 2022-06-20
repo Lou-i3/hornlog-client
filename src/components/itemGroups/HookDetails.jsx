@@ -8,7 +8,7 @@ import Icon from "../global/Icon";
 import ChoicePill from "../items/ChoicePill";
 import HookEnumField from "../items/hooks/HookEnumField.jsx";
 import HookPartnersField from "../items/hooks/HookPartnersField.jsx";
-import PictureAndName from "../items/profile/PictureAndName.jsx";
+import StarRating from "../items/StarRating.jsx";
 
 const HookDetails = (props) => {
     const { displayMode, setDisplayMode, setSelectedHook } = props;
@@ -65,7 +65,7 @@ const HookDetails = (props) => {
         }
 
         // protected 
-        if (values.protected !=="") {
+        if (values.protected !== "") {
             data.protected = values.protected;
         }
 
@@ -205,27 +205,39 @@ const HookDetails = (props) => {
                                     <h2>New Hook</h2> :
                                     displayMode === "edit" ?
                                         <h2>Edit Hook</h2> :
-                                        <h2 className="date">{formatDateTime(values.dateTime, 'longdate')}</h2>
+                                        <h2 className="date">
+                                            {formatDateTime(values.dateTime, 'longdate').split(",")[0]},
+                                            <br />
+                                            {formatDateTime(values.dateTime, 'longdate').split(",")[1]}
+                                        </h2>
                             }
                             <div className="icones">
-                                <Field as="span" onClick={handleSubmit}>
-                                    <Icon type="apple" />
-                                </Field>
+                                {
+                                    displayMode !== "new" &&
+                                    <Field as="span" onClick={handleSubmit}>
+                                        <Icon type="apple" />
+                                    </Field>
+                                }
                                 <Field as="span" onClick={handleSubmit}>
                                     {displayMode === "view" && <Icon type="edit" />}
                                     {["edit", "new"].includes(displayMode) && <Icon type="save" />}
                                 </Field>
-                                <Field as="span" onClick={handleSubmit}>
-                                    <Icon type="archive" />
-                                </Field>
+                                {
+                                    displayMode !== "new" &&
+                                    <Field as="span" onClick={handleSubmit}>
+                                        <Icon type="archive" />
+                                    </Field>
+                                }
                             </div>
                         </div>
 
                         <div className="info">
                             <div className="infoItemWrapper">
-                                <div className="infoItem">
+                                <div className="infoItem dateTime">
                                     {
                                         ["edit", "new"].includes(displayMode) &&
+                                        <Fragment>
+                                            <p>On</p>
                                         <Field
                                             type="date"
                                             name="date"
@@ -235,6 +247,7 @@ const HookDetails = (props) => {
                                             disabled={readOnly}
                                             value={formatDateTime(values.date, 'techdate')}
                                         />
+                                        </Fragment>
 
                                     }
                                     <p>at</p>
@@ -322,13 +335,7 @@ const HookDetails = (props) => {
                                 </div>
                                 <div className="infoItem">
                                     <p>Grade</p>
-                                    <div className="icones">
-                                        <Icon type="star" />
-                                        <Icon type="star" />
-                                        <Icon type="star" />
-                                        <Icon type="star" />
-                                        <Icon type="star" />
-                                    </div>
+                                    <StarRating />
                                 </div>
                                 <div className="infoItem">
                                     <Icon type="duration" />
