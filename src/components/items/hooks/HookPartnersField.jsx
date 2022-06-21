@@ -106,53 +106,54 @@ const HookPartnersField = (props) => {
                 <Fragment>
 
                     <div className="hooksPartners">
-                        <p> with</p>
+                        <h3> with</h3>
+                        <div className="partnerListWrapper">
+                            <div className={`partnerList ${readOnly ? "" : "edit"}`}>
 
-                        <div className={`partnerList ${readOnly ? "" : "edit"}`}>
-
-                            {
-                                values.partners.map((item, index) => (
-                                    <div className="partnerWrapper" key={index}>
-                                        {
-                                            displayMode === "view" ?
-                                                <PictureAndName
-                                                    name={item.name}
-                                                    profilePic={item.picture}
-                                                /> :
-                                                <Fragment>
+                                {
+                                    values.partners.map((item, index) => (
+                                        <div className="partnerWrapper" key={index}>
+                                            {
+                                                displayMode === "view" ?
                                                     <PictureAndName
                                                         name={item.name}
                                                         profilePic={item.picture}
-                                                        onlyPic={true}
-                                                    />
-                                                    <Field
-                                                        name={`partners.${index}.name`}
-                                                        type="text"
-                                                        key={"partners" + (readOnly ? "readonly" : "active") + index}
-                                                        className="form-control"
-                                                        placeholder="Name"
-                                                        disabled={readOnly}
-                                                        onChange={(e) => handleOnChangeName(e, index)}
-                                                        onFocus={() => handleFocusChange('focus', index)}
-                                                        onBlur={(e) => handleFocusChange('focusOut', index, e)}
-                                                    />
-                                                    <Icon type="bin" onClick={() => arrayHelpers.remove(index)} />
-
-                                                    {
-                                                        listForIndex === index && // ICI POUR LE TRUC QUI RESTE (0 -> listForIndex)
-                                                        <PartnersMiniList
-                                                            searchTerms={searchTerms}
-                                                            selectedId={values.partners[index].id}
-                                                            handleSelect={(partner) => handleSelect(partner, index)}
-                                                            handleNew={() => handleSelectNew(index)}
+                                                    /> :
+                                                    <Fragment>
+                                                        <PictureAndName
+                                                            name={item.name}
+                                                            profilePic={item.picture}
+                                                            onlyPic={true}
                                                         />
-                                                    }
-                                                </Fragment>
-                                        }
+                                                        <Field
+                                                            name={`partners.${index}.name`}
+                                                            type="text"
+                                                            key={"partners" + (readOnly ? "readonly" : "active") + index}
+                                                            className="form-control"
+                                                            placeholder="Name"
+                                                            disabled={readOnly}
+                                                            onChange={(e) => handleOnChangeName(e, index)}
+                                                            onFocus={() => handleFocusChange('focus', index)}
+                                                            onBlur={(e) => handleFocusChange('focusOut', index, e)}
+                                                        />
+                                                        <Icon type="bin" onClick={() => arrayHelpers.remove(index)} />
 
-                                    </div>
-                                ))
-                            }
+                                                        {
+                                                            listForIndex === index && // ICI POUR LE TRUC QUI RESTE (0 -> listForIndex)
+                                                            <PartnersMiniList
+                                                                searchTerms={searchTerms}
+                                                                selectedId={values.partners[index].id}
+                                                                handleSelect={(partner) => handleSelect(partner, index)}
+                                                                handleNew={() => handleSelectNew(index)}
+                                                            />
+                                                        }
+                                                    </Fragment>
+                                            }
+
+                                        </div>
+                                    ))
+                                }
+                            </div>
                         </div>
 
                         {

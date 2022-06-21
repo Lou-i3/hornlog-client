@@ -3,7 +3,6 @@ import Icon from "../global/Icon";
 
 const StarRating = (props) => {
 
-    //const { rating, onClick } = props;
 
     const [grade, setGrade] = useState(0);
     

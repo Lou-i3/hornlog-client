@@ -149,16 +149,43 @@
         gap: 10px;
         padding: 20px;
         overflow: scroll;
-        & .location {
+        /* IE and Edge */
+        -ms-overflow-style: none;
+        /* Firefox */
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+            /* Safari and Chrome & Opera */
+        }
+        & .locationWrapper {
             background-color: $color-main-black-50;
             padding: 10px;
             border-radius: 5px;
             width: 20px;
+            & svg {
+                @include icon();
+                width: 20px;
+                height: 20px;
+            }
         }
         & .infoItemWrapper {
             width: 100%;
+            & .hookDetailsFirstGroupWrapper {
+                &.view {
+                    @include flex(row);
+                }
+                &.edit {
+                    @include flex(column);
+                }
+                & .infoItem {
+                    width: 100%;
+                    &:last-child {
+                        justify-content: flex-end;
+                    }
+                }
+            }
             & .infoItem {
-                @include flex(row, flex-start, flex-start);
+                @include flex(row, flex-start, center);
                 padding: 20px 10px;
                 gap: 20px;
                 & .icones {
@@ -173,25 +200,36 @@
                     @include flex(row, flex-start, center);
                     gap: 20px;
                     & input {
-                        font-size: 16px;
-                        padding: 0px 10px;
+                        font-size: 14px;
+                        padding: 0px 2px;
+                        // min-width: max(fit-content, '20px');
+                        min-width: 40px;
                     }
-                    & [type='date'] {
-                        min-width: 25%;
+                    & [type="date"] {
+                        // min-width: fit-content;
+                        width: fit-content;
+                        padding-right: -10px;
+                    }
+                    & [type="time"] {
+                        // min-width: fit-content;
                         width: fit-content;
                     }
-                    & [type='time'] {
-                        min-width: 25%;
-                        width: fit-content;
+                }
+                & .moodPicker {
+                    @include flex(row);
+                    gap: 10px;
+                    & .moodContainer {
+                        font-size: 20px;
                     }
                 }
                 & .hookEnumField {
-                    @include flex(row, flex-start, center);
+                    @include flex(row, space-between, center);
                     flex-wrap: wrap;
+                    width: 100%;
                     gap: 20px;
                 }
                 & .hooksPartners {
-                    @include flex(row, flex-start, flex-start);
+                    @include flex(row, space-between, center);
                     gap: 20px;
                     width: 100%;
                     & svg {
@@ -200,67 +238,65 @@
                             cursor: pointer;
                         }
                     }
-                    & .partnerList {
-                        @include flex(column, center, flex-start);
-                        width: fit-content;
-                        border-radius: 5px;
-                        & .edit {
-                            background-color: $color-secondary-black;
-                        }
-                        & .partnerWrapper {
-                            @include flex(row, space-between, center);
+                    & .partnerListWrapper {
+                        @include flex(column, flex-start, center);
+                        width: 100%;
+                        & .partnerList {
+                            @include flex(column, center, flex-start);
+                            border-radius: 5px;
                             width: fit-content;
-                            gap: 10px;
-                            position: relative;
-                            background-color: transparent;
-                            & svg {
-                                cursor: pointer;
-                                &:hover {
-                                    cursor: pointer;
-                                }
-                            }
-                            & .picAndName {
-                                width: fit-content;
-                            }
-                            & input {
-                                min-width: 10px;
-                                width: fit-content;
-                            }
-                            & .partnersMiniList {
-                                @include flex(column, flex-start, center);
-                                position: absolute;
-                                top: 55px;
-                                width: 100%;
-                                height: 400px;
-                                border-radius: 5px;
-                                z-index: 2;
-                                gap: 10px;
-                                padding: 10px;
-                                overflow-y: scroll;
-                                overflow-x: visible;
+                            & .edit {
                                 background-color: $color-secondary-black;
-                                & .picAndName {
-                                    width: 100%;
-                                    padding: 10px;
-                                    background-color: $color-secondary-black;
-                                    border-radius: 5px;
+                            }
+                            & .partnerWrapper {
+                                @include flex(row, space-between, center);
+                                width: fit-content;
+                                gap: 10px;
+                                position: relative;
+                                background-color: transparent;
+                                & svg {
+                                    cursor: pointer;
+                                    width: 20px;
                                     &:hover {
-                                        background-color: $color-main-black-50;
                                         cursor: pointer;
                                     }
-                                    &.selected {
-                                        background-color: $color-main-black-50;
+                                }
+                                & .picAndName {
+                                    width: fit-content;
+                                }
+                                & input {
+                                    min-width: 10px;
+                                    width: fit-content;
+                                }
+                                & .partnersMiniList {
+                                    @include flex(column, flex-start, center);
+                                    position: absolute;
+                                    top: 55px;
+                                    width: 100%;
+                                    height: 400px;
+                                    border-radius: 5px;
+                                    z-index: 2;
+                                    gap: 10px;
+                                    padding: 10px;
+                                    overflow-y: scroll;
+                                    overflow-x: visible;
+                                    background-color: $color-secondary-black;
+                                    & .picAndName {
+                                        width: 100%;
+                                        padding: 10px;
+                                        background-color: $color-secondary-black;
+                                        border-radius: 5px;
+                                        &:hover {
+                                            background-color: $color-main-black-50;
+                                            cursor: pointer;
+                                        }
+                                        &.selected {
+                                            background-color: $color-main-black-50;
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    &>p,
-                    >svg {
-                        margin: 10px;
-                    }
-                    & svg {
-                        width: fit-content;
                     }
                 }
             }

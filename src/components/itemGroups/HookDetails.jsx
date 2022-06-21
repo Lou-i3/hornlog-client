@@ -8,6 +8,7 @@ import Icon from "../global/Icon";
 import ChoicePill from "../items/ChoicePill";
 import HookEnumField from "../items/hooks/HookEnumField.jsx";
 import HookPartnersField from "../items/hooks/HookPartnersField.jsx";
+import MoodPicker from "../items/MoodPicker.jsx";
 import StarRating from "../items/StarRating.jsx";
 
 const HookDetails = (props) => {
@@ -169,7 +170,9 @@ const HookDetails = (props) => {
                     dateTime: hook.dateTime,
                     date: formatDateTime(hook.dateTime, "techdate"),
                     time: formatDateTime(hook.dateTime, "techtime"),
+                    duration: hook.duration ? hook.duration : "",
                     hookType: hook.hookType,
+                    location: hook.location ? hook.location : "",
                     protected: hook.protected,
                     note: hook.note ? hook.note : "",
                     partners: hook.partners ?
@@ -185,7 +188,9 @@ const HookDetails = (props) => {
                     dateTime: "",
                     date: "",
                     time: "",
+                    duration: "",
                     hookType: "",
+                    location: "",
                     protected: "",
                     note: "",
                     partners: [],
@@ -233,67 +238,78 @@ const HookDetails = (props) => {
                                     {displayMode === "view" && <Icon type="edit" />}
                                     {["edit", "new"].includes(displayMode) && <Icon type="save" />}
                                 </Field>
-                               
+
                             </div>
                         </div>
 
                         <div className="info">
                             <div className="infoItemWrapper">
-                                <div className="infoItem dateTime">
-                                    {
-                                        ["edit", "new"].includes(displayMode) &&
-                                        <Fragment>
-                                            <p>On</p>
-                                            <Field
-                                                type="date"
-                                                name="date"
-                                                key={"date" + (readOnly ? "readonly" : "active") + (hook && hook.date)}
-                                                className="form-control"
-                                                // placeholder="Nickname"
-                                                disabled={readOnly}
-                                                value={formatDateTime(values.date, 'techdate')}
-                                            />
-                                        </Fragment>
+                                <div className={`hookDetailsFirstGroupWrapper ${["edit", "new"].includes(displayMode) ? 'edit' : 'view'}`}>
+                                    <div className="infoItem dateTime">
+                                        {
+                                            ["edit", "new"].includes(displayMode) &&
+                                            <Fragment>
+                                                <h3>On</h3>
+                                                <Field
+                                                    type="date"
+                                                    name="date"
+                                                    key={"date" + (readOnly ? "readonly" : "active") + (hook && hook.date)}
+                                                    className="form-control"
+                                                    // placeholder="Nickname"
+                                                    disabled={readOnly}
+                                                    value={formatDateTime(values.date, 'techdate')}
+                                                />
+                                            </Fragment>
 
-                                    }
-                                    <p>at</p>
-                                    {
-                                        displayMode === "view" ?
-                                            <p style={{ fontSize: '15px' }}><b>{formatDateTime(hook.dateTime, 'time')}</b></p> :
-                                            <Field
-                                                name="time"
-                                                type="time"
-                                                key={"time" + (readOnly ? "readonly" : "active") + (hook && hook.time)}
-                                                className="form-control"
-                                                // placeholder="Nickname"
-                                                disabled={readOnly}
-                                                value={formatDateTime(values.time, 'techtime')}
+                                        }
+                                        <h3>at</h3>
+                                        {
+                                            displayMode === "view" ?
+                                                <p style={{ fontSize: '15px' }}><b>{formatDateTime(hook.dateTime, 'time')}</b></p> :
+                                                <Field
+                                                    name="time"
+                                                    type="time"
+                                                    key={"time" + (readOnly ? "readonly" : "active") + (hook && hook.time)}
+                                                    className="form-control"
+                                                    // placeholder="Nickname"
+                                                    disabled={readOnly}
+                                                    value={formatDateTime(values.time, 'techtime')}
 
-                                            />
+                                                />
 
 
-                                    }
+                                        }
+                                    </div>
+
+                                    <div className="infoItem">
+                                        {
+                                            ["edit", "new"].includes(displayMode) ?
+                                                <HookEnumField
+                                                    setValues={setValues}
+                                                    values={values}
+                                                    enumName="hookType"
+                                                /> :
+                                                <ChoicePill text={hook && enumLabel(hook.hookType)} selected={true} />
+
+                                        }
+                                    </div>
                                 </div>
 
-                                <div className="infoItem">
-                                    <h3>for</h3>
-                                    <p>{hook && hook.duration}</p>
-                                    <input type="text" class="html-duration-picker"></input>
-                                    <Icon type="duration" />
-                                </div>
+                                {
+                                    (values.duration !== "" || props.displayMode !== "view") &&
+                                    <div className="infoItem">
+                                        <h3>for</h3>
+                                        {
+                                            ["edit", "new"].includes(displayMode) ?
 
-                                <div className="infoItem">
-                                    {
-                                        ["edit", "new"].includes(displayMode) ?
-                                            <HookEnumField
-                                                setValues={setValues}
-                                                values={values}
-                                                enumName="hookType"
-                                            /> :
-                                            <ChoicePill text={hook && enumLabel(hook.hookType)} selected={true} />
+                                                <input type="text" placeholder="21/06/2022"></input>
+                                                : <p>{hook && hook.duration}</p>
+                                        }
+                                        <Icon type="duration" />
+                                    </div>
+                                }
 
-                                    }
-                                </div>
+
                                 <div className="infoItem with">
                                     <HookPartnersField
                                         values={values}
@@ -307,24 +323,31 @@ const HookDetails = (props) => {
                                     </div> */}
                                 </div>
 
-                                <div className="infoItem">
-                                    <p> at</p>
-                                    {
-                                        ["edit", "new"].includes(displayMode) ?
-                                            <HookEnumField
-                                                setValues={setValues}
-                                                values={values}
-                                                enumName="locationType"
-                                            /> :
-                                            <ChoicePill text={hook && enumLabel(hook.locationType)} selected={true} />
+                                {
+                                    (values.location !== "" || props.displayMode !== "view") &&
+                                    <div className="hooksDetailsLocationGroup">
+                                        <div className="infoItem">
+                                            <h3> at</h3>
+                                            {
+                                                ["edit", "new"].includes(displayMode) ?
+                                                    <HookEnumField
+                                                        setValues={setValues}
+                                                        values={values}
+                                                        enumName="locationType"
+                                                    /> :
+                                                    <ChoicePill text={hook && enumLabel(hook.locationType)} selected={true} />
 
-                                    }
-                                </div>
+                                            }
+                                        </div>
 
-                                <div className="infoItem">
-                                    <Icon type="location" />
-                                    {/* <p>{hook.location}</p> */}
-                                </div>
+                                        <div className="infoItem location">
+                                            <Icon type="location" />
+                                            {/* <p>{hook.location}</p> */}
+                                        </div>
+                                    </div>
+                                }
+
+
 
                                 <div className="infoItem">
                                     {/* <p>Protection Type</p> */}
@@ -344,13 +367,13 @@ const HookDetails = (props) => {
                                 </div>
                                 <div className="infoItem">
                                     <Icon type="mood" />
-                                    <p>{hook && hook.mood}</p>
+                                    <MoodPicker />
                                 </div>
                                 <div className="infoItem">
                                     <p>Grade</p>
                                     <StarRating />
                                 </div>
-                                
+
                                 <div className="infoItem">
                                     <p>Notes</p>
                                     {
