@@ -200,6 +200,12 @@ const HookDetails = (props) => {
                     // console.log("form values: ", values),
                     <Form>
                         <div className="title">
+                            <span className="mobileBack">
+                                <Icon type="arrowLeft" className="mobileBack" onClick={() => {
+                                    props.setSelectedHook(null);
+                                    props.setDisplayMode("none");
+                                }} />
+                            </span>
                             {
                                 displayMode === "new" ?
                                     <h2>New Hook</h2> :
@@ -213,21 +219,21 @@ const HookDetails = (props) => {
                             }
                             <div className="icones">
                                 {
-                                    displayMode !== "new" &&
-                                    <Field as="span" onClick={handleSubmit}>
-                                        <Icon type="apple" />
-                                    </Field>
+                                    displayMode === "edit" &&
+                                    <>
+                                        <Field as="span" onClick={handleSubmit}>
+                                            <Icon type="apple" />
+                                        </Field>
+                                        <Field as="span" onClick={handleSubmit}>
+                                            <Icon type="bin" />
+                                        </Field>
+                                    </>
                                 }
                                 <Field as="span" onClick={handleSubmit}>
                                     {displayMode === "view" && <Icon type="edit" />}
                                     {["edit", "new"].includes(displayMode) && <Icon type="save" />}
                                 </Field>
-                                {
-                                    displayMode !== "new" &&
-                                    <Field as="span" onClick={handleSubmit}>
-                                        <Icon type="archive" />
-                                    </Field>
-                                }
+                               
                             </div>
                         </div>
 
@@ -238,22 +244,22 @@ const HookDetails = (props) => {
                                         ["edit", "new"].includes(displayMode) &&
                                         <Fragment>
                                             <p>On</p>
-                                        <Field
-                                            type="date"
-                                            name="date"
-                                            key={"date" + (readOnly ? "readonly" : "active") + (hook && hook.date)}
-                                            className="form-control"
-                                            // placeholder="Nickname"
-                                            disabled={readOnly}
-                                            value={formatDateTime(values.date, 'techdate')}
-                                        />
+                                            <Field
+                                                type="date"
+                                                name="date"
+                                                key={"date" + (readOnly ? "readonly" : "active") + (hook && hook.date)}
+                                                className="form-control"
+                                                // placeholder="Nickname"
+                                                disabled={readOnly}
+                                                value={formatDateTime(values.date, 'techdate')}
+                                            />
                                         </Fragment>
 
                                     }
                                     <p>at</p>
                                     {
                                         displayMode === "view" ?
-                                            <p><b>{formatDateTime(hook.dateTime, 'time')}</b></p> :
+                                            <p style={{ fontSize: '15px' }}><b>{formatDateTime(hook.dateTime, 'time')}</b></p> :
                                             <Field
                                                 name="time"
                                                 type="time"
@@ -267,6 +273,13 @@ const HookDetails = (props) => {
 
 
                                     }
+                                </div>
+
+                                <div className="infoItem">
+                                    <h3>for</h3>
+                                    <p>{hook && hook.duration}</p>
+                                    <input type="text" class="html-duration-picker"></input>
+                                    <Icon type="duration" />
                                 </div>
 
                                 <div className="infoItem">
@@ -337,10 +350,7 @@ const HookDetails = (props) => {
                                     <p>Grade</p>
                                     <StarRating />
                                 </div>
-                                <div className="infoItem">
-                                    <Icon type="duration" />
-                                    <p>{hook && hook.duration}</p>
-                                </div>
+                                
                                 <div className="infoItem">
                                     <p>Notes</p>
                                     {
