@@ -40,7 +40,11 @@ const ContactItems = (props) => {
 
                     {
                         values[fieldName].map((item, index) => (
-                            item.type === type ?
+                            item.type === type
+                                && (displayMode === "view" ?
+                                    (item.info && item.info !== "")
+                                    : true)
+                                ?
                                 <Fragment key={index}>
                                     {
                                         index !== 0 && <div className="infoSeparator" ></div>

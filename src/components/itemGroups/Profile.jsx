@@ -85,7 +85,22 @@ const Profile = (props) => {
             data.sexPosition = values.sexPosition;
         }
 
-        let ContactInfosValues = [...values.contactInfosPhone, ...values.contactInfosEmail, ...values.contactInfossocial_media];
+        let checkInfo = (info) => {
+            let checkedInfo = [];
+            info.forEach(item => {
+                if (item.designation && item.designation !== "" && item.info && item.info !== "") {
+                    checkedInfo.push(item);
+                }
+            });
+
+            return checkedInfo;
+        }
+
+        let ContactInfosValues = [
+            ...checkInfo(values.contactInfosPhone),
+            ...checkInfo(values.contactInfosEmail),
+            ...checkInfo(values.contactInfossocial_media)
+        ];
 
         if (person) {
             data.updatedContactInfos = [];
@@ -172,6 +187,32 @@ const Profile = (props) => {
         return error;
     }
 
+    let getConactInfo = (forType, person) => {
+        let contactInfos = [];
+        const emptyConactInfo = (forType) => ({
+            id: null,
+            type: forType,
+            info: "",
+            designation: ""
+        });
+        if (person) {
+            
+            let personContactInfos = person.contactInfos.filter((info) => { return info.type === forType });
+            let isPersonContactInfos = personContactInfos.length > 0;
+
+            contactInfos = [
+                ...person.contactInfos.filter((info) => { return info.type === forType })
+            ];
+            if (!isPersonContactInfos) contactInfos.push(emptyConactInfo(forType));
+
+        } else {
+            contactInfos.push(emptyConactInfo(forType));
+
+        }
+
+        return contactInfos
+    };
+
     return (
         (person || props.displayMode === "new") &&
         <div className="profile">
@@ -188,9 +229,9 @@ const Profile = (props) => {
                     notes: person.notes === null ? "" : person.notes,
                     how: person.how === null ? "" : person.how,
                     genderId: person && person.gender ? person.gender.id : "",
-                    contactInfosPhone: [...person.contactInfos.filter((info) => { return info.type === "Phone" })],
-                    contactInfosEmail: [...person.contactInfos.filter((info) => { return info.type === "Email" })],
-                    contactInfossocial_media: [...person.contactInfos.filter((info) => { return info.type === "social_media" })],
+                    contactInfosPhone: getConactInfo("Phone", person),
+                    contactInfosEmail: getConactInfo("Email", person),
+                    contactInfossocial_media: getConactInfo("social_media", person),
                 } : {
                     firstName: "",
                     lastName: "",
@@ -202,9 +243,9 @@ const Profile = (props) => {
                     notes: "",
                     how: "",
                     genderId: "0",
-                    contactInfosPhone: [],
-                    contactInfosEmail: [],
-                    contactInfossocial_media: [],
+                    contactInfosPhone: getConactInfo("Phone"),
+                    contactInfosEmail: getConactInfo("Email"),
+                    contactInfossocial_media: getConactInfo("social_media"),
                 }}
                 onSubmit={(values) => {
                     props.displayMode === "view" ?
@@ -462,7 +503,7 @@ const Profile = (props) => {
                                                 {
                                                     (values.contactInfossocial_media.length > 0 || props.displayMode !== "view") &&
                                                     <div className="infoGroup social_media">
-
+                                                        <h4>Social Media</h4>
                                                         <ContactItems
                                                             type="social_media"
                                                             displayMode={props.displayMode}

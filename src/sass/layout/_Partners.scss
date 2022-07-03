@@ -97,6 +97,9 @@
                     padding: 10px 20px;
                     width: 100%;
                     gap: 10px;
+                    &:empty {
+                        display: none;
+                    }
                     & .infoItem {
                         @include flex(row, center, center);
                         & .label {}
@@ -112,6 +115,12 @@
                         width: 100%;
                         background-color: $color-main-black-50;
                         height: 1px;
+                    }
+                    & .new {
+                        @include flex();
+                        gap: 5px;
+                        padding: 5px;
+                        margin-left: auto;
                     }
                 }
             }
