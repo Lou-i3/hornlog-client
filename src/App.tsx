@@ -119,7 +119,7 @@ const App: React.FC<WrappedComponentProps> = ({
             pageLoading
               ? <Loading />
               : <Switch>
-                <Route exact path={["/", "/home"]} >
+                <Route exact path={["/", "/home", ""]} >
                   <Home />
                 </Route>
                 <Route exact path="/profile" >

@@ -203,15 +203,15 @@
                         font-size: 14px;
                         padding: 0px 2px;
                         // min-width: max(fit-content, '20px');
-                        min-width: 40px;
+                        // min-width: 40px;
                     }
                     & [type="date"] {
-                        // min-width: fit-content;
+                        min-width: 130px;
                         width: fit-content;
                         padding-right: -10px;
                     }
                     & [type="time"] {
-                        // min-width: fit-content;
+                        min-width: 100px;
                         width: fit-content;
                     }
                 }

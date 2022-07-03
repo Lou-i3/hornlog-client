@@ -1,5 +1,5 @@
 import Icon from "./Icon";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 
 const Nav = (props) => {
@@ -17,7 +17,8 @@ const Nav = (props) => {
         {
             Name: "Dashboard",
             Icon: "dashboard",
-            Url: "/home"
+            Url: "/home",
+            ActivePath: ["/", "/home"],
         },
         {
             Name: "Profile",
@@ -68,6 +69,8 @@ const Nav = (props) => {
         // history.replace(target);
     }
 
+    const currentPageUrl = useLocation();
+    // console.log("Nav, currentPageUrl: ", currentPageUrl);
     return (
         <div className="nav">
             {
@@ -87,7 +90,21 @@ const Nav = (props) => {
                                     };
 
                                     return (
-                                        <NavLink className="menuItem" onClick={(e) => handleClick(e, item.Url)} to={item.Url} key={index + " " + linkTarget.key}>
+                                        <NavLink
+                                            className="menuItem"
+                                            onClick={(e) => handleClick(e, item.Url)}
+                                            to={item.Url}
+                                            key={index + " " + linkTarget.key}
+                                            isActive={() => {
+                                                let activePath = item.ActivePath || [item.Url, item.Url];
+                                                console.log("Nav, isActive, item: ", item.Name);
+                                                console.log("Nav, isActive, activePath: ", activePath);
+                                                return activePath
+                                                && [...activePath].includes(currentPageUrl.pathname)
+                                            }
+                                            }
+
+                                        >
                                             <Icon type={item.Icon} />
                                             <h3>{item.Name}</h3>
                                         </NavLink>
@@ -102,19 +119,34 @@ const Nav = (props) => {
                             {
                                 menuItems.map((item, index) => (
                                     item.mobile === "left" &&
-                                    <NavLink className="menuItem" to={item.Url} onClick={(e) => handleClick(e, item.Url)} key={index}>
+                                    <NavLink
+                                        className="menuItem"
+                                        to={item.Url}
+                                        onClick={(e) => handleClick(e, item.Url)}
+                                        key={index}
+                                    >
                                         <Icon type={item.Icon} />
                                         {/* <h3>{item.Name}</h3> */}
                                     </NavLink>
                                 ))
                             }
-                            <NavLink className="menuItem" to="/home" onClick={(e) => handleClick(e, '/Home')}>
+                            <NavLink
+                                className="menuItem"
+                                to="/home"
+                                // onClick={(e) => handleClick(e, '/Home')}
+                                isActive={() => ["/", "/home"].includes(currentPageUrl.pathname)}
+                            >
                                 <img src="/logo.svg" alt="" className="logo" />
                             </NavLink>
                             {
                                 menuItems.map((item, index) => (
                                     item.mobile === "right" &&
-                                    <NavLink className="menuItem" to={item.Url} onClick={(e) => handleClick(e, item.Url)} key={index}>
+                                    <NavLink
+                                        className="menuItem"
+                                        to={item.Url}
+                                        onClick={(e) => handleClick(e, item.Url)}
+                                        key={index}
+                                    >
                                         <Icon type={item.Icon} />
                                         {/* <h3>{item.Name}</h3> */}
                                     </NavLink>

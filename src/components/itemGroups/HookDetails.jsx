@@ -255,7 +255,7 @@ const HookDetails = (props) => {
                                                     name="date"
                                                     key={"date" + (readOnly ? "readonly" : "active") + (hook && hook.date)}
                                                     className="form-control"
-                                                    // placeholder="Nickname"
+                                                    placeholder="2022-06-21"
                                                     disabled={readOnly}
                                                     value={formatDateTime(values.date, 'techdate')}
                                                 />
@@ -302,7 +302,7 @@ const HookDetails = (props) => {
                                         {
                                             ["edit", "new"].includes(displayMode) ?
 
-                                                <input type="text" placeholder="21/06/2022"></input>
+                                                <input type="text" placeholder="xxx"></input>
                                                 : <p>{hook && hook.duration}</p>
                                         }
                                         <Icon type="duration" />
