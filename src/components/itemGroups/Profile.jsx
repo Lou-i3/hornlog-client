@@ -11,6 +11,7 @@ import PositionOptions from "../items/profile/PositionOptions";
 import ContactItems from "../items/profile/ContactItems";
 import { MY_PARTNERS_QUERY } from "../../helpers/queries";
 import ProfilePicture from "../items/profile/ProfilePicture";
+import { DeletePartnerMutation } from "../../helpers/mutations";
 
 
 const NewPartnerMutation = gql`
@@ -39,6 +40,7 @@ const Profile = (props) => {
 
     const [mutateFctNewPartner] = useMutation(NewPartnerMutation, { refetchQueries: [{ query: MY_PARTNERS_QUERY }] });
     const [mutateFctEditPartner] = useMutation(EditPartnerMutation, { refetchQueries: [{ query: MY_PARTNERS_QUERY }] });
+    const [mutateFctDeletePartner] = useMutation(DeletePartnerMutation, { refetchQueries: [{ query: MY_PARTNERS_QUERY }] });
 
     const [profilePicture, setProfilePicture] = useState("");
 
@@ -176,6 +178,24 @@ const Profile = (props) => {
 
     }
 
+    const handleClickDelete = () => {
+        
+        const idToDelete = parseInt(props.partner.id);
+        console.log("idToDelete: ", idToDelete);
+        mutateFctDeletePartner({
+            variables: {
+                id: idToDelete
+            }
+        }).then(res => {
+            console.log(res);
+            props.setSelectedPartner(null);
+            props.setDisplayMode("none");
+
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
     function validateGender(value) {
         let error;
         if (!value || value === "0") {
@@ -261,17 +281,30 @@ const Profile = (props) => {
                             <div className="column left">
                                 <div className="header">
                                     <div className="actionIcons">
-                                        <span className="mobileBack">
+                                        {/* <span className="mobileBack"> */}
                                             <Icon type="arrowLeft" className="mobileBack" onClick={() => {
                                                 props.setSelectedPartner(null);
                                                 props.setDisplayMode("none");
                                             }} />
+                                        {/* </span> */}
+
+                                        <span className="rightButtons">
+                                        <span className="deleteButton">
+                                            {props.displayMode === "edit" && 
+                                            <Icon type="bin" className="deleteButton" onClick={() => {
+                                                handleClickDelete();
+                                                props.setSelectedPartner(null);
+                                                props.setDisplayMode("none");
+                                            }}
+                                            />}
                                         </span>
 
-                                        <Field as="span" onClick={handleSubmit}>
+                                        <Field as="span" className="submit" onClick={handleSubmit}>
                                             {props.displayMode === "view" && <Icon type="edit" /*onClick={() => handleClickEdit()} */ />}
                                             {["edit", "new"].includes(props.displayMode) && <Icon type="save" /*onClick={() => handleClickSave()} */ />}
                                         </Field>
+                                        </span>
+                                       
                                     </div>
 
                                     <div className="personHeader">
@@ -380,6 +413,7 @@ const Profile = (props) => {
                                                                 placeholder="What did you think about them?"
                                                                 disabled={readOnly}
                                                                 value={values.notes}
+                                                                oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
 
                                                             />
                                                         </p>

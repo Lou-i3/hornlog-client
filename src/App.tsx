@@ -110,8 +110,8 @@ const App: React.FC<WrappedComponentProps> = ({
       <div className="content">
 
         <Header isLoggedIn={!(user === null)} logOut={signOut} user={user} />
-        {/* {console.log("user exist: " + !(user === null))}
-        {console.log("user ", user)} */}
+        {/* {console.log("user exist: " + !(user === null))} */}
+        {console.log("user ", user)}
 
         {(loading || user === undefined) ?
           <Loading /> :
