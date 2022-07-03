@@ -25,3 +25,11 @@ mutation DeletePartnerMutation($id: Int!) {
     }
 }
 `;
+
+export const DeleteHookMutation = gql `
+mutation DeleteHookMutation($id: Int!) {
+    deleteHook(id: $id) {
+        id
+    }
+}
+`;

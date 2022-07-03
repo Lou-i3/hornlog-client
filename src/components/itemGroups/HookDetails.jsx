@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { Field, Form, Formik } from "formik";
 import { Fragment, useEffect, useState } from "react";
 import { enumLabel, formatDateTime } from "../../helpers/helpers.js";
-import { EditHookMutation, NewHookMutation } from "../../helpers/mutations.js";
+import { DeleteHookMutation, EditHookMutation, NewHookMutation } from "../../helpers/mutations.js";
 import { MY_HOOKS_QUERY, MY_PARTNERS_QUERY } from "../../helpers/queries.js";
 import Icon from "../global/Icon";
 import ChoicePill from "../items/ChoicePill";
@@ -18,6 +18,7 @@ const HookDetails = (props) => {
 
     const [mutateFctNewHook] = useMutation(NewHookMutation, { refetchQueries: [{ query: MY_HOOKS_QUERY }, { query: MY_PARTNERS_QUERY }] });
     const [mutateFctEditHook] = useMutation(EditHookMutation, { refetchQueries: [{ query: MY_HOOKS_QUERY }, { query: MY_PARTNERS_QUERY }] });
+    const [mutateFctDeleteHook] = useMutation(DeleteHookMutation, { refetchQueries: [{ query: MY_HOOKS_QUERY }, { query: MY_PARTNERS_QUERY }] });
 
     useEffect(() => {
         // console.log("useEffect HookDetails");
@@ -161,6 +162,24 @@ const HookDetails = (props) => {
 
     }
 
+    const handleClickDelete = () => {
+        
+        const idToDelete = parseInt(hook.id);
+        console.log("idToDelete: ", idToDelete);
+        mutateFctDeleteHook({
+            variables: {
+                id: idToDelete
+            }
+        }).then(res => {
+            console.log(res);
+            props.setSelectedHook(null);
+            props.setDisplayMode("none");
+
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
     return (
         (hook || displayMode === "new") &&
         <div className="hookDetails">
@@ -226,10 +245,14 @@ const HookDetails = (props) => {
                                 {
                                     displayMode === "edit" &&
                                     <>
-                                        <Field as="span" onClick={handleSubmit}>
+                                        <Field as="span" onClick={() => {}}>
                                             <Icon type="apple" />
                                         </Field>
-                                        <Field as="span" onClick={handleSubmit}>
+                                        <Field as="span" onClick={() => {
+                                            handleClickDelete();
+                                            props.setSelectedHook(null);
+                                            props.setDisplayMode("none");
+                                        }}>
                                             <Icon type="bin" />
                                         </Field>
                                     </>
