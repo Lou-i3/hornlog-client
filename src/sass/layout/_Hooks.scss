@@ -184,6 +184,34 @@
                     }
                 }
             }
+            & .infoGroup {
+                @include flex(row, space-between, center);
+                width: 100%;
+                gap: 10px;
+                & .infoItem {
+                    @include flex(column, center, flex-start);
+                    width: 100%;
+                    gap: 10px;
+                    & .infoText {
+                        @include flex(row, center, center);
+                        gap: 10px;
+                    }
+                    & .moodPicker,
+                    .starRating {
+                        @include flex(row, space-evenly, center);
+                        gap: 10px;
+                        padding: 4px 8px;
+                        width: 100%;
+                        & .moodContainer {
+                            font-size: 20px;
+                            opacity: 0.5;
+                            &.selected {
+                                opacity: 1;
+                            }
+                        }
+                    }
+                }
+            }
             & .infoItem {
                 @include flex(row, flex-start, center);
                 padding: 20px 10px;
@@ -213,13 +241,6 @@
                     & [type="time"] {
                         min-width: 100px;
                         width: fit-content;
-                    }
-                }
-                & .moodPicker {
-                    @include flex(row);
-                    gap: 10px;
-                    & .moodContainer {
-                        font-size: 20px;
                     }
                 }
                 & .hookEnumField {
@@ -315,6 +336,23 @@
                     & svg {
                         height: 30px;
                         width: 30px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.hookDetails.view {
+    & .info {
+        & .infoGroup {
+            & .infoItem {
+                flex-direction: row;
+                align-items: center;
+                & .moodPicker {
+                    & .moodContainer {
+                        // display: none;
+                        opacity: 1;
                     }
                 }
             }

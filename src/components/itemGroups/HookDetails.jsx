@@ -70,13 +70,19 @@ const HookDetails = (props) => {
         if (values.protected !== "") {
             data.protected = values.protected;
         }
+        if (values.mood !== "") {
+            data.mood = values.mood;
+        }
+        if (values.grade !== "") {
+            data.grade = values.grade;
+        }
 
         // partners 
         if (values.partners) {
             let additionalPartners = values.partners.filter(partner => {
-                return partner.id !== "new" && hook.partners.filter(hookPartner => {
+                return partner.id !== "new" && hook ? hook.partners.filter(hookPartner => {
                     return partner.id === hookPartner.id;
-                }).length === 0
+                }).length === 0 : true;
             });
 
             if (additionalPartners && additionalPartners.length > 0) {
@@ -163,7 +169,7 @@ const HookDetails = (props) => {
     }
 
     const handleClickDelete = () => {
-        
+
         const idToDelete = parseInt(hook.id);
         console.log("idToDelete: ", idToDelete);
         mutateFctDeleteHook({
@@ -182,7 +188,7 @@ const HookDetails = (props) => {
 
     return (
         (hook || displayMode === "new") &&
-        <div className="hookDetails">
+        <div className={`hookDetails ${displayMode}`}>
             <Formik
                 enableReinitialize
                 initialValues={hook ? {
@@ -192,6 +198,8 @@ const HookDetails = (props) => {
                     duration: hook.duration ? hook.duration : "",
                     hookType: hook.hookType,
                     location: hook.location ? hook.location : "",
+                    mood: hook.mood ? hook.mood : "",
+                    grade: hook.grade ? hook.grade : "",
                     protected: hook.protected,
                     note: hook.note ? hook.note : "",
                     partners: hook.partners ?
@@ -210,6 +218,8 @@ const HookDetails = (props) => {
                     duration: "",
                     hookType: "",
                     location: "",
+                    mood: "",
+                    grade: "",
                     protected: "",
                     note: "",
                     partners: [],
@@ -245,7 +255,7 @@ const HookDetails = (props) => {
                                 {
                                     displayMode === "edit" &&
                                     <>
-                                        <Field as="span" onClick={() => {}}>
+                                        <Field as="span" onClick={() => { }}>
                                             <Icon type="apple" />
                                         </Field>
                                         <Field as="span" onClick={() => {
@@ -388,13 +398,36 @@ const HookDetails = (props) => {
 
                                     }
                                 </div>
-                                <div className="infoItem">
-                                    <Icon type="mood" />
-                                    <MoodPicker />
-                                </div>
-                                <div className="infoItem">
-                                    <p>Grade</p>
-                                    <StarRating />
+                                <div className="infoGroup">
+                                    {
+                                        (values.mood !== "" || props.displayMode !== "view") &&
+                                        <div className="infoItem mood">
+                                            <div className="infoText">
+                                                <h3>Mood</h3>
+                                            </div>
+                                            <MoodPicker
+                                                displayMode={displayMode}
+                                                readOnly={readOnly}
+                                                setValues={setValues}
+                                                values={values}
+                                            />
+                                        </div>
+                                    }
+                                    {
+                                        (values.grade !== "" || props.displayMode !== "view") &&
+                                        <div className="infoItem grade">
+                                            <h3>Grade</h3>
+                                            <StarRating
+                                                displayMode={displayMode}
+                                                setValues={setValues}
+                                                values={values}
+                                                name="grade"
+                                                readOnly={readOnly}
+
+                                            />
+
+                                        </div>
+                                    }
                                 </div>
 
                                 <div className="infoItem">
