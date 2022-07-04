@@ -431,7 +431,7 @@ const HookDetails = (props) => {
                                 </div>
 
                                 <div className="infoItem">
-                                    <p>Notes</p>
+                                    <h3>Notes</h3>
                                     {
                                         displayMode === "view" ?
                                             <p>{hook && hook.note}</p> :
