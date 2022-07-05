@@ -148,7 +148,7 @@
         height: 100%;
         gap: 10px;
         padding: 20px;
-        overflow: scroll;
+        overflow: visible scroll;
         /* IE and Edge */
         -ms-overflow-style: none;
         /* Firefox */
@@ -187,10 +187,11 @@
             & .infoGroup {
                 @include flex(row, space-between, center);
                 width: 100%;
-                gap: 10px;
+                // gap: 10px;
                 & .infoItem {
                     @include flex(column, center, flex-start);
-                    width: 100%;
+                    // width: 100%;
+                    flex: 1 1 0;
                     gap: 10px;
                     & .infoText {
                         @include flex(row, center, center);
@@ -199,7 +200,7 @@
                     & .moodPicker,
                     .starRating {
                         @include flex(row, space-evenly, center);
-                        gap: 10px;
+                        // gap: 10px;
                         padding: 4px 8px;
                         width: 100%;
                         & .moodContainer {
