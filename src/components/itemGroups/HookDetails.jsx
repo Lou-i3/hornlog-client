@@ -6,6 +6,7 @@ import { DeleteHookMutation, EditHookMutation, NewHookMutation } from "../../hel
 import { MY_HOOKS_QUERY, MY_PARTNERS_QUERY } from "../../helpers/queries.js";
 import Icon from "../global/Icon";
 import ChoicePill from "../items/ChoicePill";
+import DurationField from "../items/hooks/DurationField.jsx";
 import HookEnumField from "../items/hooks/HookEnumField.jsx";
 import HookPartnersField from "../items/hooks/HookPartnersField.jsx";
 import MoodPicker from "../items/MoodPicker.jsx";
@@ -75,6 +76,9 @@ const HookDetails = (props) => {
         }
         if (values.grade !== "") {
             data.grade = values.grade;
+        }
+        if (values.duration !== "") {
+            data.duration = parseInt(values.duration);
         }
 
         // partners 
@@ -195,7 +199,7 @@ const HookDetails = (props) => {
                     dateTime: hook.dateTime,
                     date: formatDateTime(hook.dateTime, "techdate"),
                     time: formatDateTime(hook.dateTime, "techtime"),
-                    duration: hook.duration ? hook.duration : "",
+                    duration: hook.duration ? hook.duration : 0,
                     hookType: hook.hookType,
                     location: hook.location ? hook.location : "",
                     mood: hook.mood ? hook.mood : "",
@@ -215,7 +219,7 @@ const HookDetails = (props) => {
                     dateTime: "",
                     date: "",
                     time: "",
-                    duration: "",
+                    duration: 0,
                     hookType: "",
                     location: "",
                     mood: "",
@@ -329,16 +333,21 @@ const HookDetails = (props) => {
                                 </div>
 
                                 {
-                                    (values.duration !== "" || props.displayMode !== "view") &&
+                                    (values.duration !== 0 || props.displayMode !== "view") &&
                                     <div className="infoItem">
                                         <h3>for</h3>
                                         {
-                                            ["edit", "new"].includes(displayMode) ?
+                                            // ["edit", "new"].includes(displayMode) ?
 
-                                                <input type="text" placeholder="xxx"></input>
-                                                : <p>{hook && hook.duration}</p>
+                                                <DurationField 
+                                                    values={values}
+                                                    setValues={setValues}
+                                                    readOnly={readOnly}
+                                                />
+                                                // <input type="text" placeholder="xxx"></input>
+                                                // : <p>{hook && hook.duration}</p>
                                         }
-                                        <Icon type="duration" />
+                                        {/* <Icon type="duration" /> */}
                                     </div>
                                 }
 

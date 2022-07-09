@@ -244,6 +244,17 @@
                         width: fit-content;
                     }
                 }
+                & .durationField {
+                    @include flex(row, space-between, center);
+                    width: 100%;
+                    &>svg {
+                        transform: rotate(-90deg);
+                    }
+                    & .durationValue {
+                        @include flex(row, center, center);
+                        gap: 10px;
+                    }
+                }
                 & .hookEnumField {
                     @include flex(row, space-between, center);
                     flex-wrap: wrap;
