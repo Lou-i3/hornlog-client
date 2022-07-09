@@ -44,6 +44,7 @@
                 & .settingsBlockHeader {
                     @include flex(row, space-between, center);
                     width: 100%;
+                    gap: 10px;
                     & .title {
                         @include flex(row, center, center);
                         gap: 10px;
@@ -51,6 +52,13 @@
                     & svg {
                         cursor: pointer;
                     }
+                    &.icons {
+                        @include flex(row, flex-start, center);
+                        gap: 10px;
+                    }
+                }
+                &.icons {
+                    text-decoration: none;
                 }
                 & .settingsBlockContent {
                     @include flex(column, center, flex-start);
