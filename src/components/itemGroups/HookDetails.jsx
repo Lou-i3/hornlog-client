@@ -65,6 +65,7 @@ const HookDetails = (props) => {
             hookType: values.hookType,
             // protected: values.protected,
             dateTime: new Date(values.date + "T" + values.time),
+            note: values.note,
         }
 
         // protected 
