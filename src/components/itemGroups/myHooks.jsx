@@ -26,10 +26,10 @@ const MyHooks = (props) => {
     const handleClick = (hook) => {
         // props.setSelectedHook(hook);
         // if (hook.id in data.myHooks) { 
-            console.log("selectedHook in data.myHooks"); 
-            props.setSelectedHook(data.myHooks.filter((hookItem) => hookItem.id === hook.id)[0]);
+        console.log("selectedHook in data.myHooks");
+        props.setSelectedHook(data.myHooks.filter((hookItem) => hookItem.id === hook.id)[0]);
         // }
-    
+
         console.log("handleClick, selectedHook: ", props.selectedHook);
     }
 
@@ -39,10 +39,10 @@ const MyHooks = (props) => {
 
         // console.log(data);
         if (data && props.selectedHook) {
-        //     if (props.selectedHook.id in data.myHooks) { 
-        //         console.log("selectedHook in data.myHooks"); 
-        //         props.setSelectedHook(data.myHooks.filter((value, index, self) => self.id === props.selectedHook.id)[0]);
-        //     }
+            //     if (props.selectedHook.id in data.myHooks) { 
+            //         console.log("selectedHook in data.myHooks"); 
+            //         props.setSelectedHook(data.myHooks.filter((value, index, self) => self.id === props.selectedHook.id)[0]);
+            //     }
         }
         getData();
         // eslint-disable-next-line
@@ -69,7 +69,7 @@ const MyHooks = (props) => {
             data.myHooks.forEach(hook => {
                 tableDataLocal.push({
                     id: hook.id,
-                    date: formatDateTime(hook.dateTime, 'date'),
+                    date: hook.dateTime,
                     hookType: hook.hookType,
                     partners: hook.partners,
                     name: hook.partners && hook.partners[0] ?
@@ -92,12 +92,17 @@ const MyHooks = (props) => {
                     let x = a[sortColumnLocal];
                     let y = b[sortColumnLocal];
 
+                    if (sortColumnLocal === 'date') {
+                        x = (new Date(x)).getTime();
+                        y = (new Date(y)).getTime();
+                    }
                     if (typeof x === 'string') {
                         x = x.charCodeAt();
                     }
                     if (typeof y === 'string') {
                         y = y.charCodeAt();
                     }
+
                     if (sortType === 'asc') {
                         return x - y;
                     } else {
@@ -107,6 +112,21 @@ const MyHooks = (props) => {
                 // tableDataLocal = output;
                 // console.log("output", output);
                 // setTableData(output);
+            } else {
+                tableDataLocal = tableDataLocal.sort((a, b) => {
+                    let x = a["date"];
+                    let y = b["date"];
+
+
+                    x = (new Date(x)).getTime();
+                    y = (new Date(y)).getTime();
+
+                    if (sortType === 'asc') {
+                        return x - y;
+                    } else {
+                        return y - x;
+                    }
+                });
             }
             if (props.searchTerms !== "") {
                 let filteredData = [...tableDataLocal];
@@ -129,7 +149,7 @@ const MyHooks = (props) => {
                 tableDataLocal = filteredData;
                 // return filteredData;
             }
-        setTableData(tableDataLocal);
+            setTableData(tableDataLocal);
             setLoading(false);
 
         }
@@ -188,7 +208,7 @@ const MyHooks = (props) => {
                                 </HeaderCell>
                                 <Cell dataKey="date" color='white'>
                                     {
-                                        rowdata => <p>{rowdata.date}</p>
+                                        rowdata => <p>{formatDateTime(rowdata.date, 'date')}</p>
 
                                     }
                                 </Cell>
@@ -227,8 +247,8 @@ const MyHooks = (props) => {
                                 <Cell dataKey='hookType'>{
                                     rowData =>
                                         <ChoicePill
-                                            text={enumLabel(rowData.hookType)} 
-                                            />
+                                            text={enumLabel(rowData.hookType)}
+                                        />
                                 }
                                 </Cell>
                             </Column>
