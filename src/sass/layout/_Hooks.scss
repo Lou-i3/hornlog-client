@@ -197,20 +197,6 @@
                         @include flex(row, center, center);
                         gap: 10px;
                     }
-                    & .moodPicker,
-                    .starRating {
-                        @include flex(row, space-evenly, center);
-                        // gap: 10px;
-                        padding: 4px 8px;
-                        width: 100%;
-                        & .moodContainer {
-                            font-size: 20px;
-                            opacity: 0.5;
-                            &.selected {
-                                opacity: 1;
-                            }
-                        }
-                    }
                 }
             }
             & .infoItem {
@@ -393,6 +379,21 @@
                     }
                 }
             }
+        }
+    }
+}
+
+.moodPicker,
+.starRating {
+    @include flex(row, space-between, center);
+    // gap: 10px;
+    padding: 4px 8px;
+    width: 100%;
+    & .moodContainer {
+        font-size: 20px;
+        opacity: 0.5;
+        &.selected {
+            opacity: 1;
         }
     }
 }

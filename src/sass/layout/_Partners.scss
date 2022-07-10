@@ -116,14 +116,18 @@
                         display: none;
                     }
                     & .infoItem {
-                        @include flex(row, center, center);
+                        @include flex(row, flex-start, center);
+                        width: 100%;
                         & .label {}
                         & .value {}
                         gap: 20px;
                         & svg {
                             width: 20px;
                             height: 20px;
-                            margin-left: auto;
+                            // margin-left: auto;
+                        }
+                        & .infoTexts {
+                            width: 100%;
                         }
                     }
                     & .infoSeparator {

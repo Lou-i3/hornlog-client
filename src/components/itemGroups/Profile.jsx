@@ -12,6 +12,7 @@ import ContactItems from "../items/profile/ContactItems";
 import { MY_PARTNERS_QUERY } from "../../helpers/queries";
 import ProfilePicture from "../items/profile/ProfilePicture";
 import { DeletePartnerMutation } from "../../helpers/mutations";
+import StarRating from "../items/StarRating";
 
 
 const NewPartnerMutation = gql`
@@ -179,7 +180,7 @@ const Profile = (props) => {
     }
 
     const handleClickDelete = () => {
-        
+
         const idToDelete = parseInt(props.partner.id);
         console.log("idToDelete: ", idToDelete);
         mutateFctDeletePartner({
@@ -216,7 +217,7 @@ const Profile = (props) => {
             designation: ""
         });
         if (person) {
-            
+
             let personContactInfos = person.contactInfos.filter((info) => { return info.type === forType });
             let isPersonContactInfos = personContactInfos.length > 0;
 
@@ -231,6 +232,21 @@ const Profile = (props) => {
         }
 
         return contactInfos
+    };
+
+    let getPartnerGrade = (partnerHooks) => {
+        let len = partnerHooks.filter(hook => hook.grade).length;
+        let grade;
+        if (len === 0) {
+            grade = "";
+        } else if (len === 1) {
+            grade = partnerHooks[0].grade;
+        } else {
+            let sum = partnerHooks.filter(hook => hook.grade).reduce((a, b) => a.grade + b.grade);
+            grade = sum / len;
+        }
+        return grade
+
     };
 
     return (
@@ -252,6 +268,7 @@ const Profile = (props) => {
                     contactInfosPhone: getConactInfo("Phone", person),
                     contactInfosEmail: getConactInfo("Email", person),
                     contactInfossocial_media: getConactInfo("social_media", person),
+                    grade: props.partner && props.partner.hooks ? getPartnerGrade(props.partner.hooks) : "",
                 } : {
                     firstName: "",
                     lastName: "",
@@ -266,6 +283,7 @@ const Profile = (props) => {
                     contactInfosPhone: getConactInfo("Phone"),
                     contactInfosEmail: getConactInfo("Email"),
                     contactInfossocial_media: getConactInfo("social_media"),
+                    grade: "",
                 }}
                 onSubmit={(values) => {
                     props.displayMode === "view" ?
@@ -274,37 +292,36 @@ const Profile = (props) => {
 
                 }}  >
                 {({ handleSubmit, values, errors, touched }) => (
-                    // console.log("form values: ", values),
+                    console.log("form values profile: ", values),
                     <Form>
-
                         <Fragment>
                             <div className="column left">
                                 <div className="header">
                                     <div className="actionIcons">
                                         {/* <span className="mobileBack"> */}
-                                            <Icon type="arrowLeft" className="mobileBack" onClick={() => {
-                                                props.setSelectedPartner(null);
-                                                props.setDisplayMode("none");
-                                            }} />
+                                        <Icon type="arrowLeft" className="mobileBack" onClick={() => {
+                                            props.setSelectedPartner(null);
+                                            props.setDisplayMode("none");
+                                        }} />
                                         {/* </span> */}
 
                                         <span className="rightButtons">
-                                        <span className="deleteButton">
-                                            {props.displayMode === "edit" && 
-                                            <Icon type="bin" className="deleteButton" onClick={() => {
-                                                handleClickDelete();
-                                                props.setSelectedPartner(null);
-                                                props.setDisplayMode("none");
-                                            }}
-                                            />}
+                                            <span className="deleteButton">
+                                                {props.displayMode === "edit" &&
+                                                    <Icon type="bin" className="deleteButton" onClick={() => {
+                                                        handleClickDelete();
+                                                        props.setSelectedPartner(null);
+                                                        props.setDisplayMode("none");
+                                                    }}
+                                                    />}
+                                            </span>
+
+                                            <Field as="span" className="submit" onClick={handleSubmit}>
+                                                {props.displayMode === "view" && <Icon type="edit" /*onClick={() => handleClickEdit()} */ />}
+                                                {["edit", "new"].includes(props.displayMode) && <Icon type="save" /*onClick={() => handleClickSave()} */ />}
+                                            </Field>
                                         </span>
 
-                                        <Field as="span" className="submit" onClick={handleSubmit}>
-                                            {props.displayMode === "view" && <Icon type="edit" /*onClick={() => handleClickEdit()} */ />}
-                                            {["edit", "new"].includes(props.displayMode) && <Icon type="save" /*onClick={() => handleClickSave()} */ />}
-                                        </Field>
-                                        </span>
-                                       
                                     </div>
 
                                     <div className="personHeader">
@@ -535,7 +552,7 @@ const Profile = (props) => {
                                                     </div>
                                                 }
                                                 {
-                                                    (values.contactInfossocial_media.length > 0 || props.displayMode !== "view") &&
+                                                    ((values.contactInfossocial_media.length > 0 && values.contactInfossocial_media[0].info !== "") || props.displayMode !== "view") &&
                                                     <div className="infoGroup social_media">
                                                         <h4>Social Media</h4>
                                                         <ContactItems
@@ -550,34 +567,39 @@ const Profile = (props) => {
                                             </div>
                                             <div className="column right">
                                                 <div className="infoGroup sexuality">
-                                                    <div className="infoItem sexuality">
-                                                        <Icon type={(values.sexuality && values.sexuality === "Straight") ? "sexualityStraight" : "sexuality"} />
-                                                        <div className="infoTexts">
-                                                            <h4 className="label">Sexuality</h4>
-                                                            <p className="value">
-                                                                {
-                                                                    props.displayMode === "view" ?
-                                                                        enumLabel(person.sexuality) :
-                                                                        <Field
-                                                                            name="sexuality"
-                                                                            as="select"
-                                                                            value={values.sexuality}
-                                                                        >
-                                                                            {
-                                                                                props.displayMode === "new" &&
-                                                                                <option disabled value="0"> -- select an option -- </option>
-                                                                            }
-                                                                            <SexualityOptions />
-                                                                            {/* <option value="straight">Straight</option>
+                                                    {
+                                                        (props.displayMode !== "view" || values.sexuality !== "") &&
+                                                        <>
+                                                            <div className="infoItem sexuality">
+                                                                <Icon type={(values.sexuality && values.sexuality === "Straight") ? "sexualityStraight" : "sexuality"} />
+                                                                <div className="infoTexts">
+                                                                    <h4 className="label">Sexuality</h4>
+                                                                    <p className="value">
+                                                                        {
+                                                                            props.displayMode === "view" ?
+                                                                                enumLabel(person.sexuality) :
+                                                                                <Field
+                                                                                    name="sexuality"
+                                                                                    as="select"
+                                                                                    value={values.sexuality}
+                                                                                >
+                                                                                    {
+                                                                                        props.displayMode === "new" &&
+                                                                                        <option disabled value="0"> -- select an option -- </option>
+                                                                                    }
+                                                                                    <SexualityOptions />
+                                                                                    {/* <option value="straight">Straight</option>
                                                                             <option value="Gay">Gay</option> */}
-                                                                        </Field>
-                                                                }
+                                                                                </Field>
+                                                                        }
 
-                                                            </p>
+                                                                    </p>
 
-                                                        </div>
-                                                    </div>
-                                                    <div className="infoSeparator" ></div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="infoSeparator" ></div>
+                                                        </>
+                                                    }
 
                                                     <div className={`infoItem gender ${touched.genderId && errors.genderId ? "error" : ""}`}>
                                                         <Icon type="genders" />
@@ -608,39 +630,53 @@ const Profile = (props) => {
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div className="infoSeparator" ></div>
 
-                                                    <div className="infoItem position">
-                                                        <Icon type="position" />
-                                                        <div className="infoTexts">
-                                                            <h4 className="label">Position</h4>
-                                                            <p className="value">
-                                                                {props.displayMode === "view" ?
-                                                                    enumLabel(person.sexPosition) :
-                                                                    <Field
-                                                                        name="sexPosition"
-                                                                        as="select"
-                                                                        value={values.sexPosition}
-                                                                    >
-                                                                        {
-                                                                            props.displayMode === "new" &&
-                                                                            <option disabled value="0"> -- select an option -- </option>
+                                                    {
+                                                        (props.displayMode !== "view" || values.sexPosition !== "") &&
+                                                        <>
+                                                            <div className="infoSeparator" ></div>
+
+                                                            <div className="infoItem position">
+                                                                <Icon type="position" />
+                                                                <div className="infoTexts">
+                                                                    <h4 className="label">Position</h4>
+                                                                    <p className="value">
+                                                                        {props.displayMode === "view" ?
+                                                                            enumLabel(person.sexPosition) :
+                                                                            <Field
+                                                                                name="sexPosition"
+                                                                                as="select"
+                                                                                value={values.sexPosition}
+                                                                            >
+                                                                                {
+                                                                                    props.displayMode === "new" &&
+                                                                                    <option disabled value="0"> -- select an option -- </option>
+                                                                                }
+                                                                                <PositionOptions />
+                                                                            </Field>
                                                                         }
-                                                                        <PositionOptions />
-                                                                    </Field>
-                                                                }
-                                                            </p>
-                                                        </div>
-                                                    </div>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </>
+                                                    }
 
                                                 </div>
-                                                <div className="infoGroup grade">
-                                                    <div className="infoItem">
-                                                        <div className="infoTexts">
-                                                            <h4 className="label">Grade</h4>
+                                                {
+                                                    values.grade !== "" &&
+                                                    <div className="infoGroup grade">
+                                                        <div className="infoItem">
+                                                            <div className="infoTexts">
+                                                                <h4 className="label">Average Grade</h4>
+                                                                <StarRating
+                                                                    displayMode="view"
+                                                                    values={values}
+                                                                    name="grade"
+                                                                />
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                }
                                             </div>
                                         </div>
                                         <div className="infoGroup location">
