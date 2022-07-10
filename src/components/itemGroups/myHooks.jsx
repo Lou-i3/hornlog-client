@@ -172,6 +172,8 @@ const MyHooks = (props) => {
         }, 500);
     };
 
+    const isDev = true;
+
     return (
         <div className="myHooks">
             {/* {fireToken && <pstyle="">FireToken: {fireToken}</p>} */}
@@ -181,80 +183,125 @@ const MyHooks = (props) => {
                     <p>Error: {error.message}{console.log(error)}</p> :
                     <Fragment>
                         {/* <div onClick={() => setLoading(true)} >Coucou</div> */}
-                        <Table
-                            data={tableData}
-                            sortColumn={sortColumn}
-                            sortType={sortType}
-                            id="table"
-                            bordered={false}
-                            onSortColumn={handleSortColumn}
-                            loading={loading}
-                            rowClassName={(rowData) => (rowData && props.selectedHook && rowData["id"] === props.selectedHook.id ? "selected" : "")}
-                            onRowClick={data => {
-                                console.log(data);
-                                const hook = data;
-                                handleClick(hook)
-                            }}
-                            rowHeight={55}
-                        >
+                        {
+                            !isDev ?
+                                <Table
+                                    data={tableData}
+                                    sortColumn={sortColumn}
+                                    sortType={sortType}
+                                    id="table"
+                                    bordered={false}
+                                    onSortColumn={handleSortColumn}
+                                    loading={loading}
+                                    rowClassName={(rowData) => (rowData && props.selectedHook && rowData["id"] === props.selectedHook.id ? "selected" : "")}
+                                    onRowClick={data => {
+                                        console.log(data);
+                                        const hook = data;
+                                        handleClick(hook)
+                                    }}
+                                    rowHeight={55}
+                                >
 
 
-                            <Column
-                                flexGrow={1}
-                                sortable
-                                align='center'>
-                                <HeaderCell >
-                                    Date
-                                </HeaderCell>
-                                <Cell dataKey="date" color='white'>
-                                    {
-                                        rowdata => <p>{formatDateTime(rowdata.date, 'date')}</p>
+                                    <Column
+                                        flexGrow={1}
+                                        sortable
+                                        align='center'>
+                                        <HeaderCell >
+                                            Date
+                                        </HeaderCell>
+                                        <Cell dataKey="date" color='white'>
+                                            {
+                                                rowdata => <p>{formatDateTime(rowdata.date, 'date')}</p>
 
-                                    }
-                                </Cell>
-                            </Column>
-                            <Column
-                                // resizable
-                                // width={80}
-                                flexGrow={1}
-                                sortable
-                                align='center'>
-                                <HeaderCell >
-                                    Who
-                                </HeaderCell>
-                                <Cell dataKey="partners" color='white'>
-                                    {
-                                        rowdata =>
-                                            rowdata.partners.map((partner, index) =>
-                                                <PictureAndName
-                                                    key={index}
-                                                    partner={partner}
-                                                    onlyPic={rowdata.partners.length > 1 || windowWidth < 767}
+                                            }
+                                        </Cell>
+                                    </Column>
+                                    <Column
+                                        // resizable
+                                        // width={80}
+                                        flexGrow={1}
+                                        sortable
+                                        align='center'>
+                                        <HeaderCell >
+                                            Who
+                                        </HeaderCell>
+                                        <Cell dataKey="partners" color='white'>
+                                            {
+                                                rowdata =>
+                                                    rowdata.partners.map((partner, index) =>
+                                                        <PictureAndName
+                                                            key={index}
+                                                            partner={partner}
+                                                            onlyPic={rowdata.partners.length > 1 || windowWidth < 767}
+                                                        />
+                                                    )
+
+                                            }
+                                        </Cell>
+                                    </Column>
+                                    <Column
+                                        flexGrow={1}
+                                        // sortable
+                                        align='center'
+                                    >
+                                        <HeaderCell>
+                                            Type
+                                        </HeaderCell>
+                                        <Cell dataKey='hookType'>{
+                                            rowData =>
+                                                <ChoicePill
+                                                    text={enumLabel(rowData.hookType)}
                                                 />
-                                            )
-
-                                    }
-                                </Cell>
-                            </Column>
-                            <Column
-                                flexGrow={1}
-                                // sortable
-                                align='center'
-                            >
-                                <HeaderCell>
-                                    Type
-                                </HeaderCell>
-                                <Cell dataKey='hookType'>{
-                                    rowData =>
-                                        <ChoicePill
-                                            text={enumLabel(rowData.hookType)}
-                                        />
-                                }
-                                </Cell>
-                            </Column>
+                                        }
+                                        </Cell>
+                                    </Column>
 
 
-                        </Table>
+                                </Table>
+                                :
+                                loading ?
+                                    <div className="loading">Loading</div>
+                                    :
+                                    <div className="hooksWrapper">
+                                        {tableData && tableData.map((hook, index) => (
+                                            <div className="hookContainer" onClick={() => {
+                                                console.log({hook});
+                                                // const hook = data;
+                                                handleClick(hook)
+                                            }}>
+                                                <div className="firstLine line">
+                                                    <div className="column partners">
+                                                        {
+                                                            hook.partners.map((partner, index) =>
+                                                                <PictureAndName
+                                                                    key={index}
+                                                                    partner={partner}
+                                                                    onlyPic={hook.partners.length > 1 || windowWidth < 767}
+                                                                />
+                                                            )
+                                                        }
+                                                    </div>
+                                                    <div className="column date">
+                                                        {formatDateTime(hook.date, 'date')}
+                                                    </div>
+                                                </div>
+                                                <div className="secondLine line">
+                                                    <div className="column type">
+                                                        <ChoicePill
+                                                            text={enumLabel(hook.hookType)}
+                                                        />
+                                                    </div>
+                                                    <div className="column icons">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))
+                                        }
+                                    </div>
+                        }
+
                     </Fragment>
 
             }

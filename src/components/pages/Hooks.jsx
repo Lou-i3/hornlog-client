@@ -67,33 +67,36 @@ const Hooks = () => {
 
                             </div>
                         </div>
-                        <Search setSearchTerms={setSearchTerms} />
+                        <div className="title">
+                            <Search setSearchTerms={setSearchTerms} />
+                            <Icon type="filter" />
+                        </div>
                         <MyHooks selectedHook={selectedHook} setSelectedHook={setSelectedHook} searchTerms={searchTerms} />
                     </div>
 
                 </div>
-               { 
-               (windowWidth > 767 || (windowWidth < 767 && ["view", "edit", "new"].includes(displayMode))) &&
-                <div className={`right-side side ${displayMode}`}>
+                {
+                    (windowWidth > 767 || (windowWidth < 767 && ["view", "edit", "new"].includes(displayMode))) &&
+                    <div className={`right-side side ${displayMode}`}>
 
-                    {
-                        ["view", "edit", "new"].includes(displayMode) &&
-                        <HookDetails
-                            hook={selectedHook}
-                            displayMode={displayMode}
-                            setDisplayMode={setDisplayMode}
-                            setSelectedHook={setSelectedHook}
-                        />
-                    }
-                    {displayMode === "none" &&
-                        <div className="none">
-                            <Illustration type="hooksNoSelection" />
-                            <p>Select a hook to see details</p>
-                        </div>
-                    }
-                    {/* {(displayMode === "edit" || displayMode === "new") && <HookEditNew displayMode={displayMode} setDisplayMode={setDisplayMode} setSelectedHook={setSelectedHook} />} */}
+                        {
+                            ["view", "edit", "new"].includes(displayMode) &&
+                            <HookDetails
+                                hook={selectedHook}
+                                displayMode={displayMode}
+                                setDisplayMode={setDisplayMode}
+                                setSelectedHook={setSelectedHook}
+                            />
+                        }
+                        {displayMode === "none" &&
+                            <div className="none">
+                                <Illustration type="hooksNoSelection" />
+                                <p>Select a hook to see details</p>
+                            </div>
+                        }
+                        {/* {(displayMode === "edit" || displayMode === "new") && <HookEditNew displayMode={displayMode} setDisplayMode={setDisplayMode} setSelectedHook={setSelectedHook} />} */}
 
-                </div>
+                    </div>
                 }
             </div>
 
