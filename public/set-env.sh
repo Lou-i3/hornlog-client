@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Substitute container environment into production packaged react app
 # CRA does have some support for managing .env files, but not as an `npm build` output
