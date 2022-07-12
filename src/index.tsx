@@ -18,8 +18,8 @@ import { setContext } from '@apollo/client/link/context';
 import firebase from 'firebase/app';
 
 
-console.log("windows.R: ", window.__RUNTIME_CONFIG__);
-console.log("coucouuuu");
+// console.log("windows.R: ", window.__RUNTIME_CONFIG__);
+// console.log("coucouuuu");
 
 const httpLink = createHttpLink({
   uri:   'https://hornlog-api.nas.dewwwe.com/',
