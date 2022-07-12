@@ -44,6 +44,5 @@ WORKDIR /usr/share/nginx/html
 RUN chmod +x set-env.sh
 #RUN chmod +x env.sh
 # ENTRYPOINT [ "nginx -g \"daemon off;\""]
-# CMD ["/bin/sh", "set-env.sh"]
 # CMD ["nginx", "-g", "\"daemon off;\""]
 ENTRYPOINT ["sh","/usr/share/nginx/html/set-env.sh"]
