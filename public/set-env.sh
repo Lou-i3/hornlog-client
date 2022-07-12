@@ -6,6 +6,8 @@
 # To test:
 # docker run --rm -e API_URI=http://localhost:5000/api -e CONFLUENCE_URI=https://confluence.evilcorp.org -e INTRANET_URI=https://intranet.evilcorp.org -it -p 3000:80/tcp dam-frontend:latest
 
+echo "Setting environment variables..."
+
 cp -f /usr/share/nginx/html/runtime-env.example.js /tmp
 
 if [ -n "$PORT" ]; then
