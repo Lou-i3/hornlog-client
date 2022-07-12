@@ -54,4 +54,4 @@ cat /tmp/runtime-env.example.js > /usr/share/nginx/html/runtime-env.js
 # exec "$@"
 echo "done"
 
-nginx -g "daemon off;"
+# nginx -g "daemon off;"
