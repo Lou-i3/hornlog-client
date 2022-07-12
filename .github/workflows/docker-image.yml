@@ -24,8 +24,3 @@ jobs:
       with:
         push: true
         tags: loui3/hornlog-client:latest
-
-    - name: Webhook POST Action
-      uses: muinmomin/webhook-action@v1.0.0
-      with:
-        url: https://portainer.nas.dewwwe.com/api/webhooks/2597a7fc-e7f6-46a0-9771-958432412d19
