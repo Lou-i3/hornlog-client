@@ -61,7 +61,7 @@ function OkQuery(_props: { user: any; }) {
   const handleClick = () => {
     console.log("Clicked");
     console.log(_props.user)
-    console.log("user: " + _props.user.currentUser);
+    // console.log("user: " + _props.user.currentUser);
   }
   // console.log("api key: ", window.__RUNTIME_CONFIG__.FIREBASE_API_KEY);
   return (
