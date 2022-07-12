@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Substitute container environment into production packaged react app
 # CRA does have some support for managing .env files, but not as an `npm build` output
@@ -54,4 +54,4 @@ cat /tmp/runtime-env.example.js > /usr/share/nginx/html/runtime-env.js
 # exec "$@"
 echo "done"
 
-# nginx -g "daemon off;"
+nginx -g "daemon off;"
