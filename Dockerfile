@@ -20,8 +20,8 @@ COPY ./.env.example /usr/share/nginx/html/.env
 
 # COPY nginx/nginx.conf /etc/nginx/
 RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx/nginx.conf /etc/nginx/conf.d
-# COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+# COPY nginx/nginx.conf /etc/nginx/conf.d
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # install nodejs & npm
 #RUN apk add --update nodejs
@@ -43,5 +43,7 @@ EXPOSE 80
 WORKDIR /usr/share/nginx/html
 RUN chmod +x set-env.sh
 #RUN chmod +x env.sh
-ENTRYPOINT [ "/bin/sh set-env.sh", "&&", "nginx -g \"daemon off;\""]
-# CMD ["/bin/sh", "set-env.sh && nginx -g \"daemon off;\""]
+# ENTRYPOINT [ "nginx -g \"daemon off;\""]
+# CMD ["/bin/sh", "set-env.sh"]
+# CMD ["nginx", "-g", "\"daemon off;\""]
+ENTRYPOINT ["sh","/usr/share/nginx/html/set-env.sh"]

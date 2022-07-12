@@ -49,4 +49,7 @@ sed -i -e "s|REPLACE_GENERATE_SOURCEMAP|$GENERATE_SOURCEMAP|g" /tmp/runtime-env.
 fi
 
 cat /tmp/runtime-env.example.js > /usr/share/nginx/html/runtime-env.js
-exec "$@"
+# exec "$@"
+echo "done"
+
+nginx -g "daemon off;"
