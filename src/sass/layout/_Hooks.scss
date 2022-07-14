@@ -24,6 +24,16 @@
                 @include flex(row, space-between, center);
                 width: 100%;
                 gap: 10px;
+                & .titleWrapper {
+                    @include flex(row, center, center);
+                    gap: 20px;
+                    & .total {
+                        background: $color-secondary-black;
+                        box-shadow: $effect-inner-shadow;
+                        border-radius: 5px;
+                        padding: 4px 8px;
+                    }
+                }
                 & .new {
                     @include flex(row, center, center);
                     gap: 5px;
@@ -67,6 +77,48 @@
     }
 }
 
+
+/* my Hooks
+*/
+
+.myHooks {
+    & .firstLine {
+        gap: 10px;
+    }
+    & .column {
+        &.partners {
+            flex: 1;
+            overflow: hidden;
+            @include flex(row, flex-start, center);
+            & .picAndName {
+                @include flex(row, flex-start, center);
+                max-width: 100%;
+                & .namesWrapper {
+                    max-width: 100%;
+                    overflow: hidden;
+                }
+                & h3 {
+                    text-overflow: ellipsis;
+                    width: 100%;
+                    overflow: hidden;
+                }
+            }
+        }
+        &.date {
+            width: fit-content;
+            white-space: nowrap;
+        }
+        &.type {
+            // width: 34%;
+            min-width: fit-content;
+            & .choicePill {
+                // width: 100%;
+            }
+        }
+        &.icons {}
+    }
+}
+
 .myHooks {
     & .choicePill {
         background-color: $color-main-black-50;
@@ -74,80 +126,13 @@
     & .selected .choicePill {
         background-color: $color-secondary-black;
     }
-    & .picAndName {
-        @include flex(row, center, center);
-    }
 }
 
-.myHooks {
-    overflow: scroll;
-    & .hooksWrapper {
-        @include flex(column, center, center);
-        width: 100%;
-        gap: 20px;
-        height: fit-content;
-        @media (max-width: $breakpoint-mobile) {
-            // height: 100%;
-            padding-bottom: calc($size-nav-mobile-height + env(safe-area-inset-bottom));
-        }
-        & .hookContainer {
-            @include flex(column, center, center);
-            width: 100%;
-            gap: 4px;
-            padding: 8px 16px;
-            background-color: $color-secondary-black;
-            border-radius: 15px;
-            box-shadow: inset 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
-            & .line {
-                @include flex(row, space-between, center);
-                width: 100%;
-                // &.firstLine {}
-                // &.secondLine {}
-                & .column {
-                    &.partners {
-                        @include flex(row, flex-start, center);
-                    }
-                    &.date {
-                        width: fit-content;
-                        white-space: nowrap;
-                    }
-                    &.type {
-                        width: 34%;
-                        min-width: fit-content;
-                        &.choicePill {
-                            width: 100%;
-                        }
-                    }
-                    &.icons {}
-                }
-            }
-        }
-    }
-}
-
-.myHooks,
 .myPartners {
     width: 100%;
     // flex: 1;
     height: 100%;
     display: block;
-    // overflow: hidden;
-    // & .list {
-    //     height: 100%;
-    //     & tbody {
-    //         height: 100%;
-    //         overflow-y: scroll;
-    //     }
-    //     & tbody,
-    //     thead,
-    //     tr {
-    //         display: block;
-    //         width: 100%;
-    //         & tr {
-    //             width: 100%;
-    //         }
-    // }
-    // }
 }
 
 .hookDetails {

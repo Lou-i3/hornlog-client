@@ -1,3 +1,7 @@
+/* base
+ * style for all basic html elements
+*/
+
 *,
 *::after,
 *::before {
@@ -9,48 +13,8 @@
 body {
     font-family: $font-main;
     // height: calc(100vh - env(safe-area-inset-bottom) - env(safe-area-inset-top));
-    // height: 100vh; 
     height: calc(var(--vh, 1vh) * 100);
     width: 100vw;
-}
-
-div#root,
-div.app {
-    @include flex();
-    height: 100%;
-    width: 100%;
-    background-color: $color-secondary-black;
-}
-
-@media (max-width: $breakpoint-mobile) {
-    div.app {
-        @include flex(column-reverse, center, center);
-    }
-}
-
-.content {
-    @include flex(column);
-    width: 100%;
-    height: 100%;
-    // padding-top: $size-header-height;
-}
-
-.content-inner {
-    @include flex(column, flex-start, flex-start);
-    gap: 20px;
-    height: calc(100% - $size-header-height);
-    width: 100%;
-    background-color: $color-main-black;
-    box-shadow: -5px -5px 15px rgba(20, 20, 20, 0.35);
-    border-radius: 30px 0px 0px 0px;
-    padding: 20px;
-}
-
-@media (max-width: $breakpoint-mobile) {
-    .content-inner {
-        border-radius: 0px;
-        height: 100%;
-    }
 }
 
 .button {
@@ -84,26 +48,8 @@ div.app {
     background: $color-main-black-20;
 }
 
-.okQuery {
-    @include flex(column);
-    position: absolute;
-    top: 100px;
-    right: 20px;
-    background: $color-blue;
-    width: fit-content;
-    padding: 20px;
-    border-radius: 10px;
-}
-
 table {
     color: $color-main-black-20;
-}
-
-.error404 {
-    @include flex(column);
-    padding: 60px;
-    gap: 30px;
-    color: $color-blue;
 }
 
 .search {
@@ -118,7 +64,6 @@ table {
         left: 15px;
     }
     & input[type="search"] {
-        // height: 110%;
         width: 100%;
         border: none;
         color: $color-main-black-20;
@@ -127,6 +72,10 @@ table {
         border: 1px solid $color-main-black-20;
         border-radius: 15px;
     }
+}
+
+input[type="search"]::-webkit-search-decoration {
+    display: none;
 }
 
 input[type="text"],
@@ -159,15 +108,4 @@ input[type="time"] {
         transition: background-color 5000s ease-in-out 0s;
         -webkit-text-fill-color: $color-main-black;
     }
-}
-
-input[type="search"]::-webkit-search-decoration {
-    display: none;
-}
-
-textarea {
-    // height: 100px;
-    // max-width: 200px;
-    // max-height: 100px;
-    resize: none;
 }

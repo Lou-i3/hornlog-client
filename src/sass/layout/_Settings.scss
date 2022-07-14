@@ -102,6 +102,7 @@
                         @include flex(row, flex-start);
                         gap: 10px;
                         cursor: pointer;
+                        margin-left: auto;
                     }
                 }
             }

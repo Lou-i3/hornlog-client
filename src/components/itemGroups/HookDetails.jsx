@@ -214,6 +214,7 @@ const HookDetails = (props) => {
                                 partner.person.nickName :
                                 partner.person.firstName + " " + partner.person.lastName,
                             picture: partner.person.picture,
+                            partner: partner,
                         })) :
                         [],
                 } : {
@@ -361,9 +362,6 @@ const HookDetails = (props) => {
                                         setValues={setValues}
 
                                     />
-                                    {/* <div className="partnerItem">
-                                        <PictureAndName partner={hook && hook.partners[0]} />
-                                    </div> */}
                                 </div>
 
                                 {

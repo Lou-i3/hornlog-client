@@ -56,6 +56,7 @@ export const MY_PARTNERS_QUERY = gql `
                 id
                 dateTime
                 grade
+                hookType
             }
             
         }

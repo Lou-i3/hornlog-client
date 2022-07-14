@@ -18,6 +18,15 @@ const HookPartnersField = (props) => {
             id: null,
             name: "",
             picture: "",
+            partner: {
+                person: {
+                    firstName: "",
+                    lastName: "",
+                    nickName: "",
+                    picture: "",
+                    // id: "new"
+                }
+            },
         });
         console.log("new partner added");
     }
@@ -75,6 +84,7 @@ const HookPartnersField = (props) => {
             partner.person.firstName + " " + partner.person.lastName;
         newPartners[index].id = partner.id;
         newPartners[index].picture = partner.person.picture ? partner.person.picture : "";
+        newPartners[index].partner = partner;
 
         newValues.partners = newPartners;
         setValues(newValues);
@@ -91,6 +101,14 @@ const HookPartnersField = (props) => {
         let newPartners = [...values.partners];
         newPartners[index].id = "new";
         newPartners[index].picture = "";
+        newPartners[index].partner = {
+            person: {
+                firstName: "",
+                lastName: "",
+                nickName: "",
+                picture: "",
+            }
+        };
 
         newValues.partners = newPartners;
         setValues(newValues);
@@ -116,14 +134,12 @@ const HookPartnersField = (props) => {
                                             {
                                                 displayMode === "view" ?
                                                     <PictureAndName
-                                                        name={item.name}
-                                                        profilePic={item.picture}
+                                                        partner={item.partner}
                                                     /> :
                                                     <Fragment>
                                                         <PictureAndName
-                                                            name={item.name}
-                                                            profilePic={item.picture}
-                                                            onlyPic={true}
+                                                            partner={item.partner}
+                                                            showName={false}
                                                         />
                                                         <Field
                                                             name={`partners.${index}.name`}

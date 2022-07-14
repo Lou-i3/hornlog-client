@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 
 // import logo from './logo.svg';
 // import 'rsuite/dist/rsuite.min.css'; // or 'rsuite/dist/rsuite.min.css'
-import 'rsuite-table/dist/css/rsuite-table.min.css';
+// import 'rsuite-table/dist/css/rsuite-table.min.css';
 
 import './sass/App.scss';
 

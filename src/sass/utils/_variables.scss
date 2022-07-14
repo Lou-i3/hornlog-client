@@ -3,23 +3,32 @@
     position: relative;
 }
 
-// $color-main: #234c64;
+//
+// Colors
 $color-main: --color-main;
 $color-main-black: #141414;
 $color-main-black-20: #F6F6F6;
 $color-main-black-50: #898989;
 $color-secondary-black: #373737;
 $color-secondary-black-50: #CDCDCD;
-// $color-blue: #B7D0F1;
 $color-blue: var(--color-accent);
 $color-accent: var(--color-accent);
 $color-red: #F2564F;
+// 
+// Efects
+$effect-inner-shadow: inset 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+//
+// Fonts
 $font-main: "Cantarell",
 sans-serif;
 $font-secondary: 'Indie Flower',
 cursive;
+//
+// Sizes
 $size-header-height: 60px;
 $size-nav-width: 280px;
 $size-nav-mobile-height: 75px;
+//
+// Responsive
 $breakpoint-tablet: 0px;
 $breakpoint-mobile: 767px;

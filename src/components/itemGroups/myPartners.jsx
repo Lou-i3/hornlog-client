@@ -1,10 +1,11 @@
 
 import { useQuery } from '@apollo/client';
 import { Fragment, useEffect, useState } from 'react';
-import { formatDateTime } from '../../helpers/helpers';
+import { enumLabel, formatDateTime } from '../../helpers/helpers';
 // import Icon from '../global/Icon';
-import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
+// import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 import { MY_PARTNERS_QUERY } from '../../helpers/queries';
+import ChoicePill from '../items/ChoicePill';
 import PictureAndName from '../items/profile/PictureAndName';
 // import firebase from 'firebase/app';
 
@@ -17,6 +18,7 @@ const MyPartners = (props) => {
     const [sortType, setSortType] = useState();
     const [tableData, setTableData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { selectedPartner, setTotalPartners } = props;
 
     // console.log("myPartners");
     // console.log(data);
@@ -45,6 +47,7 @@ const MyPartners = (props) => {
         }
 
         getData();
+        setTotalPartners(data && data.myPartners.length);
     }, [props.selectedPartner, data, loadingQuery, props]);
 
     useEffect(() => {
@@ -65,10 +68,11 @@ const MyPartners = (props) => {
                     name: partner.person.nickName ?
                         partner.person.nickName :
                         partner.person.firstName + " " + partner.person.lastName,
-                    profilePic: partner.person.picture ? partner.person.picture : "",
+                    partner: partner,
                     lastHook: partner.hooks[0] ?
                         formatDateTime(partner.hooks[0].dateTime, 'date') :
                         "Never",
+                    lastHookType: partner.hooks[0] ? partner.hooks[0].hookType : "",
                 });
             });
             console.log("sortColumn", sortColumnLocal);
@@ -142,9 +146,9 @@ const MyPartners = (props) => {
         }, 500);
     };
 
-
+    const dev = true;
     return (
-        <div className="myPartners">
+        <div className="myPartners cardsList">
             {/* {loadingQuery ?
                 <p>Loading...</p> : */
                 error ?
@@ -152,70 +156,45 @@ const MyPartners = (props) => {
                     <p>Error: {error.message}</p> :
                     <Fragment>
                         {/* <div onClick={() => {console.log(error)}}>Coucou</div> */}
-                        <Table
-                            // virtualized
-                            data={tableData}
-                            sortColumn={sortColumn}
-                            sortType={sortType}
-                            id="table"
-                            bordered={false}
-                            // width={auto}
-                            // height={"100%"}
-                            // autoHeight={true}
-                            onSortColumn={handleSortColumn}
-                            loading={loading}
-                            rowClassName={(rowData) => (rowData && props.selectedPartner && rowData["id"] === props.selectedPartner.id ? "selected" : "")}
-                            onRowClick={data => {
-                                console.log(data);
-                                const partner = data;
-                                handleClick(partner)
-                            }}
-                            // fillHeight={true}
-                            // autoHeight={true}    
+                        {
+                            loading ?
+                                <div className="loading">Loading</div>
+                                :
+                                <div className="partnersWrapper cardsWrapper">
+                                    {tableData && tableData.map((partner, index) => {
+                                        let rowClass = partner && selectedPartner && partner["id"] === selectedPartner.id ? "selected" : "";
 
-                        >
+                                        return (
+                                            <div className={`partnerContainer card ${rowClass}`} onClick={() => {
+                                                console.log({ partner });
+                                                // const hook = data;
+                                                handleClick(partner)
+                                            }}>
 
-
-                            <Column
-                                // resizable
-                                width={100}
-                                flexGrow={1}
-                                sortable
-                                align='center'>
-                                <HeaderCell >
-                                    Name
-                                </HeaderCell>
-                                <Cell dataKey="name" color='white'>
-                                    {/* <img src="/Ellipse 4.png" alt="" width="30px" className="profilePic" /> */}
-                                    {
-                                        rowdata => <PictureAndName
-                                            profilePic={rowdata.profilePic}
-                                            name={rowdata.name}
-                                        />
-
+                                                <div className="firstLine line">
+                                                    <div className="column name">
+                                                        {
+                                                            <PictureAndName
+                                                                partner={partner.partner}
+                                                                showFullName={true}
+                                                            />
+                                                        }
+                                                    </div>
+                                                    <div className="column lastHook">
+                                                        {
+                                                            partner.lastHook
+                                                        }
+                                                        <ChoicePill 
+                                                            text={enumLabel(partner.lastHookType)}
+                                                            />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
                                     }
-                                </Cell>
-                            </Column>
-                            <Column
-                                flexGrow={1}
-                                sortable
-                                align='center'
-                            >
-                                <HeaderCell>
-                                    Last Hook
-                                </HeaderCell>
-                                <Cell dataKey='lastHook'>{rowData => rowData.lastHook}
-                                </Cell>
-                            </Column>
-
-                            {/* <tr className={`listItem ${props.selectedPartner && props.selectedPartner.id === partner.id ? "selected" : ""}`} key={partner.id} onClick={() => handleClick(partner)}>
-
-                                        
-                                    </tr> */}
-
-
-                        </Table>
-
+                                </div>
+                        }
                     </Fragment>
             }
         </div >

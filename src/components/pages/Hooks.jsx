@@ -12,6 +12,7 @@ const Hooks = () => {
     const [displayMode, setDisplayMode] = useState("none");
     const [searchTerms, setSearchTerms] = useState("");
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [totalHooks, setTotalHooks] = useState(0);
 
     useEffect(() => {
         window.addEventListener("resize", () => {
@@ -60,7 +61,10 @@ const Hooks = () => {
 
                     <div className="hooks">
                         <div className="title">
+                            <div className="titleWrapper">
                             <h1>Hooks</h1>
+                            <div className="total">{totalHooks}</div>
+                            </div>
                             <div className="new" onClick={() => handleClickNew()}>
                                 <p>New</p>
                                 <Icon type="plus" />
@@ -71,7 +75,12 @@ const Hooks = () => {
                             <Search setSearchTerms={setSearchTerms} />
                             <Icon type="filter" />
                         </div>
-                        <MyHooks selectedHook={selectedHook} setSelectedHook={setSelectedHook} searchTerms={searchTerms} />
+                        <MyHooks 
+                        selectedHook={selectedHook} 
+                        setSelectedHook={setSelectedHook} 
+                        searchTerms={searchTerms} 
+                        setTotalHooks={setTotalHooks}
+                        />
                     </div>
 
                 </div>

@@ -11,6 +11,8 @@ const Partners = () => {
     const [selectedPartner, setSelectedPartner] = useState(null);
     const [searchTerms, setSearchTerms] = useState("");
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [totalPartners, setTotalPartners] = useState(0);
+
 
     useEffect(() => {
         window.addEventListener("resize", () => {
@@ -58,14 +60,23 @@ const Partners = () => {
                     <div className="left-side side">
                         <div className="partners">
                             <div className="title">
+                                <div className="titleWrapper">
                                 <h1>Partners</h1>
+                                <div className="total">{totalPartners}</div>
+                                </div>
                                 <div className="new" onClick={() => handleClickNew()}>
                                     <p>New</p>
                                     <Icon type="plus" />
                                 </div>
                             </div>
                             <Search setSearchTerms={setSearchTerms} />
-                            <MyPartners selectedPartner={selectedPartner} setSelectedPartner={setSelectedPartner} setDisplayMode={setDisplayMode} searchTerms={searchTerms} />
+                            <MyPartners 
+                            selectedPartner={selectedPartner} 
+                            setSelectedPartner={setSelectedPartner} 
+                            setDisplayMode={setDisplayMode} 
+                            searchTerms={searchTerms} 
+                            setTotalPartners={setTotalPartners}
+                            />
                         </div>
 
 

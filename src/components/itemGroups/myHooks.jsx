@@ -1,7 +1,7 @@
 
 import { useQuery } from '@apollo/client';
 import { Fragment, useEffect, useState } from 'react';
-import { Cell, Column, HeaderCell, Table } from 'rsuite-table';
+// import { Cell, Column, HeaderCell, Table } from 'rsuite-table';
 import { enumLabel, formatDateTime } from '../../helpers/helpers';
 import { MY_HOOKS_QUERY } from '../../helpers/queries';
 
@@ -9,6 +9,7 @@ import ChoicePill from '../items/ChoicePill';
 import PictureAndName from '../items/profile/PictureAndName';
 
 const MyHooks = (props) => {
+    const { setTotalHooks } = props;
     // eslint-disable-next-line
     const { loading: loadingQuery, error, data } = useQuery(MY_HOOKS_QUERY);
     const [sortColumn, setSortColumn] = useState();
@@ -45,6 +46,7 @@ const MyHooks = (props) => {
             //     }
         }
         getData();
+        setTotalHooks(data && data.myHooks.length);
         // eslint-disable-next-line
     }, [props.selectedHook, data]);
 
@@ -72,11 +74,11 @@ const MyHooks = (props) => {
                     date: hook.dateTime,
                     hookType: hook.hookType,
                     partners: hook.partners,
-                    name: hook.partners && hook.partners[0] ?
-                        hook.partners[0].person && hook.partners[0].person.nickName ?
-                            hook.partners[0].person.nickName
-                            : hook.partners[0].person.firstName + " " + hook.partners[0].person.lastName
-                        : "",
+                    // name: hook.partners && hook.partners[0] ?
+                    //     hook.partners[0].person && hook.partners[0].person.nickName ?
+                    //         hook.partners[0].person.nickName
+                    //         : hook.partners[0].person.firstName + " " + hook.partners[0].person.lastName
+                    //     : "",
                 });
             });
             console.log("tableDataLocal", tableDataLocal);
@@ -172,114 +174,41 @@ const MyHooks = (props) => {
         }, 500);
     };
 
-    const isDev = true;
-
     return (
-        <div className="myHooks">
-            {/* {fireToken && <pstyle="">FireToken: {fireToken}</p>} */}
-            {/* {loadingQuery ?
-                <p>Loading...</p> : */
+        <div className="myHooks cardsList">
+            {
                 error ?
                     <p>Error: {error.message}{console.log(error)}</p> :
                     <Fragment>
                         {/* <div onClick={() => setLoading(true)} >Coucou</div> */}
                         {
-                            !isDev ?
-                                <Table
-                                    data={tableData}
-                                    sortColumn={sortColumn}
-                                    sortType={sortType}
-                                    id="table"
-                                    bordered={false}
-                                    onSortColumn={handleSortColumn}
-                                    loading={loading}
-                                    rowClassName={(rowData) => (rowData && props.selectedHook && rowData["id"] === props.selectedHook.id ? "selected" : "")}
-                                    onRowClick={data => {
-                                        console.log(data);
-                                        const hook = data;
-                                        handleClick(hook)
-                                    }}
-                                    rowHeight={55}
-                                >
-
-
-                                    <Column
-                                        flexGrow={1}
-                                        sortable
-                                        align='center'>
-                                        <HeaderCell >
-                                            Date
-                                        </HeaderCell>
-                                        <Cell dataKey="date" color='white'>
-                                            {
-                                                rowdata => <p>{formatDateTime(rowdata.date, 'date')}</p>
-
-                                            }
-                                        </Cell>
-                                    </Column>
-                                    <Column
-                                        // resizable
-                                        // width={80}
-                                        flexGrow={1}
-                                        sortable
-                                        align='center'>
-                                        <HeaderCell >
-                                            Who
-                                        </HeaderCell>
-                                        <Cell dataKey="partners" color='white'>
-                                            {
-                                                rowdata =>
-                                                    rowdata.partners.map((partner, index) =>
-                                                        <PictureAndName
-                                                            key={index}
-                                                            partner={partner}
-                                                            onlyPic={rowdata.partners.length > 1 || windowWidth < 767}
-                                                        />
-                                                    )
-
-                                            }
-                                        </Cell>
-                                    </Column>
-                                    <Column
-                                        flexGrow={1}
-                                        // sortable
-                                        align='center'
-                                    >
-                                        <HeaderCell>
-                                            Type
-                                        </HeaderCell>
-                                        <Cell dataKey='hookType'>{
-                                            rowData =>
-                                                <ChoicePill
-                                                    text={enumLabel(rowData.hookType)}
-                                                />
-                                        }
-                                        </Cell>
-                                    </Column>
-
-
-                                </Table>
+                            loading ?
+                                <div className="loading">Loading</div>
                                 :
-                                loading ?
-                                    <div className="loading">Loading</div>
-                                    :
-                                    <div className="hooksWrapper">
-                                        {tableData && tableData.map((hook, index) => (
-                                            <div className="hookContainer" onClick={() => {
-                                                console.log({hook});
+                                <div className="hooksWrapper cardsWrapper">
+                                    {tableData && tableData.map((hook, index) => {
+                                        let rowClass = hook && props.selectedHook && hook["id"] === props.selectedHook.id ? "selected" : "";
+
+                                        return (
+                                            <div className={`hookContainer card ${rowClass}`} onClick={() => {
+                                                console.log({ hook });
                                                 // const hook = data;
                                                 handleClick(hook)
                                             }}>
+
                                                 <div className="firstLine line">
                                                     <div className="column partners">
                                                         {
-                                                            hook.partners.map((partner, index) =>
-                                                                <PictureAndName
-                                                                    key={index}
-                                                                    partner={partner}
-                                                                    onlyPic={hook.partners.length > 1 || windowWidth < 767}
-                                                                />
-                                                            )
+                                                            // hook.partners.map((partner, index) =>
+                                                            //     <PictureAndName
+                                                            //         key={index}
+                                                            //         partner={partner}
+                                                            //         onlyPic={hook.partners.length > 1 || windowWidth < 767}
+                                                            //     />
+                                                            // )
+                                                            <PictureAndName 
+                                                                partners={hook.partners}
+                                                            />
                                                         }
                                                     </div>
                                                     <div className="column date">
@@ -297,9 +226,10 @@ const MyHooks = (props) => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        ))
-                                        }
-                                    </div>
+                                        )
+                                    })
+                                    }
+                                </div>
                         }
 
                     </Fragment>
