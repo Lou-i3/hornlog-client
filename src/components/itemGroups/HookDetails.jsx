@@ -70,9 +70,9 @@ const HookDetails = (props) => {
             sex: values.sex,
             penetration: values.penetration,
             orgasm: values.orgasm,
-            // protection: values.protection,
+            protection: values.protection,
             porn: values.porn,
-            // pill: values.pill,
+            pill: values.pill,
         }
 
         // protected 
