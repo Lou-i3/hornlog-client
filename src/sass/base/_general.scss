@@ -48,7 +48,60 @@ div.app {
 /* pills
 */
 
-.pill {}
+.pill {
+    @include flex(row, center, center);
+    padding: 4px 10px;
+    border-radius: 5px;
+    width: fit-content;
+    & p {
+        color: $color-secondary-black;
+        white-space: nowrap;
+    }
+    &.noIcon {
+        &.on {
+            background-color: $color-secondary-black-50;
+        }
+        &.off {
+            background-color: $color-secondary-black;
+            & p {
+                color: $color-main-black-20;
+            }
+        }
+    }
+    &.withIcon {
+        @include flex(row, center, center);
+        gap: 5px;
+        color: $color-secondary-black;
+        & .icon {
+            fill: $color-secondary-black;
+            height: 20px;
+            width: 20px;
+        }
+        &.on {
+            background: $color-accent;
+        }
+        &.off {
+            background: $color-secondary-black-50;
+        }
+        &.noValue {
+            background: $color-secondary-black-50;
+            opacity: 50%;
+        }
+    }
+    &.iconOnly {
+        background: transparent;
+        &.on {
+            & .icon {
+                fill: $color-accent;
+            }
+        }
+        &.off {
+            & .icon {
+                fill: $color-secondary-black-50;
+            }
+        }
+    }
+}
 
 .choicePill {
     @include flex(row, center, center);

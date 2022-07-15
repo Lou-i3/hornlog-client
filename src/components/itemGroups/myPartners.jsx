@@ -5,7 +5,7 @@ import { enumLabel, formatDateTime } from '../../helpers/helpers';
 // import Icon from '../global/Icon';
 // import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 import { MY_PARTNERS_QUERY } from '../../helpers/queries';
-import ChoicePill from '../items/ChoicePill';
+import Pill from '../items/Pill';
 import PictureAndName from '../items/profile/PictureAndName';
 // import firebase from 'firebase/app';
 
@@ -184,9 +184,10 @@ const MyPartners = (props) => {
                                                         {
                                                             partner.lastHook
                                                         }
-                                                        <ChoicePill 
+                                                        <Pill
                                                             text={enumLabel(partner.lastHookType)}
-                                                            />
+                                                            selected
+                                                        />
                                                     </div>
                                                 </div>
                                             </div>

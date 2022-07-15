@@ -5,7 +5,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { enumLabel, formatDateTime } from '../../helpers/helpers';
 import { MY_HOOKS_QUERY } from '../../helpers/queries';
 
-import ChoicePill from '../items/ChoicePill';
+import Pill from '../items/Pill';
 import PictureAndName from '../items/profile/PictureAndName';
 
 const MyHooks = (props) => {
@@ -190,11 +190,15 @@ const MyHooks = (props) => {
                                         let rowClass = hook && props.selectedHook && hook["id"] === props.selectedHook.id ? "selected" : "";
 
                                         return (
-                                            <div className={`hookContainer card ${rowClass}`} onClick={() => {
+                                            <div 
+                                            className={`hookContainer card ${rowClass}`} 
+                                            onClick={() => {
                                                 console.log({ hook });
                                                 // const hook = data;
                                                 handleClick(hook)
-                                            }}>
+                                            }}
+                                            key={index}
+                                            >
 
                                                 <div className="firstLine line">
                                                     <div className="column partners">
@@ -206,7 +210,7 @@ const MyHooks = (props) => {
                                                             //         onlyPic={hook.partners.length > 1 || windowWidth < 767}
                                                             //     />
                                                             // )
-                                                            <PictureAndName 
+                                                            <PictureAndName
                                                                 partners={hook.partners}
                                                             />
                                                         }
@@ -217,8 +221,9 @@ const MyHooks = (props) => {
                                                 </div>
                                                 <div className="secondLine line">
                                                     <div className="column type">
-                                                        <ChoicePill
+                                                        <Pill
                                                             text={enumLabel(hook.hookType)}
+                                                            selected
                                                         />
                                                     </div>
                                                     <div className="column icons">

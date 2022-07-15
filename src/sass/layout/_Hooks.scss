@@ -219,10 +219,9 @@
             & .infoGroup {
                 @include flex(row, space-between, center);
                 width: 100%;
-                // gap: 10px;
+                flex-wrap: wrap;
                 & .infoItem {
-                    @include flex(column, center, flex-start);
-                    // width: 100%;
+                    @include flex(column, flex-start);
                     flex: 1 1 0;
                     gap: 10px;
                     & .infoText {

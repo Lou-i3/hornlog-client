@@ -28,8 +28,8 @@ const PictureAndName = (props) => {
 
     let selectedClass = selected ? "selected" : "";
 
-    console.log("partner", partner);
-    console.log("data", data);
+    // console.log("partner", partner);
+    // console.log("data", data);
 
     let buildPic = (item) => (
         <>
@@ -100,11 +100,11 @@ const PictureAndName = (props) => {
                             {
                                 showName &&
                                 data.map((item, index) => (
-                                    <>
+                                    <Fragment key={index}>
                                     {item.name}
                                     { index < data.length - 2 ? ", " : "" }
                                     { index === data.length - 2 ? " & " : "" }
-                                    </>
+                                    </Fragment>
                                 ))
                             }
                             </h3>

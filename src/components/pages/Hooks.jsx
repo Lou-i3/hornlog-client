@@ -3,7 +3,6 @@ import MyHooks from "../itemGroups/myHooks";
 import HookDetails from "../itemGroups/HookDetails";
 import Search from "../items/Search";
 import { useState, useEffect } from 'react';
-// import HookEditNew from "../itemGroups/HookEditNew";
 import Icon from "../global/Icon";
 import Illustration from "../global/Illustration";
 
@@ -103,8 +102,6 @@ const Hooks = () => {
                                 <p>Select a hook to see details</p>
                             </div>
                         }
-                        {/* {(displayMode === "edit" || displayMode === "new") && <HookEditNew displayMode={displayMode} setDisplayMode={setDisplayMode} setSelectedHook={setSelectedHook} />} */}
-
                     </div>
                 }
             </div>

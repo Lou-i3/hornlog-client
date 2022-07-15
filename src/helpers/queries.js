@@ -92,6 +92,10 @@ export const MY_HOOKS_QUERY = gql `
             note
             grade
             protected
+            sex
+            penetration
+            pill
+            protection
             addToAppleHealth
             mood
             archived

@@ -10,6 +10,7 @@ import DurationField from "../items/hooks/DurationField.jsx";
 import HookEnumField from "../items/hooks/HookEnumField.jsx";
 import HookPartnersField from "../items/hooks/HookPartnersField.jsx";
 import MoodPicker from "../items/MoodPicker.jsx";
+import Pill from "../items/Pill.jsx";
 import StarRating from "../items/StarRating.jsx";
 
 const HookDetails = (props) => {
@@ -66,6 +67,12 @@ const HookDetails = (props) => {
             // protected: values.protected,
             dateTime: new Date(values.date + "T" + values.time),
             note: values.note,
+            sex: values.sex,
+            penetration: values.penetration,
+            orgasm: values.orgasm,
+            // protection: values.protection,
+            porn: values.porn,
+            // pill: values.pill,
         }
 
         // protected 
@@ -190,6 +197,9 @@ const HookDetails = (props) => {
             console.log(err);
         });
     }
+    const getBoolVal = (val) => {
+        return val !== undefined ? val : null;
+    }
 
     return (
         (hook || displayMode === "new") &&
@@ -206,6 +216,12 @@ const HookDetails = (props) => {
                     mood: hook.mood ? hook.mood : "",
                     grade: hook.grade ? hook.grade : "",
                     protected: hook.protected,
+                    sex: getBoolVal(hook.sex),
+                    penetration: getBoolVal(hook.penetration),
+                    orgasm: getBoolVal(hook.orgasm),
+                    protection: getBoolVal(hook.protection),
+                    porn: getBoolVal(hook.porn),
+                    pill: getBoolVal(hook.pill),
                     note: hook.note ? hook.note : "",
                     partners: hook.partners ?
                         hook.partners.map((partner, index) => ({
@@ -227,6 +243,12 @@ const HookDetails = (props) => {
                     mood: "",
                     grade: "",
                     protected: "",
+                    sex: null,
+                    penetration: null,
+                    orgasm: null,
+                    protection: null,
+                    porn: null,
+                    pill: null,
                     note: "",
                     partners: [],
                 }}
@@ -320,36 +342,39 @@ const HookDetails = (props) => {
                                         }
                                     </div>
 
+
                                     <div className="infoItem">
                                         {
+                                            /* Hook Type
+                                            */
                                             ["edit", "new"].includes(displayMode) ?
                                                 <HookEnumField
                                                     setValues={setValues}
                                                     values={values}
                                                     enumName="hookType"
                                                 /> :
-                                                <ChoicePill text={hook && enumLabel(hook.hookType)} selected={true} />
+                                                <Pill
+                                                    text={hook && enumLabel(hook.hookType)}
+                                                    selected
+                                                />
 
                                         }
                                     </div>
                                 </div>
 
                                 {
+                                    /* Duration
+                                     */
                                     (values.duration !== 0 || props.displayMode !== "view") &&
                                     <div className="infoItem">
                                         <h3>for</h3>
                                         {
-                                            // ["edit", "new"].includes(displayMode) ?
-
-                                                <DurationField 
-                                                    values={values}
-                                                    setValues={setValues}
-                                                    readOnly={readOnly}
-                                                />
-                                                // <input type="text" placeholder="xxx"></input>
-                                                // : <p>{hook && hook.duration}</p>
+                                            <DurationField
+                                                values={values}
+                                                setValues={setValues}
+                                                readOnly={readOnly}
+                                            />
                                         }
-                                        {/* <Icon type="duration" /> */}
                                     </div>
                                 }
 
@@ -365,6 +390,8 @@ const HookDetails = (props) => {
                                 </div>
 
                                 {
+                                    /* Location
+                                    */
                                     (values.location !== "" || props.displayMode !== "view") &&
                                     <div className="hooksDetailsLocationGroup">
                                         <div className="infoItem">
@@ -376,7 +403,10 @@ const HookDetails = (props) => {
                                                         values={values}
                                                         enumName="locationType"
                                                     /> :
-                                                    <ChoicePill text={hook && enumLabel(hook.locationType)} selected={true} />
+                                                    <Pill
+                                                        text={hook && enumLabel(hook.locationType)}
+                                                        selected
+                                                    />
 
                                             }
                                         </div>
@@ -388,7 +418,98 @@ const HookDetails = (props) => {
                                     </div>
                                 }
 
-
+                                <div className="infoGroup bools">
+                                    {
+                                        /* Sex
+                                        */
+                                        (values.sex !== null || props.displayMode !== "view") &&
+                                        <div className="infoItem sex">
+                                            <Pill
+                                                values={values}
+                                                setValues={setValues}
+                                                field="sex"
+                                                type="sex"
+                                                icon
+                                                readOnly={readOnly}
+                                            />
+                                        </div>
+                                    }
+                                    {
+                                        /* Penetration
+                                        */
+                                        (values.penetration !== null || props.displayMode !== "view") &&
+                                        <div className="infoItem penetration">
+                                            <Pill
+                                                values={values}
+                                                setValues={setValues}
+                                                field="penetration"
+                                                type="penetration"
+                                                icon
+                                                readOnly={readOnly}
+                                            />
+                                        </div>
+                                    }
+                                    {
+                                        /* Orgasm
+                                        */
+                                        (values.orgasm !== null || props.displayMode !== "view") &&
+                                        <div className="infoItem orgasm">
+                                            <Pill
+                                                values={values}
+                                                setValues={setValues}
+                                                field="orgasm"
+                                                type="orgasm"
+                                                icon
+                                                readOnly={readOnly}
+                                            />
+                                        </div>
+                                    }
+                                    {
+                                        /* Protection
+                                        */
+                                        (values.protection !== null || props.displayMode !== "view") &&
+                                        <div className="infoItem protection">
+                                            <Pill
+                                                values={values}
+                                                setValues={setValues}
+                                                field="protection"
+                                                type="protection"
+                                                icon
+                                                readOnly={readOnly}
+                                            />
+                                        </div>
+                                    }
+                                    {
+                                        /* Porn
+                                        */
+                                        (values.porn !== null || props.displayMode !== "view") &&
+                                        <div className="infoItem porn">
+                                            <Pill
+                                                values={values}
+                                                setValues={setValues}
+                                                field="porn"
+                                                type="porn"
+                                                icon
+                                                readOnly={readOnly}
+                                            />
+                                        </div>
+                                    }
+                                    {
+                                        /* Pill 
+                                        */
+                                        (values.pill !== null || props.displayMode !== "view") &&
+                                        <div className="infoItem pill">
+                                            <Pill
+                                                values={values}
+                                                setValues={setValues}
+                                                field="pill"
+                                                type="pill"
+                                                icon
+                                                readOnly={readOnly}
+                                            />
+                                        </div>
+                                    }
+                                </div>
 
                                 <div className="infoItem">
                                     {/* <p>Protection Type</p> */}
