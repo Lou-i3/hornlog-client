@@ -63,7 +63,6 @@ const HookDetails = (props) => {
 
         let data = {
             hookType: values.hookType,
-            // protected: values.protected,
             dateTime: new Date(values.date + "T" + values.time),
             note: values.note,
             sex: values.sex,
@@ -74,10 +73,7 @@ const HookDetails = (props) => {
             pill: values.pill,
         }
 
-        // protected 
-        if (values.protected !== "") {
-            data.protected = values.protected;
-        }
+        
         if (values.mood !== "") {
             data.mood = values.mood;
         }
