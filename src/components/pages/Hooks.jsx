@@ -12,12 +12,30 @@ const Hooks = () => {
     const [searchTerms, setSearchTerms] = useState("");
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [totalHooks, setTotalHooks] = useState(0);
+    const [listAnimation, setListAnimation] = useState("");
+    const [detailsAnimation, setDetailsAnimation] = useState("");
 
     useEffect(() => {
         window.addEventListener("resize", () => {
             setWindowWidth(window.innerWidth);
         });
     }, []);
+
+    const setAnimations = () => {
+        if (windowWidth < 767) {
+            if (selectedHook || ["new", "view"].includes(displayMode)) {
+                setListAnimation("fade-out");
+                setDetailsAnimation("slide-in-from-right");
+            }
+            if (!selectedHook && displayMode === "none") {
+                setListAnimation("slide-in-from-left");
+                setDetailsAnimation("fade-out");
+            }
+        } else {
+            setListAnimation("");
+            setDetailsAnimation("");
+        }
+    }
 
     useEffect(() => {
         console.log("useEffect hooks, selectedHook: ");
@@ -33,7 +51,14 @@ const Hooks = () => {
 
         }
 
+        setAnimations();
+
     }, [selectedHook, displayMode]);
+
+    useEffect(() => {
+        // To fix transition in case of screen resize
+        setAnimations();
+    }, [windowWidth]);
 
     useEffect(() => {
         if (selectedHook && ["none", "view", "new"].includes(displayMode)) {
@@ -53,16 +78,17 @@ const Hooks = () => {
         // setSelectedHook("none");
         setDisplayMode("new");
     }
+
     return (
         <div className="content-inner">
             <div className={`hooks-page-inner ${displayMode}`}>
-                <div className="left-side side">
+                <div className={`left-side side ${listAnimation}`}>
 
                     <div className="hooks">
                         <div className="title">
                             <div className="titleWrapper">
-                            <h1>Hooks</h1>
-                            <div className="total">{totalHooks}</div>
+                                <h1>Hooks</h1>
+                                <div className="total">{totalHooks}</div>
                             </div>
                             <div className="new" onClick={() => handleClickNew()}>
                                 <p>New</p>
@@ -74,18 +100,18 @@ const Hooks = () => {
                             <Search setSearchTerms={setSearchTerms} />
                             <Icon type="filter" />
                         </div>
-                        <MyHooks 
-                        selectedHook={selectedHook} 
-                        setSelectedHook={setSelectedHook} 
-                        searchTerms={searchTerms} 
-                        setTotalHooks={setTotalHooks}
+                        <MyHooks
+                            selectedHook={selectedHook}
+                            setSelectedHook={setSelectedHook}
+                            searchTerms={searchTerms}
+                            setTotalHooks={setTotalHooks}
                         />
                     </div>
 
                 </div>
                 {
-                    (windowWidth > 767 || (windowWidth < 767 && ["view", "edit", "new"].includes(displayMode))) &&
-                    <div className={`right-side side ${displayMode}`}>
+                    // (windowWidth > 767 || (windowWidth < 767 && ["view", "edit", "new"].includes(displayMode))) &&
+                    <div className={`right-side side ${displayMode} ${detailsAnimation}`}>
 
                         {
                             ["view", "edit", "new"].includes(displayMode) &&
@@ -105,12 +131,6 @@ const Hooks = () => {
                     </div>
                 }
             </div>
-
-            {/* <div className="filter">
-                <p>Filters</p>
-                <p>Grade</p>
-                <p>Duration</p>
-            </div> */}
         </div>
     );
 }

@@ -5,11 +5,19 @@
     width: 100%;
     overflow: hidden;
     gap: 20px;
+    position: relative;
     & .side {
         @include flex(row, center, flex-start);
         width: 100%;
         height: 100%;
         gap: 20px;
+    }
+    @media (max-width: $breakpoint-mobile) {
+        & .side {
+            top: 0;
+            left: 0;
+            position: absolute;
+        }
     }
     & .left-side {
         @include flex(column, flex-start);
@@ -71,7 +79,7 @@
         &.edit,
         &.new {
             & .left-side {
-                display: none;
+                // display: none;
             }
         }
     }

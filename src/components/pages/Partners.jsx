@@ -12,6 +12,8 @@ const Partners = () => {
     const [searchTerms, setSearchTerms] = useState("");
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [totalPartners, setTotalPartners] = useState(0);
+    const [listAnimation, setListAnimation] = useState("");
+    const [detailsAnimation, setDetailsAnimation] = useState("");
 
 
     useEffect(() => {
@@ -19,6 +21,22 @@ const Partners = () => {
             setWindowWidth(window.innerWidth);
         });
     }, []);
+
+    const setAnimations = () => {
+        if (windowWidth < 767) {
+            if (selectedPartner || ["new", "view"].includes(displayMode)) {
+                setListAnimation("fade-out");
+                setDetailsAnimation("slide-in-from-right");
+            }
+            if (!selectedPartner && displayMode === "none") {
+                setListAnimation("slide-in-from-left");
+                setDetailsAnimation("fade-out");
+            }
+        } else {
+            setListAnimation("");
+            setDetailsAnimation("");
+        }
+    };
 
     useEffect(() => {
         console.log("useEffect Partners");
@@ -33,8 +51,14 @@ const Partners = () => {
             setSelectedPartner(null);
 
         }
+        setAnimations();
 
     }, [selectedPartner, displayMode]);
+
+    useEffect(() => {
+        // To fix transition in case of screen resize
+        setAnimations();
+    }, [windowWidth]);
 
     // useEffect(() => {
     //     if (selectedPartner && ["none", "view"].includes(displayMode)) {
@@ -57,7 +81,7 @@ const Partners = () => {
         <div className="content-inner">
             <div className={`partners-page-inner ${displayMode}`}>
                 {
-                    <div className="left-side side">
+                    <div className={`left-side side ${listAnimation}`}>
                         <div className="partners">
                             <div className="title">
                                 <div className="titleWrapper">
@@ -84,8 +108,8 @@ const Partners = () => {
                 }
 
                 {
-                    (windowWidth > 767 || (windowWidth < 767 && ["view", "edit", "new"].includes(displayMode))) &&
-                    <div className="right-side side">
+                    // (windowWidth > 767 || (windowWidth < 767 && ["view", "edit", "new"].includes(displayMode))) &&
+                    <div className={`right-side side ${detailsAnimation}`}>
                         {
                             ["view", "edit", "new"].includes(displayMode) &&
                             <Profile partner={selectedPartner} person={selectedPartner ? selectedPartner.person : null} displayMode={displayMode} setDisplayMode={setDisplayMode} setSelectedPartner={setSelectedPartner} />
