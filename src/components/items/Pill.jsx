@@ -13,7 +13,7 @@ const Pill = (props) => {
     } = props;
 
     console.log("Pill props", props);
-    
+
     const states = {
         null: "noValue",
         true: "on",
@@ -74,7 +74,7 @@ const Pill = (props) => {
     }
 
     // clases
-    const iconClass = icon ? (icon ==="iconOnly" ? "iconOnly" : "withIcon") : "noIcon";
+    const iconClass = icon ? (icon === "iconOnly" ? "iconOnly" : "withIcon") : "noIcon";
     const stateClass = selected !== undefined ?
         (selected ? "on" : "off") :
         states[state];
@@ -125,8 +125,11 @@ const Pill = (props) => {
                 outText = text
             }
         }
+        outText = (outText && outText !== "") ?
+            (outText.charAt(0).toUpperCase() + outText.slice(1))
+            : "";
 
-        return outText.charAt(0).toUpperCase() + outText.slice(1);
+        return outText;
     }
     const displayIcon = () => {
         let outIcon;

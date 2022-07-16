@@ -183,10 +183,13 @@ const MyPartners = (props) => {
                                                     <div className="column lastHook">
                                                         <p>{partner.lastHook}</p>
 
-                                                        <Pill
-                                                            text={enumLabel(partner.lastHookType)}
-                                                            selected
-                                                        />
+                                                        {
+                                                            partner.lastHook !== "Never" &&
+                                                            <Pill
+                                                                text={enumLabel(partner.lastHookType)}
+                                                                selected
+                                                            />
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
