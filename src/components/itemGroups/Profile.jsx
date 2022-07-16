@@ -306,15 +306,17 @@ const Profile = (props) => {
                                         {/* </span> */}
 
                                         <span className="rightButtons">
-                                            <span className="deleteButton">
-                                                {props.displayMode === "edit" &&
+                                            {
+                                                props.displayMode === "edit" &&
+                                                <span className="deleteButton">
                                                     <Icon type="bin" className="deleteButton" onClick={() => {
                                                         handleClickDelete();
                                                         props.setSelectedPartner(null);
                                                         props.setDisplayMode("none");
                                                     }}
-                                                    />}
-                                            </span>
+                                                    />
+                                                </span>
+                                            }
 
                                             <Field as="span" className="submit" onClick={handleSubmit}>
                                                 {props.displayMode === "view" && <Icon type="edit" /*onClick={() => handleClickEdit()} */ />}

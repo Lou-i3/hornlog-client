@@ -29,6 +29,7 @@ body {
     padding: 15px 20px;
     gap: 10px;
     border: none;
+    // transition: all 0.25s ease-in-out;
     cursor: pointer;
     & svg {
         @include icon($color-main-black);
