@@ -91,7 +91,6 @@ export const MY_HOOKS_QUERY = gql `
             porn
             note
             grade
-            protected
             sex
             penetration
             pill

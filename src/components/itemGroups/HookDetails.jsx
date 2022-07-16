@@ -5,7 +5,6 @@ import { enumLabel, formatDateTime } from "../../helpers/helpers.js";
 import { DeleteHookMutation, EditHookMutation, NewHookMutation } from "../../helpers/mutations.js";
 import { MY_HOOKS_QUERY, MY_PARTNERS_QUERY } from "../../helpers/queries.js";
 import Icon from "../global/Icon";
-import ChoicePill from "../items/ChoicePill";
 import DurationField from "../items/hooks/DurationField.jsx";
 import HookEnumField from "../items/hooks/HookEnumField.jsx";
 import HookPartnersField from "../items/hooks/HookPartnersField.jsx";
@@ -215,7 +214,6 @@ const HookDetails = (props) => {
                     location: hook.location ? hook.location : "",
                     mood: hook.mood ? hook.mood : "",
                     grade: hook.grade ? hook.grade : "",
-                    protected: hook.protected,
                     sex: getBoolVal(hook.sex),
                     penetration: getBoolVal(hook.penetration),
                     orgasm: getBoolVal(hook.orgasm),
@@ -234,15 +232,14 @@ const HookDetails = (props) => {
                         })) :
                         [],
                 } : {
-                    dateTime: "",
-                    date: "",
-                    time: "",
+                    dateTime: new Date(),
+                    date: formatDateTime(new Date(), "techdate"),
+                    time: formatDateTime(new Date(), "techtime"),
                     duration: 0,
                     hookType: "",
                     location: "",
                     mood: "",
                     grade: "",
-                    protected: "",
                     sex: null,
                     penetration: null,
                     orgasm: null,
@@ -378,16 +375,20 @@ const HookDetails = (props) => {
                                     </div>
                                 }
 
+                                {
+                                    /* With (Partners)
+                                    */
+                                    (values.partners.length > 0 || displayMode !== "view") &&
+                                    <div className="infoItem with">
+                                        <HookPartnersField
+                                            values={values}
+                                            displayMode={displayMode}
+                                            readOnly={readOnly}
+                                            setValues={setValues}
 
-                                <div className="infoItem with">
-                                    <HookPartnersField
-                                        values={values}
-                                        displayMode={displayMode}
-                                        readOnly={readOnly}
-                                        setValues={setValues}
-
-                                    />
-                                </div>
+                                        />
+                                    </div>
+                                }
 
                                 {
                                     /* Location
@@ -505,77 +506,74 @@ const HookDetails = (props) => {
                                     }
                                 </div>
 
-                                <div className="infoItem">
-                                    {/* <p>Protection Type</p> */}
-                                    {
-                                        ["edit", "new"].includes(displayMode) ?
-                                            <HookEnumField
-                                                setValues={setValues}
-                                                values={values}
-                                                enumName="protectionType"
-                                            /> :
-                                            hook && hook.protected &&
-                                            <ChoicePill text={hook && enumLabel(hook.protected)} selected={true} />
-
-
-
-                                    }
-                                </div>
-                                <div className="infoGroup">
-                                    {
-                                        (values.mood !== "" || props.displayMode !== "view") &&
-                                        <div className="infoItem mood">
-                                            <div className="infoText">
-                                                <h3>Mood</h3>
+                                {
+                                    /* Mood or Grade
+                                    */
+                                    (values.mood !== "" || values.grade !== "" || props.displayMode !== "view") &&
+                                    <div className="infoGroup">
+                                        {
+                                            /* Mood
+                                            */
+                                            (values.mood !== "" || props.displayMode !== "view") &&
+                                            <div className="infoItem mood">
+                                                <div className="infoText">
+                                                    <h3>Mood</h3>
+                                                </div>
+                                                <MoodPicker
+                                                    displayMode={displayMode}
+                                                    readOnly={readOnly}
+                                                    setValues={setValues}
+                                                    values={values}
+                                                />
                                             </div>
-                                            <MoodPicker
-                                                displayMode={displayMode}
-                                                readOnly={readOnly}
-                                                setValues={setValues}
-                                                values={values}
-                                            />
-                                        </div>
-                                    }
-                                    {
-                                        (values.grade !== "" || props.displayMode !== "view") &&
-                                        <div className="infoItem grade">
-                                            <h3>Grade</h3>
-                                            <StarRating
-                                                displayMode={displayMode}
-                                                setValues={setValues}
-                                                values={values}
-                                                name="grade"
-                                                readOnly={readOnly}
+                                        }
+                                        {
+                                            /* Grade
+                                            */
+                                            (values.grade !== "" || props.displayMode !== "view") &&
+                                            <div className="infoItem grade">
+                                                <h3>Grade</h3>
+                                                <StarRating
+                                                    displayMode={displayMode}
+                                                    setValues={setValues}
+                                                    values={values}
+                                                    name="grade"
+                                                    readOnly={readOnly}
 
-                                            />
+                                                />
 
-                                        </div>
-                                    }
-                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
 
-                                <div className="infoItem">
-                                    <h3>Notes</h3>
-                                    {
-                                        displayMode === "view" ?
-                                            <p>{hook && hook.note}</p> :
-                                            <Field
-                                                name="note"
-                                                type="textarea"
-                                                as="textarea"
-                                                rows="3"
-                                                key={"note" + (readOnly ? "readonly" : "active") + (hook && hook.note)}
-                                                className="form-control"
-                                                placeholder="Something to say?"
-                                                disabled={readOnly}
-                                                value={values.note}
+                                {
+                                    /* Notes
+                                    */
+                                    (values.note !== "" || props.displayMode !== "view") &&
+                                    <div className="infoItem note">
+                                        <h3>Notes</h3>
+                                        {
+                                            displayMode === "view" ?
+                                                <p>{hook && hook.note}</p> :
+                                                <Field
+                                                    name="note"
+                                                    type="textarea"
+                                                    as="textarea"
+                                                    rows="3"
+                                                    key={"note" + (readOnly ? "readonly" : "active") + (hook && hook.note)}
+                                                    className="form-control"
+                                                    placeholder="Something to say?"
+                                                    disabled={readOnly}
+                                                    value={values.note}
 
-                                            />
-                                    }
-                                </div>
+                                                />
+                                        }
+                                    </div>
+                                }
                             </div>
                         </div>
                     </Form>
-
                 )}
             </Formik>
 

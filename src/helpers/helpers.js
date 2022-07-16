@@ -87,7 +87,9 @@ export const formatDateTime = (dateTimeIn, format) => {
                 outDateTime = new Date(dateTime.getTime() - (offset * 60 * 1000))
 
                 outDateTime = outDateTime.toISOString().split('T')[1].slice(0, -1);
-                return outDateTime;
+                let outTime = outDateTime.split(':');
+                outTime = outTime[0] + ':' + outTime[1];
+                return outTime;
             } else {
                 return dateTimeIn;
             }

@@ -253,6 +253,9 @@
                         width: 20px;
                     }
                 }
+                &.note {
+                    flex-direction: column;
+                }
                 &.dateTime {
                     @include flex(row, flex-start, center);
                     gap: 20px;

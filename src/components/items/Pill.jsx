@@ -12,7 +12,7 @@ const Pill = (props) => {
         selected
     } = props;
 
-    console.log("Pill props", props);
+    // console.log("Pill props", props);
 
     const states = {
         null: "noValue",
@@ -63,15 +63,15 @@ const Pill = (props) => {
 
     const pillType = pillTypes.filter((typef) => typef.type === type)[0] || { type: "" };
 
-    if (type === "sex") {
-        console.log("COUCOUCOCUOCUCOUCOUCOCUOUC");
-        console.log({ state });
-        console.log("val: ", values)
-        console.log("field (type): ", type)
-        console.log("valfield: ", values[type])
-        console.log(pillType);
+    // if (type === "sex") {
+    //     console.log("COUCOUCOCUOCUCOUCOUCOCUOUC");
+    //     console.log({ state });
+    //     console.log("val: ", values)
+    //     console.log("field (type): ", type)
+    //     console.log("valfield: ", values[type])
+    //     console.log(pillType);
 
-    }
+    // }
 
     // clases
     const iconClass = icon ? (icon === "iconOnly" ? "iconOnly" : "withIcon") : "noIcon";
