@@ -47,7 +47,7 @@ const MyPartners = (props) => {
         }
 
         getData();
-        setTotalPartners(data && data.myPartners.length);
+        setTotalPartners(data ? data.myPartners.length : 0);
     }, [props.selectedPartner, data, loadingQuery, props]);
 
     useEffect(() => {

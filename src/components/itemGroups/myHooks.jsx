@@ -46,7 +46,7 @@ const MyHooks = (props) => {
             //     }
         }
         getData();
-        setTotalHooks(data && data.myHooks.length);
+        setTotalHooks(data ? data.myHooks.length : 0);
         // eslint-disable-next-line
     }, [props.selectedHook, data]);
 
