@@ -74,6 +74,12 @@ const MyHooks = (props) => {
                     date: hook.dateTime,
                     hookType: hook.hookType,
                     partners: hook.partners,
+                    sex: hook.sex,
+                    penetration: hook.penetration,
+                    orgasm: hook.orgasm,
+                    protection: hook.protection,
+                    porn: hook.porn,
+                    pill: hook.pill,
                     // name: hook.partners && hook.partners[0] ?
                     //     hook.partners[0].person && hook.partners[0].person.nickName ?
                     //         hook.partners[0].person.nickName
@@ -190,26 +196,19 @@ const MyHooks = (props) => {
                                         let rowClass = hook && props.selectedHook && hook["id"] === props.selectedHook.id ? "selected" : "";
 
                                         return (
-                                            <div 
-                                            className={`hookContainer card ${rowClass}`} 
-                                            onClick={() => {
-                                                console.log({ hook });
-                                                // const hook = data;
-                                                handleClick(hook)
-                                            }}
-                                            key={index}
+                                            <div
+                                                className={`hookContainer card ${rowClass}`}
+                                                onClick={() => {
+                                                    console.log({ hook });
+                                                    // const hook = data;
+                                                    handleClick(hook)
+                                                }}
+                                                key={index}
                                             >
 
                                                 <div className="firstLine line">
                                                     <div className="column partners">
                                                         {
-                                                            // hook.partners.map((partner, index) =>
-                                                            //     <PictureAndName
-                                                            //         key={index}
-                                                            //         partner={partner}
-                                                            //         onlyPic={hook.partners.length > 1 || windowWidth < 767}
-                                                            //     />
-                                                            // )
                                                             <PictureAndName
                                                                 partners={hook.partners}
                                                             />
@@ -227,7 +226,43 @@ const MyHooks = (props) => {
                                                         />
                                                     </div>
                                                     <div className="column icons">
-
+                                                        {
+                                                            (hook.sex !== null 
+                                                            || hook.penetration !== null
+                                                            || hook.orgasm !== null
+                                                            || hook.protection !== null
+                                                            || hook.pill !== null)
+                                                            ? 
+                                                            <>
+                                                            <Pill
+                                                            type="sex"
+                                                            icon="iconOnly"
+                                                            values={hook}
+                                                        />
+                                                        <Pill
+                                                            type="penetration"
+                                                            icon="iconOnly"
+                                                            values={hook}
+                                                        />
+                                                        <Pill
+                                                            type="orgasm"
+                                                            icon="iconOnly"
+                                                            values={hook}
+                                                        />
+                                                        <Pill
+                                                            type="protection"
+                                                            icon="iconOnly"
+                                                            values={hook}
+                                                        />
+                                                        <Pill
+                                                            type="pill"
+                                                            icon="iconOnly"
+                                                            values={hook}
+                                                        />
+                                                            </>
+                                                            :
+                                                            <h4>That's all</h4>
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>

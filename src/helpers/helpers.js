@@ -10,7 +10,10 @@ export const formatDateTime = (dateTimeIn, format) => {
 
     switch (format) {
         case 'date':
-            delete dateOptions.weekday;
+            dateOptions.weekday = 'short';
+            dateOptions.month = 'short';
+            dateOptions.year = '2-digit';
+
 
             var now = new Date();
 
@@ -49,6 +52,11 @@ export const formatDateTime = (dateTimeIn, format) => {
 
 
         case 'longdate':
+            outDateTime = dateTime.toLocaleString('en-UK', dateOptions);
+            return outDateTime;
+
+        case 'mediumdate':
+            dateOptions.day = 'short';
             outDateTime = dateTime.toLocaleString('en-UK', dateOptions);
             return outDateTime;
 

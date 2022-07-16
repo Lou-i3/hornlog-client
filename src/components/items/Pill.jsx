@@ -5,11 +5,10 @@ const Pill = (props) => {
     const { onClick,
         readOnly = false,
         type, // for icon pills
-        icon = false, // icon : true, false, IconOnly
+        icon = false, // icon : true, false, iconOnly
         text, // for no icon
         values,
         setValues,
-        field,
         selected
     } = props;
 
@@ -20,7 +19,7 @@ const Pill = (props) => {
         true: "on",
         false: "off"
     }
-    const [state, setState] = useState(values ? values[field] : null); // NoValue: null, true: on, false: off
+    const [state, setState] = useState(values ? values[type] : null); // NoValue: null, true: on, false: off
 
     const pillTypes = [
         {
@@ -64,18 +63,18 @@ const Pill = (props) => {
 
     const pillType = pillTypes.filter((typef) => typef.type === type)[0] || { type: "" };
 
-    if (type === "penetration") {
-        // console.log("COUCOUCOCUOCUCOUCOUCOCUOUC");
-        // console.log({ state });
-        // console.log("val: ", values)
-        // console.log("field: ", field)
-        // console.log("valfield: ", values[field])
-        // console.log(pillType);
+    if (type === "sex") {
+        console.log("COUCOUCOCUOCUCOUCOUCOCUOUC");
+        console.log({ state });
+        console.log("val: ", values)
+        console.log("field (type): ", type)
+        console.log("valfield: ", values[type])
+        console.log(pillType);
 
     }
 
     // clases
-    const iconClass = icon ? "withIcon" : "noIcon";
+    const iconClass = icon ? (icon ==="iconOnly" ? "iconOnly" : "withIcon") : "noIcon";
     const stateClass = selected !== undefined ?
         (selected ? "on" : "off") :
         states[state];
@@ -101,15 +100,15 @@ const Pill = (props) => {
                 let newValues = {
                     ...values
                 };
-                newValues[field] = newState;
+                newValues[type] = newState;
                 setValues(newValues);
             }
         }
     }
     const displayText = () => {
-        let outText = "caca";
+        let outText = "";
 
-        if (icon !== "IconOnly") {
+        if (icon !== "iconOnly") {
             if (icon) {
                 switch (state) {
                     case null:

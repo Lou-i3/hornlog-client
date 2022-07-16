@@ -47,16 +47,16 @@
         padding: 0;
         padding-bottom: env(safe-area-inset-bottom);
         box-sizing: content-box;
-        background: linear-gradient( 180deg, rgba(20, 20, 20, 0.75) 0%, rgba(20, 20, 20, 0.75) 15%, rgba(20, 20, 20, 0.75) 75%, rgba(20, 20, 20, 1) 100%);
-        backdrop-filter: blur(10px);
+        background: linear-gradient( 180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.829227) 32.81%, rgba(0, 0, 0, 0.9) 99.99%);
+        backdrop-filter: blur(4px);
         & .mobileMenu {
-            @include flex(row, space-around, flex-end);
+            @include flex(row, space-around, center);
             width: 100%;
             height: 100%;
             // border-top: 0.5px solid $color-blue;
             background: transparent;
             border-radius: 0px;
-            padding-bottom: 10px;
+            // padding-bottom: 10px;
             // padding-bottom: calc(10px + env(safe-area-inset-bottom));
             // padding-bottom: env(safe-area-inset-bottom);
             & .menuItem {

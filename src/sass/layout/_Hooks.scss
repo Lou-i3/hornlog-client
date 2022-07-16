@@ -123,7 +123,10 @@
                 // width: 100%;
             }
         }
-        &.icons {}
+        &.icons {
+            @include flex(row, flex-start, center);
+            gap: 10px;
+        }
     }
 }
 

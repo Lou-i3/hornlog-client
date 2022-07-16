@@ -181,9 +181,8 @@ const MyPartners = (props) => {
                                                         }
                                                     </div>
                                                     <div className="column lastHook">
-                                                        {
-                                                            partner.lastHook
-                                                        }
+                                                        <p>{partner.lastHook}</p>
+
                                                         <Pill
                                                             text={enumLabel(partner.lastHookType)}
                                                             selected

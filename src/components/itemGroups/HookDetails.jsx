@@ -427,7 +427,6 @@ const HookDetails = (props) => {
                                             <Pill
                                                 values={values}
                                                 setValues={setValues}
-                                                field="sex"
                                                 type="sex"
                                                 icon
                                                 readOnly={readOnly}
@@ -442,7 +441,6 @@ const HookDetails = (props) => {
                                             <Pill
                                                 values={values}
                                                 setValues={setValues}
-                                                field="penetration"
                                                 type="penetration"
                                                 icon
                                                 readOnly={readOnly}
@@ -457,7 +455,6 @@ const HookDetails = (props) => {
                                             <Pill
                                                 values={values}
                                                 setValues={setValues}
-                                                field="orgasm"
                                                 type="orgasm"
                                                 icon
                                                 readOnly={readOnly}
@@ -472,7 +469,6 @@ const HookDetails = (props) => {
                                             <Pill
                                                 values={values}
                                                 setValues={setValues}
-                                                field="protection"
                                                 type="protection"
                                                 icon
                                                 readOnly={readOnly}
@@ -487,7 +483,6 @@ const HookDetails = (props) => {
                                             <Pill
                                                 values={values}
                                                 setValues={setValues}
-                                                field="porn"
                                                 type="porn"
                                                 icon
                                                 readOnly={readOnly}
@@ -502,7 +497,6 @@ const HookDetails = (props) => {
                                             <Pill
                                                 values={values}
                                                 setValues={setValues}
-                                                field="pill"
                                                 type="pill"
                                                 icon
                                                 readOnly={readOnly}
