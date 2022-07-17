@@ -179,7 +179,7 @@
         & form {
             flex-direction: column;
             height: fit-content;
-            padding-bottom: $size-nav-mobile-height;
+            padding-bottom: $padding-nav-mobile;
             gap: 0;
             & .column {
                 & .info {

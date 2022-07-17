@@ -17,7 +17,7 @@
         background-color: $color-secondary-black;
         border-radius: 15px;
         padding: 20px;
-        box-shadow: inset 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+        box-shadow: $effect-inner-shadow;
         & button {
             & span {
                 color: $color-secondary-black;
@@ -34,7 +34,7 @@
             gap: 10px;
             & .settingsBlock {
                 @include flex(column, center, center);
-                box-shadow: inset 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+                box-shadow: $effect-inner-shadow;
                 background-color: $color-secondary-black;
                 width: 100%;
                 height: fit-content;
@@ -133,7 +133,7 @@
     padding: 10px;
     margin-left: auto;
     background-color: $color-secondary-black;
-    box-shadow: inset 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: $effect-inner-shadow;
     cursor: pointer;
     border-radius: 15px;
     & .reportIssuePopIn {

@@ -28,6 +28,7 @@ cursive;
 $size-header-height: 60px;
 $size-nav-width: 280px;
 $size-nav-mobile-height: 75px;
+$padding-nav-mobile: calc($size-nav-mobile-height + env(safe-area-inset-bottom) + 10px);
 //
 // Responsive
 $breakpoint-tablet: 0px;

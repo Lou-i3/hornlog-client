@@ -119,23 +119,11 @@
         &.type {
             // width: 34%;
             min-width: fit-content;
-            & .choicePill {
-                // width: 100%;
-            }
         }
         &.icons {
             @include flex(row, flex-start, center);
             gap: 10px;
         }
-    }
-}
-
-.myHooks {
-    & .choicePill {
-        background-color: $color-main-black-50;
-    }
-    & .selected .choicePill {
-        background-color: $color-secondary-black;
     }
 }
 
@@ -408,7 +396,7 @@
         & .info {
             padding: 0px;
             padding-top: 10px;
-            padding-bottom: calc($size-nav-mobile-height + env(safe-area-inset-bottom) + 10px);
+            padding-bottom: $padding-nav-mobile;
             & .infoItemWrapper {
                 & .infoItem {
                     & .hookEnumField {
