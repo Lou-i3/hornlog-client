@@ -23,6 +23,7 @@ const Hooks = () => {
         filterPill: null, // null, true, false
         filterSex: null, // null, true, false
         filterPenetration: null, // null, true, false
+        filterSelf: false, // null, true, false
     });
 
     useEffect(() => {

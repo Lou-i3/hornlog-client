@@ -233,6 +233,9 @@ const FilterPanel = (props) => {
                             {
                                 filterItemtoggle("filterPenetration", "Penetration", "penetration")
                             }
+                            {
+                                filterItemtoggle("filterSelf", "Self", "self")
+                            }
                         </div>
                     </div>
                 }

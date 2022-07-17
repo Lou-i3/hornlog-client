@@ -49,7 +49,7 @@ const MyPartners = (props) => {
         if (data && data.myPartners) {
             getData(filters.sortColumn, filters.sortType);
         }
-        setTotalPartners(data ? data.myPartners.length : 0);
+        setTotalPartners(tableData ? tableData.length : 0);
     }, [selectedPartner, data, loadingQuery]);
 
     useEffect(() => {
@@ -153,8 +153,8 @@ const MyPartners = (props) => {
                     if (typeof y === 'string') {
                         y = y.charCodeAt();
                     }
-                    
-                    if (sortTypeLocal === 'most recent' ) {
+
+                    if (sortTypeLocal === 'most recent') {
                         // console.log("y - x: ", x - y);
                         return reverse ? x - y : y - x;
                     } else {
@@ -187,6 +187,8 @@ const MyPartners = (props) => {
                 // return filteredData;
             }
             setTableData(tableDataLocal);
+            setTotalPartners(tableDataLocal ? tableDataLocal.length : 0);
+
 
             setLoading(false);
 

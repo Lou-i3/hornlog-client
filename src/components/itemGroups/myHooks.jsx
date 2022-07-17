@@ -48,7 +48,7 @@ const MyHooks = (props) => {
         if (data && data.myHooks) {
             getData(filters.sortColumn, filters.sortType);
         }
-        setTotalHooks(data ? data.myHooks.length : 0);
+        setTotalHooks(tableData ? tableData.length : 0);
         // eslint-disable-next-line
     }, [selectedHook, data]);
 
@@ -164,7 +164,17 @@ const MyHooks = (props) => {
             filterBools("sex", "filterSex");
             filterBools("penetration", "filterPenetration");
 
+            if (filters.filterSelf !== null) {
+                let filteredData = [...tableDataLocal];
+
+                filteredData = tableDataLocal.filter(x => {
+                    return filters.filterSelf ? x.hookType === "Self" : x.hookType !== "Self";
+                });
+                // console.log("filteredData", filteredData);
+                tableDataLocal = filteredData;
+            }
             setTableData(tableDataLocal);
+            setTotalHooks(tableDataLocal ? tableDataLocal.length : 0);
             setLoading(false);
 
         }
