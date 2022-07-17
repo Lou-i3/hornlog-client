@@ -14,20 +14,18 @@ import PictureAndName from '../items/profile/PictureAndName';
 
 const MyPartners = (props) => {
     const { loading: loadingQuery, error, data } = useQuery(MY_PARTNERS_QUERY);
-    const [sortColumn, setSortColumn] = useState("lastHook");
-    const [sortType, setSortType] = useState("asc");
     const [tableData, setTableData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [localSearchTerms, setLocalSearchTerms] = useState("");
-    const { selectedPartner, setTotalPartners, filters } = props;
+    const { selectedPartner, setSelectedPartner, setTotalPartners, filters, setDisplayMode, searchTerms } = props;
 
 
     // console.log("myPartners");
     // console.log(data);
 
     const handleClick = (partner) => {
-        props.setSelectedPartner(partner);
-        props.setDisplayMode("view");
+        setSelectedPartner(partner);
+        setDisplayMode("view");
         console.log("handleClick", partner);
     }
 
@@ -44,7 +42,7 @@ const MyPartners = (props) => {
             console.log("selectedPartnerIndex", selectedPartnerIndex);
             if (selectedPartnerIndex || selectedPartnerIndex === 0) {
                 console.log("selectedPartner in data.myPartners");
-                props.setSelectedPartner(data.myPartners[selectedPartnerIndex]);
+                setSelectedPartner(data.myPartners[selectedPartnerIndex]);
             }
         }
 
@@ -55,12 +53,12 @@ const MyPartners = (props) => {
     }, [selectedPartner, data, loadingQuery]);
 
     useEffect(() => {
-        console.log("searchTerms: ", props.searchTerms);
-        if (props.searchTerms !== localSearchTerms) {
+        console.log("searchTerms: ", searchTerms);
+        if (searchTerms !== localSearchTerms) {
             getData(filters.sortColumn, filters.sortType);
-            setLocalSearchTerms(props.searchTerms);
+            setLocalSearchTerms(searchTerms);
         }
-    }, [props.searchTerms]);
+    }, [searchTerms]);
 
     useEffect(() => {
         getData(filters.sortColumn, filters.sortType);
@@ -139,9 +137,15 @@ const MyPartners = (props) => {
                     if (sortColumnLocal === 'firstHook' || sortColumnLocal === 'lastHook') {
                         x = (new Date(x)).getTime() || lastValueDate;
                         y = (new Date(y)).getTime() || lastValueDate;
-                        console.log("x: ", x);
-                        console.log("y: ", y);
+                        // console.log("x: ", x);
+                        // console.log("y: ", y);
                     }
+
+                    let reverse = false;
+                    if (typeof x === 'string' && typeof y === 'string') {
+                        reverse = true;
+                    }
+                    // console.log("reverse: ", reverse);
 
                     if (typeof x === 'string') {
                         x = x.charCodeAt();
@@ -149,35 +153,36 @@ const MyPartners = (props) => {
                     if (typeof y === 'string') {
                         y = y.charCodeAt();
                     }
-                    if (sortTypeLocal === 'most recent') {
-                        console.log("y - x: ", x - y);
-                        return y - x;
+                    
+                    if (sortTypeLocal === 'most recent' ) {
+                        // console.log("y - x: ", x - y);
+                        return reverse ? x - y : y - x;
                     } else {
-                        console.log("x - y: ", x - y);
-                        return x - y;
+                        // console.log("x - y: ", x - y);
+                        return reverse ? y - x : x - y;
                     }
                 });
                 // tableDataLocal = output;
                 // console.log("output", output);
                 // setTableData(output);
-                console.log("sorted Data: ", tableDataLocal);
+                // console.log("sorted Data: ", tableDataLocal);
             }
-            if (props.searchTerms !== "") {
+            if (searchTerms !== "") {
                 let filteredData = [...tableDataLocal];
 
                 filteredData = tableDataLocal.filter(x => {
-                    // console.log("search: ", props.searchTerms);
+                    // console.log("search: ", searchTerms);
                     // console.log("x.name: ", x.name);
-                    // console.log("includes: ", x.name.toLowerCase().includes(props.searchTerms.toLowerCase()));
+                    // console.log("includes: ", x.name.toLowerCase().includes(searchTerms.toLowerCase()));
                     let output = false;
-                    if (x.name.toLowerCase().includes(props.searchTerms.toLowerCase())) {
+                    if (x.name.toLowerCase().includes(searchTerms.toLowerCase())) {
                         output = true;
-                    } else if (x.lastHook.toLowerCase().includes(props.searchTerms.toLowerCase())) {
+                    } else if (x.lastHook.toLowerCase().includes(searchTerms.toLowerCase())) {
                         output = true;
                     }
                     return output;
                 });
-                console.log("filteredData", filteredData);
+                // console.log("filteredData", filteredData);
                 tableDataLocal = filteredData;
                 // return filteredData;
             }
@@ -189,23 +194,22 @@ const MyPartners = (props) => {
         setTableData(tableDataLocal);
     };
 
-    const handleSortColumn = (sortColumn, sortType) => {
-        console.log("handlesortColumn");
-        console.log("sortColumn", sortColumn);
-        console.log("sortType", sortType);
+    // const handleSortColumn = (sortColumn, sortType) => {
+    //     console.log("handlesortColumn");
+    //     console.log("sortColumn", sortColumn);
+    //     console.log("sortType", sortType);
 
-        setSortColumn(sortColumn);
-        setSortType(sortType);
-        setLoading(true);
-        getData(sortColumn, sortType);
-        setTimeout(() => {
-            setLoading(false);
-            setSortColumn(sortColumn);
-            setSortType(sortType);
-        }, 500);
-    };
+    //     setSortColumn(sortColumn);
+    //     setSortType(sortType);
+    //     setLoading(true);
+    //     getData(sortColumn, sortType);
+    //     setTimeout(() => {
+    //         setLoading(false);
+    //         setSortColumn(sortColumn);
+    //         setSortType(sortType);
+    //     }, 500);
+    // };
 
-    const dev = true;
     return (
         <div className="myPartners cardsList">
             {/* {loadingQuery ?
@@ -228,7 +232,7 @@ const MyPartners = (props) => {
                                         let rowHookType = filters.hookDate === "last" ?
                                             enumLabel(partner.lastHookType) :
                                             enumLabel(partner.firstHookType);
-                                        console.log("rowHookDate: ", rowHookDate);
+                                        // console.log("rowHookDate: ", rowHookDate);
                                         return (
                                             <div
                                                 className={`partnerContainer card ${rowClass}`}

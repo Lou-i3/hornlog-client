@@ -12,11 +12,11 @@ const MyHooks = (props) => {
     const { setTotalHooks } = props;
     // eslint-disable-next-line
     const { loading: loadingQuery, error, data } = useQuery(MY_HOOKS_QUERY);
-    const [sortColumn, setSortColumn] = useState();
-    const [sortType, setSortType] = useState();
     const [tableData, setTableData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [localSearchTerms, setLocalSearchTerms] = useState("");
+    const { filters, selectedHook, setSelectedHook, searchTerms } = props;
 
     useEffect(() => {
         window.addEventListener("resize", () => {
@@ -25,13 +25,13 @@ const MyHooks = (props) => {
     }, []);
 
     const handleClick = (hook) => {
-        // props.setSelectedHook(hook);
+        // setSelectedHook(hook);
         // if (hook.id in data.myHooks) { 
         console.log("selectedHook in data.myHooks");
-        props.setSelectedHook(data.myHooks.filter((hookItem) => hookItem.id === hook.id)[0]);
+        setSelectedHook(data.myHooks.filter((hookItem) => hookItem.id === hook.id)[0]);
         // }
 
-        console.log("handleClick, selectedHook: ", props.selectedHook);
+        console.log("handleClick, selectedHook: ", selectedHook);
     }
 
     useEffect(() => {
@@ -39,24 +39,31 @@ const MyHooks = (props) => {
         // const { loading, error, data } = useQuery(MY_HOOKS_QUERY);
 
         // console.log(data);
-        if (data && props.selectedHook) {
-            //     if (props.selectedHook.id in data.myHooks) { 
+        if (data && selectedHook) {
+            //     if (selectedHook.id in data.myHooks) { 
             //         console.log("selectedHook in data.myHooks"); 
-            //         props.setSelectedHook(data.myHooks.filter((value, index, self) => self.id === props.selectedHook.id)[0]);
+            //         setSelectedHook(data.myHooks.filter((value, index, self) => self.id === selectedHook.id)[0]);
             //     }
         }
-        getData();
+        if (data && data.myHooks) {
+            getData(filters.sortColumn, filters.sortType);
+        }
         setTotalHooks(data ? data.myHooks.length : 0);
         // eslint-disable-next-line
-    }, [props.selectedHook, data]);
+    }, [selectedHook, data]);
 
     // Use effet for Search 
     useEffect(() => {
-        console.log("searchTerms: ", props.searchTerms);
-        getData();
-        // eslint-disable-next-line
-    }, [props.searchTerms]);
+        console.log("searchTerms: ", searchTerms);
+        if (searchTerms !== localSearchTerms) {
+            getData(filters.sortColumn, filters.sortType);
+            setLocalSearchTerms(searchTerms);
+        }
+    }, [searchTerms]);
 
+    useEffect(() => {
+        getData(filters.sortColumn, filters.sortType);
+    }, [filters]);
 
     const getData = (sortColumnLocal, sortTypeLocal) => {
         console.log("getData");
@@ -91,8 +98,6 @@ const MyHooks = (props) => {
             console.log("sortColumn", sortColumnLocal);
             console.log("sortType", sortTypeLocal);
             if (sortColumnLocal && sortTypeLocal) {
-                console.log("sortColumn", sortColumnLocal);
-                console.log("sortType", sortType);
 
                 // const sortedData = [...tableDataLocal];
 
@@ -111,44 +116,30 @@ const MyHooks = (props) => {
                         y = y.charCodeAt();
                     }
 
-                    if (sortType === 'asc') {
-                        return x - y;
-                    } else {
+                    if (sortTypeLocal === 'most recent') {
                         return y - x;
+                    } else {
+                        return x - y;
                     }
                 });
                 // tableDataLocal = output;
-                // console.log("output", output);
+                console.log("sortedData", tableDataLocal);
                 // setTableData(output);
-            } else {
-                tableDataLocal = tableDataLocal.sort((a, b) => {
-                    let x = a["date"];
-                    let y = b["date"];
-
-
-                    x = (new Date(x)).getTime();
-                    y = (new Date(y)).getTime();
-
-                    if (sortType === 'asc') {
-                        return x - y;
-                    } else {
-                        return y - x;
-                    }
-                });
             }
-            if (props.searchTerms !== "") {
+            // Search filter
+            if (searchTerms !== "") {
                 let filteredData = [...tableDataLocal];
 
                 filteredData = tableDataLocal.filter(x => {
-                    // console.log("search: ", props.searchTerms);
+                    // console.log("search: ", searchTerms);
                     // console.log("x.name: ", x.name);
-                    // console.log("includes: ", x.name.toLowerCase().includes(props.searchTerms.toLowerCase()));
+                    // console.log("includes: ", x.name.toLowerCase().includes(searchTerms.toLowerCase()));
                     let output = false;
-                    if (x.name.toLowerCase().includes(props.searchTerms.toLowerCase())) {
+                    if (x.name.toLowerCase().includes(searchTerms.toLowerCase())) {
                         output = true;
-                    } else if (x.date.toLowerCase().includes(props.searchTerms.toLowerCase())) {
+                    } else if (x.date.toLowerCase().includes(searchTerms.toLowerCase())) {
                         output = true;
-                    } else if (x.hookType.toLowerCase().includes(props.searchTerms.toLowerCase())) {
+                    } else if (x.hookType.toLowerCase().includes(searchTerms.toLowerCase())) {
                         output = true;
                     }
                     return output;
@@ -157,6 +148,22 @@ const MyHooks = (props) => {
                 tableDataLocal = filteredData;
                 // return filteredData;
             }
+            const filterBools = (field, filterName) => {
+                if (filters[filterName] !== null) {
+                    let filteredData = [...tableDataLocal];
+
+                    filteredData = tableDataLocal.filter(x => {
+                        return x[field] === filters[filterName];
+                    });
+                    // console.log("filteredData", filteredData);
+                    tableDataLocal = filteredData;
+                }
+            }
+            filterBools("protection", "filterProtection");
+            filterBools("pill", "filterPill");
+            filterBools("sex", "filterSex");
+            filterBools("penetration", "filterPenetration");
+
             setTableData(tableDataLocal);
             setLoading(false);
 
@@ -164,21 +171,21 @@ const MyHooks = (props) => {
         setTableData(tableDataLocal);
     };
 
-    const handleSortColumn = (sortColumn, sortType) => {
-        console.log("handlesortColumn");
-        console.log("sortColumn", sortColumn);
-        console.log("sortType", sortType);
+    // const handleSortColumn = (sortColumn, sortType) => {
+    //     console.log("handlesortColumn");
+    //     console.log("sortColumn", sortColumn);
+    //     console.log("sortType", sortType);
 
-        setSortColumn(sortColumn);
-        setSortType(sortType);
-        setLoading(true);
-        getData(sortColumn, sortType);
-        setTimeout(() => {
-            setLoading(false);
-            setSortColumn(sortColumn);
-            setSortType(sortType);
-        }, 500);
-    };
+    //     setSortColumn(sortColumn);
+    //     setSortType(sortType);
+    //     setLoading(true);
+    //     getData(sortColumn, sortType);
+    //     setTimeout(() => {
+    //         setLoading(false);
+    //         setSortColumn(sortColumn);
+    //         setSortType(sortType);
+    //     }, 500);
+    // };
 
     return (
         <div className="myHooks cardsList">
@@ -193,7 +200,7 @@ const MyHooks = (props) => {
                                 :
                                 <div className="hooksWrapper cardsWrapper">
                                     {tableData && tableData.map((hook, index) => {
-                                        let rowClass = hook && props.selectedHook && hook["id"] === props.selectedHook.id ? "selected" : "";
+                                        let rowClass = hook && selectedHook && hook["id"] === selectedHook.id ? "selected" : "";
 
                                         return (
                                             <div
@@ -227,41 +234,41 @@ const MyHooks = (props) => {
                                                     </div>
                                                     <div className="column icons">
                                                         {
-                                                            (hook.sex !== null 
-                                                            || hook.penetration !== null
-                                                            || hook.orgasm !== null
-                                                            || hook.protection !== null
-                                                            || hook.pill !== null)
-                                                            ? 
-                                                            <>
-                                                            <Pill
-                                                            type="sex"
-                                                            icon="iconOnly"
-                                                            values={hook}
-                                                        />
-                                                        <Pill
-                                                            type="penetration"
-                                                            icon="iconOnly"
-                                                            values={hook}
-                                                        />
-                                                        <Pill
-                                                            type="orgasm"
-                                                            icon="iconOnly"
-                                                            values={hook}
-                                                        />
-                                                        <Pill
-                                                            type="protection"
-                                                            icon="iconOnly"
-                                                            values={hook}
-                                                        />
-                                                        <Pill
-                                                            type="pill"
-                                                            icon="iconOnly"
-                                                            values={hook}
-                                                        />
-                                                            </>
-                                                            :
-                                                            <h4>That's all</h4>
+                                                            (hook.sex !== null
+                                                                || hook.penetration !== null
+                                                                || hook.orgasm !== null
+                                                                || hook.protection !== null
+                                                                || hook.pill !== null)
+                                                                ?
+                                                                <>
+                                                                    <Pill
+                                                                        type="sex"
+                                                                        icon="iconOnly"
+                                                                        values={hook}
+                                                                    />
+                                                                    <Pill
+                                                                        type="penetration"
+                                                                        icon="iconOnly"
+                                                                        values={hook}
+                                                                    />
+                                                                    <Pill
+                                                                        type="orgasm"
+                                                                        icon="iconOnly"
+                                                                        values={hook}
+                                                                    />
+                                                                    <Pill
+                                                                        type="protection"
+                                                                        icon="iconOnly"
+                                                                        values={hook}
+                                                                    />
+                                                                    <Pill
+                                                                        type="pill"
+                                                                        icon="iconOnly"
+                                                                        values={hook}
+                                                                    />
+                                                                </>
+                                                                :
+                                                                <h4>That's all</h4>
                                                         }
                                                     </div>
                                                 </div>

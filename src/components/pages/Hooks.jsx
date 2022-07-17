@@ -5,6 +5,7 @@ import Search from "../items/Search";
 import { useState, useEffect } from 'react';
 import Icon from "../global/Icon";
 import Illustration from "../global/Illustration";
+import FilterPanel from "../items/FilterPanel";
 
 const Hooks = () => {
     const [selectedHook, setSelectedHook] = useState(null);
@@ -14,6 +15,15 @@ const Hooks = () => {
     const [totalHooks, setTotalHooks] = useState(0);
     const [listAnimation, setListAnimation] = useState("");
     const [detailsAnimation, setDetailsAnimation] = useState("");
+    const [filters, setFilters] = useState({
+        sortColumn: "date", 
+        sortType: "most recent", // most recent, oldest first
+        showName: "nickname", // nickame / full 
+        filterProtection: null, // null, true, false
+        filterPill: null, // null, true, false
+        filterSex: null, // null, true, false
+        filterPenetration: null, // null, true, false
+    });
 
     useEffect(() => {
         window.addEventListener("resize", () => {
@@ -98,13 +108,18 @@ const Hooks = () => {
                         </div>
                         <div className="title">
                             <Search setSearchTerms={setSearchTerms} />
-                            <Icon type="filter" />
+                            <FilterPanel
+                                filters={filters}
+                                setFilters={setFilters}
+                                type="hooks"
+                            />
                         </div>
                         <MyHooks
                             selectedHook={selectedHook}
                             setSelectedHook={setSelectedHook}
                             searchTerms={searchTerms}
                             setTotalHooks={setTotalHooks}
+                            filters={filters}
                         />
                     </div>
 

@@ -60,14 +60,56 @@ const FilterPanel = (props) => {
         return filters.sortColumn === property ? "filterItem-switch selected" : "filterItem-switch";
     }
 
+    const filterItemtoggle = (type, text, icon, valueYes, valueNo) => {
+        const localValueYes = valueYes || "yes";
+        const localValueNo = valueNo || "no";
+        return (
+            <div className="filterItem">
+                <div className="filterItem-text">
+                    <Icon type={icon} />
+                    {text}
+                </div>
+                <div className="filterItem-actions">
+                    <Pill
+                        text={localValueYes}
+                        selected={filters[type] === true}
+                        onClick={() =>
+                            handleSetFilter(type, filters[type] === true ? null : true)
+                        }
+                    />
+                    <Pill
+                        text={localValueNo}
+                        selected={filters[type] === false}
+                        onClick={() =>
+                            handleSetFilter(type, filters[type] === false ? null : false)
+                        }
+                    />
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className="filterWrapper" ref={wrapperRef} onClick={() => toggleFilterPanel()}>
             <Icon type="filter" />
             <div className={`filterPanel ${visible ? "visible" : ""}`}>
+                <div className="sortOrder">
+                    <Pill
+                        text="most recent"
+                        onClick={() => handleSetFilter("sortType", "most recent")}
+                        selected={filters.sortType === "most recent"}
+                    />
+                    <Pill
+                        text="oldest first"
+                        onClick={() => handleSetFilter("sortType", "oldest first")}
+                        selected={filters.sortType === "oldest first"}
+                    />
+                </div>
+
                 {
                     type === "partners" &&
                     <div className="partnersFilter filtersWrapper">
-                        <div className="test" onClick={() => test()}>Test</div>
+                        {/* <div className="test" onClick={() => test()}>Test</div> */}
                         <div className="filterGroup">
                             <div className="filterTitle">
                                 <p>Sort by</p>
@@ -118,7 +160,7 @@ const FilterPanel = (props) => {
                                 <Pill
                                     text="Full"
                                     selected={filters.nameType === "full"}
-                                    // onClick={() => handleSetFilter("nameType", "full")}
+                                // onClick={() => handleSetFilter("nameType", "full")}
                                 />
                             </div>
                             <div className="filterItem">
@@ -141,6 +183,57 @@ const FilterPanel = (props) => {
                 {
                     type === "hooks" &&
                     <div className="hooksFilter filtersWrapper">
+                        <div className="filterGroup">
+                            <div className="filterTitle">
+                                <p>Sort by</p>
+                            </div>
+                            <div
+                                className="filterItem"
+                                onClick={() => handleSetFilter("sortColumn", "date")}
+                            >
+                                <Icon type="calendar" />
+                                Date
+                                <div
+                                    className={filterItemSwitchClasses("date")}
+                                ></div>
+                            </div>
+                        </div>
+                        <div className="filterGroup">
+                            <div className="filterTitle">
+                                <p>Show</p>
+                            </div>
+                            <div className="filterItem">
+                                <Icon type="user" />
+                                Name
+                                <Pill
+                                    text="Nick"
+                                    selected={filters.showName === "nickname"}
+                                    onClick={() => handleSetFilter("nameType", "nickname")}
+                                />
+                                <Pill
+                                    text="Full"
+                                    selected={filters.showName === "full"}
+                                // onClick={() => handleSetFilter("nameType", "full")}
+                                />
+                            </div>
+                        </div>
+                        <div className="filterGroup">
+                            <div className="filterTitle">
+                                <p>Filter</p>
+                            </div>
+                            {
+                                filterItemtoggle("filterProtection", "Protection", "protection", "used", "not")
+                            }
+                            {
+                                filterItemtoggle("filterPill", "Pill", "pillIcon")
+                            }
+                            {
+                                filterItemtoggle("filterSex", "Sex", "sex")
+                            }
+                            {
+                                filterItemtoggle("filterPenetration", "Penetration", "penetration")
+                            }
+                        </div>
                     </div>
                 }
             </div>

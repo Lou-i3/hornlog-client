@@ -319,7 +319,8 @@ svg.illustration {
     & .filterPanel {
         display: none;
         &.visible {
-            @include flex();
+            @include flex(column);
+            gap: 10px;
             position: absolute;
             z-index: 10;
             top: 20;
@@ -332,6 +333,10 @@ svg.illustration {
             box-shadow: $effect-inner-shadow;
             padding: 20px 20px 20px 30px;
         }
+        & .sortOrder {
+            @include flex(row, center, center);
+            width: 100%;
+        }
         & .filtersWrapper {
             @include flex(column, center, flex-start);
             gap: 10px;
@@ -341,7 +346,7 @@ svg.illustration {
                 width: 100%;
                 & .filterTitle {}
                 & .filterItem {
-                    @include flex(row, center, center);
+                    @include flex(row, space-between, center);
                     gap: 10px;
                     width: 100%;
                     & .filterItem-switch {
@@ -355,6 +360,15 @@ svg.illustration {
                         &.selected {
                             background-color: $color-main-black-20;
                         }
+                    }
+                    & .filterItem-text {
+                        @include flex(row, center, center);
+                        gap: 10px;
+                    }
+                    & .filterItem-actions {
+                        @include flex(row, center, center);
+                        gap: 10px;
+                        // width: 100%;
                     }
                 }
             }
