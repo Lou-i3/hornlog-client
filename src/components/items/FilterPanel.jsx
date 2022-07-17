@@ -1,15 +1,41 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Icon from "../global/Icon";
 import Pill from "./Pill";
 
+/**
+ * Hook that alerts clicks outside of the passed ref
+ */
+function useOutsideAlerter(ref, setVisible) {
+    useEffect(() => {
+        /**
+         * Alert if clicked on outside of element
+         */
+        function handleClickOutside(event) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                //   alert("You clicked outside of me!");
+                //   console.log("ref: ", ref);
+                setVisible(false);
+            }
+        }
+        // Bind the event listener
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [ref]);
+}
+
 const FilterPanel = (props) => {
     const {
-        filters, // { sortColumn, sortType, HookDate } || {  }
+        filters, // { sortColumn, sortType, hookDate, nameType } || {  }
         setFilters,
         items,
         type // partners / hooks
     } = props;
     const [visible, setVisible] = useState(false);
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef, setVisible);
 
     const handleSetFilter = (property, value) => {
         console.log("handleSetFilter", property, value);
@@ -20,7 +46,10 @@ const FilterPanel = (props) => {
 
     const toggleFilterPanel = () => {
         console.log("toggleFilterPanel");
-        setVisible(!visible);
+        if (!visible) {
+            setVisible(true);
+        }
+        // setVisible(!visible);
     }
 
     const test = () => {
@@ -32,7 +61,7 @@ const FilterPanel = (props) => {
     }
 
     return (
-        <div className="filterWrapper" onClick={() => toggleFilterPanel()}>
+        <div className="filterWrapper" ref={wrapperRef} onClick={() => toggleFilterPanel()}>
             <Icon type="filter" />
             <div className={`filterPanel ${visible ? "visible" : ""}`}>
                 {
@@ -43,20 +72,35 @@ const FilterPanel = (props) => {
                             <div className="filterTitle">
                                 <p>Sort by</p>
                             </div>
-                            <div className="filterItem">
+                            <div
+                                className="filterItem"
+                                onClick={() => handleSetFilter("sortColumn", "firstHook")}
+                            >
                                 <Icon type="date" />
                                 First Hook
-                                <div className={ filterItemSwitchClasses("firstHook") }></div>
+                                <div
+                                    className={filterItemSwitchClasses("firstHook")}
+                                ></div>
                             </div>
-                            <div className="filterItem">
+                            <div
+                                className="filterItem"
+                                onClick={() => handleSetFilter("sortColumn", "lastHook")}
+                            >
                                 <Icon type="date" />
                                 Last Hook
-                                <div className={ filterItemSwitchClasses("lastHook") }></div>
+                                <div
+                                    className={filterItemSwitchClasses("lastHook")}
+                                ></div>
                             </div>
-                            <div className="filterItem">
+                            <div
+                                className="filterItem"
+                                onClick={() => handleSetFilter("sortColumn", "name")}
+                            >
                                 <Icon type="user" />
                                 Name
-                                <div className={ filterItemSwitchClasses("name") }></div>
+                                <div
+                                    className={filterItemSwitchClasses("name")}
+                                ></div>
                             </div>
                         </div>
                         <div className="filterGroup">
@@ -68,11 +112,13 @@ const FilterPanel = (props) => {
                                 Name
                                 <Pill
                                     text="Nick"
-                                    selected={true}
+                                    selected={filters.nameType === "nickname"}
+                                    onClick={() => handleSetFilter("nameType", "nickname")}
                                 />
                                 <Pill
                                     text="Full"
-                                    selected={false}
+                                    selected={filters.nameType === "full"}
+                                    // onClick={() => handleSetFilter("nameType", "full")}
                                 />
                             </div>
                             <div className="filterItem">
@@ -81,10 +127,12 @@ const FilterPanel = (props) => {
                                 <Pill
                                     text="First"
                                     selected={filters.hookDate === "first"}
+                                    onClick={() => handleSetFilter("hookDate", "first")}
                                 />
                                 <Pill
                                     text="Last"
                                     selected={filters.hookDate === "last"}
+                                    onClick={() => handleSetFilter("hookDate", "last")}
                                 />
                             </div>
                         </div>

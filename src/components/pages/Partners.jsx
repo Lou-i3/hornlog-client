@@ -19,6 +19,7 @@ const Partners = () => {
         sortColumn: "lastHook",
         sortType: "most recent", // most recent, oldest first
         hookDate: "first", // show date of : first, last
+        nameType: "nickname" // nickame / full 
     });
 
     useEffect(() => {

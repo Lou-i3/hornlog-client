@@ -20,7 +20,7 @@ const MyPartners = (props) => {
     const [loading, setLoading] = useState(true);
     const [localSearchTerms, setLocalSearchTerms] = useState("");
     const { selectedPartner, setTotalPartners, filters } = props;
-    
+
 
     // console.log("myPartners");
     // console.log(data);
@@ -57,10 +57,14 @@ const MyPartners = (props) => {
     useEffect(() => {
         console.log("searchTerms: ", props.searchTerms);
         if (props.searchTerms !== localSearchTerms) {
-            getData();
+            getData(filters.sortColumn, filters.sortType);
             setLocalSearchTerms(props.searchTerms);
         }
     }, [props.searchTerms]);
+
+    useEffect(() => {
+        getData(filters.sortColumn, filters.sortType);
+    }, [filters]);
 
     const getHooksInfo = (hooks, firstLast, dateType) => {
         let infoOut = "";
@@ -218,7 +222,13 @@ const MyPartners = (props) => {
                                 <div className="partnersWrapper cardsWrapper">
                                     {tableData && tableData.map((partner, index) => {
                                         let rowClass = partner && selectedPartner && partner["id"] === selectedPartner.id ? "selected" : "";
-
+                                        let rowHookDate = filters.hookDate === "last" ?
+                                            enumLabel(partner.lastHook) :
+                                            enumLabel(partner.firstHook);
+                                        let rowHookType = filters.hookDate === "last" ?
+                                            enumLabel(partner.lastHookType) :
+                                            enumLabel(partner.firstHookType);
+                                        console.log("rowHookDate: ", rowHookDate);
                                         return (
                                             <div
                                                 className={`partnerContainer card ${rowClass}`}
@@ -240,12 +250,12 @@ const MyPartners = (props) => {
                                                         }
                                                     </div>
                                                     <div className="column lastHook">
-                                                        <p>{partner.lastHook && formatDateTime(partner.lastHook, "date")}</p>
+                                                        <p>{rowHookDate && formatDateTime(rowHookDate, "date")}</p>
 
                                                         {
-                                                            partner.lastHook !== "Never" &&
+                                                            // rowHookType !== "Never" &&
                                                             <Pill
-                                                                text={enumLabel(partner.lastHookType)}
+                                                                text={rowHookType}
                                                                 selected
                                                             />
                                                         }
