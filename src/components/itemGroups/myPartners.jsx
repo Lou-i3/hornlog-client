@@ -14,11 +14,13 @@ import PictureAndName from '../items/profile/PictureAndName';
 
 const MyPartners = (props) => {
     const { loading: loadingQuery, error, data } = useQuery(MY_PARTNERS_QUERY);
-    const [sortColumn, setSortColumn] = useState();
-    const [sortType, setSortType] = useState();
+    const [sortColumn, setSortColumn] = useState("lastHook");
+    const [sortType, setSortType] = useState("asc");
     const [tableData, setTableData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { selectedPartner, setTotalPartners } = props;
+    const [localSearchTerms, setLocalSearchTerms] = useState("");
+    const { selectedPartner, setTotalPartners, filters } = props;
+    
 
     // console.log("myPartners");
     // console.log(data);
@@ -34,10 +36,10 @@ const MyPartners = (props) => {
         // const { loading, error, data } = useQuery(MY_HOOKS_QUERY);
         setLoading((data && data.myPartners) ? false : true);
 
-        console.log(data);
-        console.log(props.selectedPartner);
-        if (data && props.selectedPartner) {
-            const selectedPartnerIndex = data.myPartners.findIndex(x => x.id === props.selectedPartner.id);
+        console.log("data: ", data);
+        console.log("selectedPartner: ", selectedPartner);
+        if (data && selectedPartner) {
+            const selectedPartnerIndex = data.myPartners.findIndex(x => x.id === selectedPartner.id);
             console.log("bwe: ", data.myPartners[0].id);
             console.log("selectedPartnerIndex", selectedPartnerIndex);
             if (selectedPartnerIndex || selectedPartnerIndex === 0) {
@@ -46,14 +48,53 @@ const MyPartners = (props) => {
             }
         }
 
-        getData();
+        if (data && data.myPartners) {
+            getData(filters.sortColumn, filters.sortType);
+        }
         setTotalPartners(data ? data.myPartners.length : 0);
-    }, [props.selectedPartner, data, loadingQuery, props]);
+    }, [selectedPartner, data, loadingQuery]);
 
     useEffect(() => {
         console.log("searchTerms: ", props.searchTerms);
-        getData();
+        if (props.searchTerms !== localSearchTerms) {
+            getData();
+            setLocalSearchTerms(props.searchTerms);
+        }
     }, [props.searchTerms]);
+
+    const getHooksInfo = (hooks, firstLast, dateType) => {
+        let infoOut = "";
+
+        if (hooks && hooks.length > 0) {
+            let localHooks = hooks;
+            // let theHook;
+            // console.log("localHooks: ", localHooks);
+
+            let theHook = localHooks[0];
+            localHooks.forEach(hook => {
+                let hookDate = (new Date(hook.dateTime)).getTime();
+                let theHookDate = (new Date(theHook.dateTime)).getTime();
+                if (firstLast === "first") {
+                    if (hookDate < theHookDate) {
+                        theHook = hook;
+                    }
+                } else if (firstLast === "last") {
+                    if (hookDate > theHookDate) {
+                        theHook = hook;
+                    }
+                }
+            });
+
+            // console.log("theHook: ", theHook);
+
+            infoOut = dateType === "date" ? theHook.dateTime : theHook.hookType;
+
+        } else {
+            infoOut = dateType === "date" ? "" : "Never";
+        }
+
+        return infoOut;
+    }
 
     const getData = (sortColumnLocal, sortTypeLocal) => {
         console.log("getData");
@@ -69,23 +110,34 @@ const MyPartners = (props) => {
                         partner.person.nickName :
                         partner.person.firstName + " " + partner.person.lastName,
                     partner: partner,
-                    lastHook: partner.hooks[0] ?
-                        formatDateTime(partner.hooks[0].dateTime, 'date') :
-                        "Never",
-                    lastHookType: partner.hooks[0] ? partner.hooks[0].hookType : "",
+                    lastHook: getHooksInfo(partner.hooks, "last", "date"),
+                    lastHookType: getHooksInfo(partner.hooks, "last", "type"),
+                    firstHook: getHooksInfo(partner.hooks, "first", "date"),
+                    firstHookType: getHooksInfo(partner.hooks, "first", "type"),
                 });
             });
+            console.log("JAZODJAOJDOAZ tableDataLocal: ", tableDataLocal);
             console.log("sortColumn", sortColumnLocal);
             console.log("sortType", sortTypeLocal);
             if (sortColumnLocal && sortTypeLocal) {
-                console.log("sortColumn", sortColumnLocal);
+                // console.log("sortColumn", sortColumnLocal);
                 // console.log("sortType", sortType);
+                // console.log("tableDataLocal", tableDataLocal);
 
                 // const sortedData = [...tableDataLocal];
 
+
+                let lastValueDate = sortTypeLocal === "most recent" ? 0 : new Date("01/01/3000").getTime();
                 tableDataLocal = tableDataLocal.sort((a, b) => {
                     let x = a[sortColumnLocal];
                     let y = b[sortColumnLocal];
+
+                    if (sortColumnLocal === 'firstHook' || sortColumnLocal === 'lastHook') {
+                        x = (new Date(x)).getTime() || lastValueDate;
+                        y = (new Date(y)).getTime() || lastValueDate;
+                        console.log("x: ", x);
+                        console.log("y: ", y);
+                    }
 
                     if (typeof x === 'string') {
                         x = x.charCodeAt();
@@ -93,15 +145,18 @@ const MyPartners = (props) => {
                     if (typeof y === 'string') {
                         y = y.charCodeAt();
                     }
-                    if (sortType === 'asc') {
-                        return x - y;
-                    } else {
+                    if (sortTypeLocal === 'most recent') {
+                        console.log("y - x: ", x - y);
                         return y - x;
+                    } else {
+                        console.log("x - y: ", x - y);
+                        return x - y;
                     }
                 });
                 // tableDataLocal = output;
                 // console.log("output", output);
                 // setTableData(output);
+                console.log("sorted Data: ", tableDataLocal);
             }
             if (props.searchTerms !== "") {
                 let filteredData = [...tableDataLocal];
@@ -155,7 +210,7 @@ const MyPartners = (props) => {
                     console.log(error) &&
                     <p>Error: {error.message}</p> :
                     <Fragment>
-                        {/* <div onClick={() => {console.log(error)}}>Coucou</div> */}
+                        {/* <div onClick={() => {getHooksInfo()}}>Coucou</div> */}
                         {
                             loading ?
                                 <div className="loading">Loading</div>
@@ -165,11 +220,15 @@ const MyPartners = (props) => {
                                         let rowClass = partner && selectedPartner && partner["id"] === selectedPartner.id ? "selected" : "";
 
                                         return (
-                                            <div className={`partnerContainer card ${rowClass}`} onClick={() => {
-                                                console.log({ partner });
-                                                // const hook = data;
-                                                handleClick(partner)
-                                            }}>
+                                            <div
+                                                className={`partnerContainer card ${rowClass}`}
+                                                onClick={() => {
+                                                    console.log({ partner });
+                                                    // const hook = data;
+                                                    handleClick(partner)
+                                                }}
+                                                key={index}
+                                            >
 
                                                 <div className="firstLine line">
                                                     <div className="column name">
@@ -181,7 +240,7 @@ const MyPartners = (props) => {
                                                         }
                                                     </div>
                                                     <div className="column lastHook">
-                                                        <p>{partner.lastHook}</p>
+                                                        <p>{partner.lastHook && formatDateTime(partner.lastHook, "date")}</p>
 
                                                         {
                                                             partner.lastHook !== "Never" &&

@@ -87,11 +87,11 @@ const PictureAndName = (props) => {
                             {
                                 showPic &&
                                 data.map((item, index) => (
-                                    <>
+                                    <Fragment key={index}>
                                         {
                                             buildPic(item)
                                         }
-                                    </>
+                                    </Fragment>
                                 ))
                             }
                         </div>

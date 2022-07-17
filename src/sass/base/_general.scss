@@ -310,6 +310,59 @@ svg.illustration {
 }
 
 
+/* Filter Panel
+*/
+
+.filterWrapper {
+    // & svg {}
+    position: relative;
+    & .filterPanel {
+        display: none;
+        &.visible {
+            @include flex();
+            position: absolute;
+            z-index: 10;
+            top: 20;
+            right: 0;
+            width: fit-content;
+            height: fit-content;
+            background-color: $color-secondary-black;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: $effect-inner-shadow;
+            padding: 20px 20px 20px 30px;
+        }
+        & .filtersWrapper {
+            @include flex(column, center, flex-start);
+            gap: 10px;
+            & .filterGroup {
+                @include flex(column, center, flex-start);
+                gap: 10px;
+                width: 100%;
+                & .filterTitle {}
+                & .filterItem {
+                    @include flex(row, center, center);
+                    gap: 10px;
+                    width: 100%;
+                    & .filterItem-switch {
+                        margin-left: auto;
+                        width: 15px;
+                        height: 15px;
+                        border-radius: 100%;
+                        background-color: $color-main-black-50;
+                        box-shadow: $effect-inner-shadow;
+                        cursor: pointer;
+                        &.selected {
+                            background-color: $color-main-black-20;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 /* Ok Query
 */
 

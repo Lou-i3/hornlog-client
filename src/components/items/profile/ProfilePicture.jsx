@@ -40,7 +40,7 @@ const ProfilePicture = (props) => {
         const file = event.target.files[0];
         // var src = URL.createObjectURL(file);
         // setPictureSrc(src);
-        // console.log("file", file);
+        console.log("file", file);
 
         getBase64(file)
             .then(result => {
@@ -79,6 +79,7 @@ const ProfilePicture = (props) => {
     };
 
     const handleClickPictureEdit = (event) => {
+        console.log("handleClickPictureEdit");
         hiddenFileInput.current.click();
     };
 

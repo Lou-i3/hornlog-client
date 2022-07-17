@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Icon from "../global/Icon";
 import Illustration from "../global/Illustration";
 import MyPartners from "../itemGroups/myPartners";
+import FilterPanel from "../items/FilterPanel";
 
 const Partners = () => {
     const [displayMode, setDisplayMode] = useState("none");
@@ -14,7 +15,11 @@ const Partners = () => {
     const [totalPartners, setTotalPartners] = useState(0);
     const [listAnimation, setListAnimation] = useState("");
     const [detailsAnimation, setDetailsAnimation] = useState("");
-
+    const [filters, setFilters] = useState({
+        sortColumn: "lastHook",
+        sortType: "oldest first", // most recent, oldest first
+        hookDate: "first", // show date of : first, last
+    });
 
     useEffect(() => {
         window.addEventListener("resize", () => {
@@ -93,13 +98,22 @@ const Partners = () => {
                                     <Icon type="plus" />
                                 </div>
                             </div>
+                            <div className="title">
+
                             <Search setSearchTerms={setSearchTerms} />
+                            <FilterPanel 
+                                filters={filters}
+                                setFilters={setFilters}
+                                type="partners"
+                            />
+                            </div>
                             <MyPartners 
                             selectedPartner={selectedPartner} 
                             setSelectedPartner={setSelectedPartner} 
                             setDisplayMode={setDisplayMode} 
                             searchTerms={searchTerms} 
                             setTotalPartners={setTotalPartners}
+                            filters={filters}
                             />
                         </div>
 
