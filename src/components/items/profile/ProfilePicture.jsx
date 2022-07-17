@@ -30,9 +30,10 @@ const ProfilePicture = (props) => {
 
     const handlePictureSelected = (event) => {
         // console.log("handlePictureSelected");
+        let oneMB = 1048576;
+        if(event.target.files[0].size > 2*oneMB) {
+            alert("File is too big! \nShould be less than 2MB \nYour file is: " + event.target.files[0].size / oneMB + " MB");
 
-        if(event.target.files[0].size > 1048576){
-            alert("File is too big! \nShould be less than 1MB");
             event.target.value = "";
             return
          };
