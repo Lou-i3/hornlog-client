@@ -17,7 +17,7 @@ const Partners = () => {
     const [detailsAnimation, setDetailsAnimation] = useState("");
     const [filters, setFilters] = useState({
         sortColumn: "lastHook",
-        sortType: "oldest first", // most recent, oldest first
+        sortType: "most recent", // most recent, oldest first
         hookDate: "first", // show date of : first, last
     });
 
