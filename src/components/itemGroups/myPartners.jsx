@@ -187,12 +187,12 @@ const MyPartners = (props) => {
                 // return filteredData;
             }
             setTableData(tableDataLocal);
-            setTotalPartners(tableDataLocal ? tableDataLocal.length : 0);
-
-
+            
+            
             setLoading(false);
-
+            
         }
+        setTotalPartners(tableDataLocal ? tableDataLocal.length : 0);
         setTableData(tableDataLocal);
     };
 

@@ -174,10 +174,10 @@ const MyHooks = (props) => {
                 tableDataLocal = filteredData;
             }
             setTableData(tableDataLocal);
-            setTotalHooks(tableDataLocal ? tableDataLocal.length : 0);
             setLoading(false);
-
+            
         }
+        setTotalHooks(tableDataLocal ? tableDataLocal.length : 0);
         setTableData(tableDataLocal);
     };
 
