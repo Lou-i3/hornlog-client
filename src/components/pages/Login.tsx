@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 import 'firebase/auth';
@@ -17,7 +17,7 @@ type LoginProps = {
 
 
 const Login = ({ onSubmit, errorAuth, loadingAuth }: LoginProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const initialValues: {
     username: string;
@@ -37,7 +37,7 @@ const Login = ({ onSubmit, errorAuth, loadingAuth }: LoginProps) => {
 
     onSubmit(username, password);
     if (window.location.href.includes("/login") && !errorAuth) {
-      history.push("/profile");
+      navigate("/profile");
 
     }
 

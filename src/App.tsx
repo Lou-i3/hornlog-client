@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Switch, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 // import logo from './logo.svg';
 // import 'rsuite/dist/rsuite.min.css'; // or 'rsuite/dist/rsuite.min.css'
@@ -106,7 +106,7 @@ const App: React.FC<WrappedComponentProps> = ({
 
       {/* <OkQuery user={user} /> */}
 
-      {user && <Nav setPageLoading={setPageLoading}/>}
+      {user && <Nav setPageLoading={setPageLoading} />}
       <div className="content">
 
         <Header isLoggedIn={!(user === null)} logOut={signOut} user={user} />
@@ -118,41 +118,46 @@ const App: React.FC<WrappedComponentProps> = ({
           user ? (
             pageLoading
               ? <Loading />
-              : <Switch>
-                <Route exact path={["/", "/home", ""]} >
-                  <Home />
-                </Route>
-                <Route exact path="/profile" >
-                  <Profile user={user} logOut={signOut} />
-                </Route>
+              : <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Home />} />
 
-                <Route path="/hooks" >
-                  <Hooks key={`${Date.now()}`} />
-                </Route>
-                <Route path="/partners" component={Partners} />
-                <Route path="/settings" component={Settings} />
-                <Route path="/icons" component={Icons} />
+                <Route path="/profile" element={<Profile user={user} logOut={signOut} />} />
 
-                <Route path="/" component={Error404} />
-              </Switch>
+                <Route path="/hooks" element={<Hooks key={`${Date.now()}`} />} />
+
+                <Route path="/partners" element={<Partners />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/icons" element={<Icons />} />
+
+                <Route path="/*" element={<Error404 />} />
+              </Routes>
           )
             :
-            <Switch>
+            <Routes>
               {console.log("user ", user)}
               {/* {!user && <Route exact path="/register">
                 <Register onSubmit={createUserWithEmailAndPassword} errorAuth={error} />
               </Route>} */}
 
-              {!user && <Route exact path={"/forgotPassword"} >
-                <ForgotPassword />
-              </Route>}
+              {!user &&
+                <Route path={"/forgotPassword"} >
+                  <ForgotPassword />
+                </Route>}
 
-              {!user && <Route path={["/", "/login"]} >
-                <Login onSubmit={signInWithEmailAndPassword} errorAuth={error} loadingAuth={loading} />
-              </Route>}
+              {!user &&
+                <>
+                  <Route path="/login" element={
+                    <Login onSubmit={signInWithEmailAndPassword} errorAuth={error} loadingAuth={loading} />
+                  } />
+                  <Route path="/" element={
+                    <Login onSubmit={signInWithEmailAndPassword} errorAuth={error} loadingAuth={loading} />
+                  } />
+                </>
+              }
 
 
-            </Switch>
+            </Routes>
         }
       </div>
       {/* <AuthVerify logOut={logOut} /> */}
