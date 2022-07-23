@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import React, { useEffect } from "react";
 import { ME_QUERY } from "../../helpers/queries";
 import Illustration from "../global/Illustration";
+import HooksCalendar from "../items/HooksCalendar";
 
 const Home = () => {
     const { loading, error, data } = useQuery(ME_QUERY);
@@ -14,13 +15,14 @@ const Home = () => {
             {
                 data && data.me && <h1>Welcome { data.me.displayName }</h1>}
 
-            <div className="emptyDashboardContainer">
-                <div className="imgContainer">
+            {/* <div className="emptyDashboardContainer"> */}
+                {/* <div className="imgContainer">
                 <Illustration type="EmptyDashboard" style="width=100%" />
 
                 </div>
-                <h3>Under Construction...</h3>
-            </div>
+                <h3>Under Construction...</h3> */}
+            {/* </div> */}
+            <HooksCalendar />
 
         </div>
     );

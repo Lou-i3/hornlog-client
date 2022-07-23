@@ -45,6 +45,116 @@ div.app {
 }
 
 
+/* Calendar
+*/
+
+.react-calendar {
+    @include flex(column, center, center);
+    width: 100%;
+    height: 100%;
+    &__navigation {
+        @include flex(row, center, center);
+        width: 100%;
+        height: 100%;
+        background-color: $color-main-black;
+        &__label {
+            background-color: transparent;
+            color: $color-secondary-black-50;
+            border: none;
+            width: 100%;
+            &__labelText {
+                font-family: $font-secondary;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 25px;
+                line-height: 36px;
+            }
+        }
+        &__arrow {
+            background-color: transparent;
+            color: $color-secondary-black-50;
+            border: none;
+            height: 30px;
+        }
+        &__prev,
+        &__next {
+            &-button {
+                width: 100%;
+            }
+            &2-button {
+                display: none;
+            }
+        }
+    }
+    &__viewContainer {}
+    &__month-view {
+        &__weekdays {
+            &__weekday {
+                @include flex();
+                padding: 10px 0px;
+                & abbr {
+                    color: $color-main-black-20;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    opacity: 0.5;
+                    font-family: $font-main;
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 13px;
+                    line-height: 18px;
+                }
+            }
+        }
+        &__days {
+            // gap: 6px;
+            row-gap: 6px;
+            & .react-calendar__tile {
+                background-color: transparent;
+                border: none;
+                border-radius: 20px;
+                & .calendarTile {
+                    @include flex(column, center, center);
+                    border: 1px $color-secondary-black-50 solid;
+                    border-radius: 20px;
+                    height: 50px;
+                    width: 45px;
+                    margin: auto;
+                    & .top {
+                        @include flex(row, center, center);
+                    }
+                    & .bottom {
+                        @include flex(row, center, center);
+                    }
+                    &.noHook {
+                        &.today {
+                            background-color: $color-secondary-black;
+                        }
+                    }
+                    &.Hang {
+                        border: 1px #d88a42 solid;
+                    }
+                    &.one_time {
+                        border: 1px #c5bb61 solid;
+                    }
+                    &.Self {
+                        border: 1px #86a785 solid;
+                    }
+                    &.Night {
+                        border: 1px #8aa1de solid;
+                    }
+                    &.Date {
+                        border: 1px #aa93d0 solid;
+                    }
+                    &.Virtual {
+                        border: 1px #97b6b8 solid;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 /* pills
 */
 
