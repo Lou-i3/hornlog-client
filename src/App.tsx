@@ -118,7 +118,8 @@ const App: React.FC<WrappedComponentProps> = ({
           user ? (
             pageLoading
               ? <Loading />
-              : <Routes>
+              :
+              <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Home />} />
 

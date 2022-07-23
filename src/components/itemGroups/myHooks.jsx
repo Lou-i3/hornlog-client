@@ -48,7 +48,7 @@ const MyHooks = (props) => {
         if (data && data.myHooks) {
             getData(filters.sortColumn, filters.sortType);
         }
-        setTotalHooks(tableData ? tableData.length : 0);
+        // setTotalHooks(tableData ? tableData.length : 0);
         // eslint-disable-next-line
     }, [selectedHook, data]);
 

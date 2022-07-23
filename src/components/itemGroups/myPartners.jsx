@@ -49,7 +49,7 @@ const MyPartners = (props) => {
         if (data && data.myPartners) {
             getData(filters.sortColumn, filters.sortType);
         }
-        setTotalPartners(tableData ? tableData.length : 0);
+        // setTotalPartners(tableData ? tableData.length : 0);
     }, [selectedPartner, data, loadingQuery]);
 
     useEffect(() => {
