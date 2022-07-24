@@ -70,7 +70,7 @@ const Profile = (props) => {
             firstName: values.firstName,
             lastName: values.lastName,
             nickName: values.nickName,
-            birthday: new Date(values.birthday),
+            birthday: new Date(values.birthday +"T00:00Z"),
             nationality: values.nationality,
             // sexuality: values.sexuality,
             notes: values.notes,
@@ -509,7 +509,7 @@ const Profile = (props) => {
                                                                             className="form-control"
                                                                             // placeholder="Nickname"
                                                                             disabled={readOnly}
-                                                                            value={formatDateTime(values.birthday, 'techdate')}
+                                                                            value={values.birthday.split("T")[0]}
 
                                                                         />
                                                                     </p>

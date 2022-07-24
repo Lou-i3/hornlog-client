@@ -63,7 +63,7 @@ const HookDetails = (props) => {
 
         let data = {
             hookType: values.hookType,
-            dateTime: new Date(values.date + "T" + values.time),
+            dateTime: new Date(new Date(values.date + "T" + values.time +"Z") - 120*60*1000),
             note: values.note,
             sex: values.sex,
             penetration: values.penetration,
@@ -203,8 +203,8 @@ const HookDetails = (props) => {
                 enableReinitialize
                 initialValues={hook ? {
                     dateTime: hook.dateTime,
-                    date: formatDateTime(hook.dateTime, "techdate"),
-                    time: formatDateTime(hook.dateTime, "techtime"),
+                    date: formatDateTime(hook.dateTime, "techdatefromDtb"),
+                    time: formatDateTime(hook.dateTime, "techtimefromDtb"),
                     duration: hook.duration ? hook.duration : 0,
                     hookType: hook.hookType,
                     location: hook.location ? hook.location : "",
@@ -228,7 +228,7 @@ const HookDetails = (props) => {
                         })) :
                         [],
                 } : {
-                    dateTime: new Date(),
+                    dateTime: "",
                     date: formatDateTime(new Date(), "techdate"),
                     time: formatDateTime(new Date(), "techtime"),
                     duration: 0,
@@ -311,7 +311,7 @@ const HookDetails = (props) => {
                                                     className="form-control"
                                                     placeholder="2022-06-21"
                                                     disabled={readOnly}
-                                                    value={formatDateTime(values.date, 'techdate')}
+                                                    value={values.date}
                                                 />
                                             </Fragment>
 
@@ -327,7 +327,7 @@ const HookDetails = (props) => {
                                                     className="form-control"
                                                     // placeholder="Nickname"
                                                     disabled={readOnly}
-                                                    value={formatDateTime(values.time, 'techtime')}
+                                                    value={values.time}
 
                                                 />
 

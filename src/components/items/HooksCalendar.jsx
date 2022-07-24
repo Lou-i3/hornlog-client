@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
-import { enumLabel } from '../../helpers/helpers';
+import { enumLabel, formatDateTime } from '../../helpers/helpers';
 import { MY_HOOKS_QUERY } from '../../helpers/queries';
 
 
@@ -22,7 +22,7 @@ const HooksCalendar = (props) => {
         console.log("newdate", currentDate);
         console.log("hooks", hooks);
 
-        const hook = hooks.filter((hook) => hook.dateTime.split('T')[0] === currentDate);
+        const hook = hooks.filter((hook) => formatDateTime(hook.dateTime, 'techdate').split('T')[0] === currentDate);
         if (hook && hook[0]) {
             out = hook[0];
         }

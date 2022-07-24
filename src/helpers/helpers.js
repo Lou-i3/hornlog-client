@@ -1,12 +1,18 @@
+import { off } from "process";
+
 export const formatDateTime = (dateTimeIn, format) => {
 
-    const dateTime = new Date(dateTimeIn);
+    let dateTime = new Date(dateTimeIn);
     // console.log(dateTime);
 
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const timeOptions = { hour: '2-digit', minute: '2-digit' };
+    dateOptions.timezone = 'Europe/France';
+    timeOptions.timezone = 'Europe/France';
 
     let outDateTime;
+
+    let offset = 120;
 
     switch (format) {
         case 'date':
@@ -16,20 +22,34 @@ export const formatDateTime = (dateTimeIn, format) => {
 
 
             var now = new Date();
+            dateTime = new Date(dateTime + offset * 60000);
+
+            console.log('bkejqskldjhlkqsjldkqj');
+            console.log("dateTime", dateTime.toISOString());
+            console.log("now", now);
+            console.log("dateTime.getTime()", dateTime.getTime());
+            console.log("now.getTime()", now.getTime());
 
             // let diff = new Date();
             // diff.setDate(now - dateTime);
             const diffTime = Math.abs(now - dateTime);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            const diffMins = Math.ceil(diffTime / (1000 * 60));
-            const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
+            const diffDays = Math.abs(Math.round(diffTime / (1000 * 60 * 60 * 24)));
+            const diffHours = Math.abs(Math.round(diffTime / (1000 * 60 * 60)));
+            const diffMins = Math.abs(Math.round((diffTime / (1000 * 60))));
+
+            console.log("diffTime", diffTime);
+            console.log("diffDays", diffDays);
+            console.log("diffHours", diffHours);
+            console.log("diffMins", diffMins);
 
             if (diffMins <= 1) {
                 outDateTime = 'less than a minute ago';
             } else if (diffHours < 1) {
                 outDateTime = `${diffMins} minutes ago`;
-            } else if (diffDays < 1) {
+            } else if (diffHours < 6) {
                 outDateTime = `${diffHours} hours ago`;
+            } else if (diffDays < 1) {
+                outDateTime = 'today';
             } else if (diffDays === 1) {
                 outDateTime = 'yesterday';
             } else if (diffDays < 4) {
@@ -52,7 +72,12 @@ export const formatDateTime = (dateTimeIn, format) => {
 
 
         case 'longdate':
-            outDateTime = dateTime.toLocaleString('en-UK', dateOptions);
+            offset = dateTime.getTimezoneOffset();
+            let newDate = (new Date(dateTime.getTime() + ((offset) * 60000)));
+
+            console.log("longdate, newDate", newDate.toISOString());
+
+            outDateTime = newDate.toLocaleString('en-UK', dateOptions);
             return outDateTime;
 
         case 'mediumdate':
@@ -67,10 +92,17 @@ export const formatDateTime = (dateTimeIn, format) => {
             return outDateTime;
 
         case 'time':
-            outDateTime = dateTime.toLocaleString('en-UK', timeOptions);
-            return outDateTime;
+            // outDateTime = dateTime.toLocaleString('en-UK', timeOptions);
 
-        case 'techdate':
+            outDateTime = (new Date(dateTime.getTime() + ((offset) * 60000))).toISOString();
+
+            outDateTime = outDateTime.split('T')[1].slice(0, -1);
+            let outTime = outDateTime.split(':');
+            outTime = outTime[0] + ':' + outTime[1];
+
+            return outTime;
+
+        case 'techdate': // Get the date in the format of: "YYYY-MM-DD" from Date in current timezone
             if (isValidDate(dateTime)) {
                 const offset = dateTime.getTimezoneOffset()
                 outDateTime = new Date(dateTime.getTime() - (offset * 60 * 1000))
@@ -81,7 +113,18 @@ export const formatDateTime = (dateTimeIn, format) => {
                 return dateTimeIn;
             }
 
-        case 'techtime':
+        case 'techdatefromDtb': // Get the date in the format of: "YYYY-MM-DD" from Date in Database
+            if (isValidDate(dateTime)) {
+                // const offset = dateTime.getTimezoneOffset()
+                outDateTime = new Date(dateTime.getTime() + (offset * 60 * 1000))
+
+                outDateTime = outDateTime.toISOString().split('T')[0];
+                return outDateTime;
+            } else {
+                return dateTimeIn;
+            }
+
+        case 'techtime': // Get the time in the format of: "HH:MM" from Date in current timezone
             if (isValidDate(dateTime)) {
                 const offset = dateTime.getTimezoneOffset()
                 outDateTime = new Date(dateTime.getTime() - (offset * 60 * 1000))
@@ -93,6 +136,20 @@ export const formatDateTime = (dateTimeIn, format) => {
             } else {
                 return dateTimeIn;
             }
+
+        case 'techtimefromDtb': // Get the time in the format of: "HH:MM" from Date in Database
+            if (isValidDate(dateTime)) {
+                // const offset = dateTime.getTimezoneOffset()
+                outDateTime = new Date(dateTime.getTime() + (offset * 60 * 1000))
+
+                outDateTime = outDateTime.toISOString().split('T')[1].slice(0, -1);
+                let outTime = outDateTime.split(':');
+                outTime = outTime[0] + ':' + outTime[1];
+                return outTime;
+            } else {
+                return dateTimeIn;
+            }
+
         default:
             outDateTime = dateTime.toLocaleString('en-UK', dateOptions);
             return outDateTime;
