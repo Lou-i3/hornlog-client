@@ -24,3 +24,32 @@
         padding-bottom: calc(150px + $size-nav-mobile-height + env(safe-area-inset-bottom));
     }
 }
+
+
+/* Hooks Types Totals 
+*/
+
+.hooksTypesTotals {
+    @include flex(row, space-between);
+    width: 100%;
+    & .pill {
+        &.Hang {
+            background-color: $color-Hang;
+        }
+        &.one_time {
+            background-color: $color-one_time;
+        }
+        &.Self {
+            background-color: $color-Self;
+        }
+        &.Night {
+            background-color: $color-Night;
+        }
+        &.Date {
+            background-color: $color-Date;
+        }
+        &.Virtual {
+            background-color: $color-Virtual;
+        }
+    }
+}

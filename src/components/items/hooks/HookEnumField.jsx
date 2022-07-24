@@ -35,7 +35,7 @@ const HookEnumField = (props) => {
                     {
                         data.__type.enumValues.map(value => (
                             <Pill
-                                selected={values[propName] === value.name}
+                                selected={values && values[propName] === value.name}
                                 onClick={(e) => handleClickValue(e, value.name)}
                                 key={value.name}
                                 text={enumLabel(value.name)}

@@ -9,7 +9,8 @@ const Pill = (props) => {
         text, // for no icon
         values,
         setValues,
-        selected
+        selected,
+        className
     } = props;
 
     // console.log("Pill props", props);
@@ -78,7 +79,7 @@ const Pill = (props) => {
     const stateClass = selected !== undefined ?
         (selected ? "on" : "off") :
         states[state];
-    const classes = `pill ${iconClass} ${stateClass}`;
+    const classes = `pill ${iconClass} ${stateClass} ${className}`;
 
     const handleClick = () => {
         if (!readOnly) {

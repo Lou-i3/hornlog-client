@@ -143,22 +143,22 @@ div.app {
                         }
                     }
                     &.Hang {
-                        border: 1px #d88a42 solid;
+                        border: 1px $color-Hang solid;
                     }
                     &.one_time {
-                        border: 1px #c5bb61 solid;
+                        border: 1px $color-one_time solid;
                     }
                     &.Self {
-                        border: 1px #86a785 solid;
+                        border: 1px $color-Self solid;
                     }
                     &.Night {
-                        border: 1px #8aa1de solid;
+                        border: 1px $color-Night solid;
                     }
                     &.Date {
-                        border: 1px #aa93d0 solid;
+                        border: 1px $color-Date solid;
                     }
                     &.Virtual {
-                        border: 1px #97b6b8 solid;
+                        border: 1px $color-Virtual solid;
                     }
                 }
             }

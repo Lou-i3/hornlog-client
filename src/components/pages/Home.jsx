@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { ME_QUERY } from "../../helpers/queries";
 import Illustration from "../global/Illustration";
 import HooksCalendar from "../items/HooksCalendar";
+import HooksTypesTotals from "../items/HooksTypesTotals";
 
 const Home = () => {
     const { loading, error, data } = useQuery(ME_QUERY);
@@ -23,6 +24,7 @@ const Home = () => {
                 <h3>Under Construction...</h3> */}
             {/* </div> */}
             <HooksCalendar />
+            <HooksTypesTotals />
 
         </div>
     );
