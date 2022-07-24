@@ -32,7 +32,22 @@
 .hooksTypesTotals {
     @include flex(row, space-between);
     width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
     & .pill {
+        flex: 1;
+        gap: 10px;
+        & .number {
+            padding: 4px 8px;
+            border-radius: 15px;
+            background-color: $color-main-black-20;
+            color: $color-secondary-black;
+            opacity: 0.8;
+            font-size: 13px;
+        }
+        & p {
+            width: 100%;
+        }
         &.Hang {
             background-color: $color-Hang;
         }
@@ -51,5 +66,22 @@
         &.Virtual {
             background-color: $color-Virtual;
         }
+    }
+}
+
+
+/* Hooks Bools Totals 
+*/
+
+.hooksBoolsTotals {
+    @include flex(column);
+    padding: 10px;
+    background-color: $color-secondary-black;
+    gap: 4px;
+    border-radius: 15px;
+    box-shadow: $effect-inner-shadow;
+    & .totalItem {
+        @include flex(row, center, center);
+        gap: 5px;
     }
 }

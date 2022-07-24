@@ -7,17 +7,18 @@ import PictureAndName from './profile/PictureAndName';
 
 
 const HooksCalendar = (props) => {
-    const { loading: loadingQuery, error, data } = useQuery(MY_HOOKS_QUERY);
+    const { data } = props;
     const [hooks, setHooks] = useState([]);
 
     useEffect(() => {
+        // console.log('usefeect hooks calendar data: ', data);
         if (data) {
-            setHooks(data.myHooks);
+            setHooks(data);
         }
     }, [data]);
 
     const getHookInfo = (date) => {
-        console.log("date", date);
+        // console.log("date", date);
         let out = null;
         let tempDate = new Date(date);
         tempDate = new Date(tempDate.getTime() - (tempDate.getTimezoneOffset() * 60000));

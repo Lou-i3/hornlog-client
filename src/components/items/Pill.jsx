@@ -5,12 +5,13 @@ const Pill = (props) => {
     const { onClick,
         readOnly = false,
         type, // for icon pills
-        icon = false, // icon : true, false, iconOnly
+        icon = false, // icon : true, false, iconOnly, withNumber
         text, // for no icon
         values,
         setValues,
         selected,
-        className
+        className = '',
+        number = 0,
     } = props;
 
     // console.log("Pill props", props);
@@ -21,6 +22,9 @@ const Pill = (props) => {
         false: "off"
     }
     const [state, setState] = useState(values ? values[type] : null); // NoValue: null, true: on, false: off
+    // console.log("Pill state", state);
+    // console.log("Pill value type", values && values[type]);
+    
 
     const pillTypes = [
         {
@@ -75,7 +79,14 @@ const Pill = (props) => {
     // }
 
     // clases
-    const iconClass = icon ? (icon === "iconOnly" ? "iconOnly" : "withIcon") : "noIcon";
+    const iconClass = icon ?
+        (icon === "iconOnly" ?
+            "iconOnly" :
+            (icon === "withNumber" ?
+                "withNumber" :
+                "withIcon")
+        )
+        : "noIcon";
     const stateClass = selected !== undefined ?
         (selected ? "on" : "off") :
         states[state];
@@ -110,7 +121,7 @@ const Pill = (props) => {
         let outText = "";
 
         if (icon !== "iconOnly") {
-            if (icon) {
+            if (icon && icon !== "withNumber") {
                 switch (state) {
                     case null:
                         outText = pillType.type;
@@ -153,7 +164,14 @@ const Pill = (props) => {
     return (
         <div className={classes} onClick={handleClick} >
             {
-                icon && <Icon type={displayIcon()} />
+                icon && icon !== "withNumber" &&
+                <Icon type={displayIcon()} />
+            }
+            {
+                icon && icon === "withNumber" &&
+                <div className="number">
+                    {number}
+                </div>
             }
             <p>
                 {
