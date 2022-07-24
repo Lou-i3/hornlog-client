@@ -20,12 +20,12 @@ export const formatDateTime = (dateTimeIn, format) => {
             dateOptions.month = 'short';
             dateOptions.year = '2-digit';
 
+            console.log("dateTime", dateTime);
 
             var now = new Date();
-            dateTime = new Date(dateTime + offset * 60000);
+            dateTime = new Date(dateTime.getTime() + offset * 60000);
 
             console.log('bkejqskldjhlkqsjldkqj');
-            console.log("dateTime", dateTime.toISOString());
             console.log("now", now);
             console.log("dateTime.getTime()", dateTime.getTime());
             console.log("now.getTime()", now.getTime());
