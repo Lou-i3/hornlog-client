@@ -18,11 +18,14 @@ const HooksCalendar = (props) => {
     const getHookInfo = (date) => {
         console.log("date", date);
         let out = null;
-        const currentDate = date.toISOString().split('T')[0];
-        console.log("newdate", currentDate);
-        console.log("hooks", hooks);
+        let tempDate = new Date(date);
+        tempDate = new Date( tempDate.getTime() - (tempDate.getTimezoneOffset() * 60000) );
+        // console.log("tempDate", tempDate.getTimezoneOffset());
+        const currentDate = tempDate.toISOString().split('T')[0];
+        // console.log("newdate", currentDate);
+        // console.log("hooks", hooks);
 
-        const hook = hooks.filter((hook) => formatDateTime(hook.dateTime, 'techdate').split('T')[0] === currentDate);
+        const hook = hooks.filter((hook) => formatDateTime(hook.dateTime, 'techdatefromDtb').split('T')[0] === currentDate);
         if (hook && hook[0]) {
             out = hook[0];
         }
