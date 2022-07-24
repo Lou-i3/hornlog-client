@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import { enumLabel, formatDateTime } from '../../helpers/helpers';
 import { MY_HOOKS_QUERY } from '../../helpers/queries';
+import PictureAndName from './profile/PictureAndName';
 
 
 const HooksCalendar = (props) => {
@@ -19,7 +20,7 @@ const HooksCalendar = (props) => {
         console.log("date", date);
         let out = null;
         let tempDate = new Date(date);
-        tempDate = new Date( tempDate.getTime() - (tempDate.getTimezoneOffset() * 60000) );
+        tempDate = new Date(tempDate.getTime() - (tempDate.getTimezoneOffset() * 60000));
         // console.log("tempDate", tempDate.getTimezoneOffset());
         const currentDate = tempDate.toISOString().split('T')[0];
         // console.log("newdate", currentDate);
@@ -52,7 +53,14 @@ const HooksCalendar = (props) => {
                             </div>
                             <div className="bottom">
                                 {
-                                    hookInfo && enumLabel(hookInfo.hookType)
+                                    // hookInfo && enumLabel(hookInfo.hookType)
+                                }
+                                {
+                                    hookInfo && hookInfo.partners && hookInfo.partners !== [] &&
+                                    <PictureAndName
+                                        partners={hookInfo.partners}
+                                        showName={false}
+                                    />
                                 }
                             </div>
                             {

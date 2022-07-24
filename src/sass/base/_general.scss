@@ -119,11 +119,23 @@ div.app {
                     height: 50px;
                     width: 45px;
                     margin: auto;
+                    overflow: hidden;
                     & .top {
                         @include flex(row, center, center);
                     }
                     & .bottom {
                         @include flex(row, center, center);
+                        & .picAndName {
+                            & img,
+                            .noPic {
+                                width: 20px;
+                                height: 20px;
+                                font-size: 8px;
+                            }
+                            & .namesWrapper {
+                                display: none;
+                            }
+                        }
                     }
                     &.noHook {
                         &.today {
