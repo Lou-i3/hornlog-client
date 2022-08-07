@@ -313,7 +313,10 @@ svg.illustration {
     width: unset;
 }
 
-// Style for profilePicture
+
+/* Style for profilePicture
+*/
+
 .profilePicContainer {
     // @include flex(column, center, center);
     // width: 100%;
@@ -336,7 +339,13 @@ svg.illustration {
     & input[type="file"] {
         display: none;
     }
-    & button.profilePicEditButton {
+    & .profilePicBig {
+        position: fixed;
+        z-index: 10;
+        border-radius: 0;
+    }
+    & button.profilePicEditButton,
+    & button.profilePicViewButton {
         background-color: transparent;
         border: none;
         & svg {

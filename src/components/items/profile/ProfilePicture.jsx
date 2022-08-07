@@ -7,6 +7,7 @@ const ProfilePicture = (props) => {
     let initialPic = person && person.picture ? person.picture : "";
     const [pictureSrc, setPictureSrc] = useState(initialPic === "" ? "/Ellipse 4.png" : initialPic);
     const hiddenFileInput = useRef(null);
+    const [showBigPicture, setShowBigPicture] = useState(false);
 
     useEffect(() => {
         // console.log("ProfilePicture useState");
@@ -84,14 +85,24 @@ const ProfilePicture = (props) => {
         hiddenFileInput.current.click();
     };
 
+
     return (
         <div className="profilePicContainer">
             <img src={pictureSrc} alt="" className="profilePic" />
             {
-                displayMode !== "view" &&
+                displayMode !== "view" ?
                 <button className="profilePicEditButton" onClick={handleClickPictureEdit} type="button" >
                     <Icon icon="edit" />
                 </button>
+                :
+                <button className="profilePicViewButton" onClick={() => setShowBigPicture(true)} type="button" >
+                    <Icon icon="view" />
+                </button>
+            }
+
+            {
+                showBigPicture &&
+                <img src={pictureSrc} alt="" className="profilePicBig" onClick={() => setShowBigPicture(false)} />
             }
 
 
