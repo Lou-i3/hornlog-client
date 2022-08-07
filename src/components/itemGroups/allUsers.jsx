@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import { formatDateTime } from '../../helpers/helpers';
 import Icon from '../global/Icon';
+import Loader from '../items/Loader';
 
 const ALL_USERS_QUERY = gql`
     query ALL_USERS_QUERY {
@@ -16,7 +17,7 @@ const ALL_USERS_QUERY = gql`
 const AllUsers = () => {
     const { loading, error, data } = useQuery(ALL_USERS_QUERY);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader size="mini" />;
     if (error) return <p>Error: {error.message}</p>;
 
     return (

@@ -4,6 +4,7 @@ import { Fragment, useEffect, useState } from 'react';
 // import { Cell, Column, HeaderCell, Table } from 'rsuite-table';
 import { enumLabel, formatDateTime } from '../../helpers/helpers';
 import { MY_HOOKS_QUERY } from '../../helpers/queries';
+import Loader from '../items/Loader';
 
 import Pill from '../items/Pill';
 import PictureAndName from '../items/profile/PictureAndName';
@@ -206,7 +207,7 @@ const MyHooks = (props) => {
                         {/* <div onClick={() => setLoading(true)} >Coucou</div> */}
                         {
                             loading ?
-                                <div className="loading">Loading</div>
+                                <Loader size="page" />
                                 :
                                 <div className="hooksWrapper cardsWrapper">
                                     {tableData && tableData.map((hook, index) => {

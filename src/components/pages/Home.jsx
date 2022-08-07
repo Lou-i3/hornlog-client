@@ -18,6 +18,10 @@ const Home = () => {
         }
     }, [dataMyHooks]);
 
+    useEffect(() => {
+        console.log('home useEffect loadingMyHooks: ', loadingMyHooks);
+    }, [loadingMyHooks]);
+
     return (
         <div className="content-inner home">
 
@@ -38,9 +42,11 @@ const Home = () => {
             />
             <HooksTypesTotals 
                 data={hooks}
+                loadingMyHooks={loadingMyHooks}
             />
             <HooksBoolsTotals
                 data={hooks}
+                loading={loadingMyHooks}
             />
 
         </div>

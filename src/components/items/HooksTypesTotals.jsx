@@ -5,7 +5,7 @@ import { enumLabel } from "../../helpers/helpers";
 import { useEffect, useState } from "react";
 
 const HooksTypesTotals = (props) => {
-    const { data } = props;
+    const { data, loadingMyHooks } = props;
     const [hooks, setHooks] = useState([]);
 
     const enumName = "hookType";
@@ -46,6 +46,7 @@ const HooksTypesTotals = (props) => {
                                 readOnly={true}
                                 icon="withNumber"
                                 number={getTotal(value.name)}
+                                loading={loadingMyHooks}
                             />
                         ))
             }

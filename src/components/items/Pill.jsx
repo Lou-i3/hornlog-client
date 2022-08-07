@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "../global/Icon";
+import Loader from "./Loader";
 
 const Pill = (props) => {
     const { onClick,
@@ -12,7 +13,13 @@ const Pill = (props) => {
         selected,
         className = '',
         number = 0,
+        loading = false
     } = props;
+
+    useEffect(() => {
+        console.log("pill, lodading", loading);
+
+    }, [loading]);
 
     // console.log("Pill props", props);
 
@@ -23,7 +30,7 @@ const Pill = (props) => {
     }
     const [state, setState] = useState(values ? values[type] : null); // NoValue: null, true: on, false: off
     // console.log("Pill state", state);
-    // console.log("Pill value type", values && values[type]);
+    // console.log("Pill value type", values && values[type]);  
     
 
     const pillTypes = [
@@ -170,7 +177,14 @@ const Pill = (props) => {
             {
                 icon && icon === "withNumber" &&
                 <div className="number">
-                    {number}
+                    {
+                        loading ?
+                        <Loader 
+                        size="mini"
+                        />
+                        :
+                        number
+                    }
                 </div>
             }
             <p>

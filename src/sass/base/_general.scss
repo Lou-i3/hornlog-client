@@ -483,6 +483,33 @@ svg.illustration {
 }
 
 
+/* Loader
+*/
+
+.loader {
+    @include flex(column, center, center);
+    width: 100%;
+    height: 100%;
+    & .miniLoader {
+        @include flex();
+        & svg {
+            fill: $color-main-black-50;
+        }
+    }
+    & .pageLoader {
+        @include flex(column);
+        gap: 20px;
+        width: 80%;
+        height: 100%;
+        & svg {
+            fill: $color-main-black-50;
+            width: 100%;
+            height: 40vh;
+        }
+    }
+}
+
+
 /* Ok Query
 */
 

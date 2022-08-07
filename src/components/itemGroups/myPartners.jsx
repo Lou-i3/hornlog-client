@@ -5,6 +5,7 @@ import { enumLabel, formatDateTime } from '../../helpers/helpers';
 // import Icon from '../global/Icon';
 // import { Table, Column, HeaderCell, Cell } from 'rsuite-table';
 import { MY_PARTNERS_QUERY } from '../../helpers/queries';
+import Loader from '../items/Loader';
 import Pill from '../items/Pill';
 import PictureAndName from '../items/profile/PictureAndName';
 // import firebase from 'firebase/app';
@@ -223,7 +224,7 @@ const MyPartners = (props) => {
                         {/* <div onClick={() => {getHooksInfo()}}>Coucou</div> */}
                         {
                             loading ?
-                                <div className="loading">Loading</div>
+                                <Loader size="page" />
                                 :
                                 <div className="partnersWrapper cardsWrapper">
                                     {tableData && tableData.map((partner, index) => {

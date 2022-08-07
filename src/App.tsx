@@ -31,6 +31,7 @@ import Loading from './components/pages/Loading';
 import ForgotPassword from './components/pages/ForgotPassword';
 import Settings from './components/pages/Settings';
 import Icons from './components/pages/Icons';
+import Loader from './components/items/Loader';
 
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -114,10 +115,11 @@ const App: React.FC<WrappedComponentProps> = ({
         {console.log("user ", user)}
 
         {(loading || user === undefined) ?
-          <Loading /> :
+          <Loader size="page" what="Searching for a user..." />
+          :
           user ? (
             pageLoading
-              ? <Loading />
+              ? <Loader size="page" what="Loading page..." />
               :
               <Routes>
                 <Route path="/" element={<Home />} />
