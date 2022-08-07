@@ -38,7 +38,7 @@ const HooksCalendar = (props) => {
         <div className="hooksCalendar">
             <Calendar
                 value={new Date()}
-                formatDay={() => null}
+                formatDay={() => <span></span>}
                 tileContent={({ activeStartDate, date, view }) => {
                     let hookInfo = getHookInfo(date);
                     let hookType = hookInfo ? hookInfo.hookType : 'noHook';

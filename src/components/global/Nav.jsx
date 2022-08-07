@@ -134,7 +134,7 @@ const Nav = (props) => {
                                 className="menuItem"
                                 to="/home"
                                 // onClick={(e) => handleClick(e, '/Home')}
-                                isActive={() => ["/", "/home"].includes(currentPageUrl.pathname)}
+                                // isActive={() => ["/", "/home"].includes(currentPageUrl.pathname)}
                             >
                                 <img src="/logo.svg" alt="" className="logo" />
                             </NavLink>
