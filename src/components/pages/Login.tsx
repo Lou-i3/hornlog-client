@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import { Link, useNavigate } from "react-router-dom";
 
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 
 import 'firebase/auth';
 
@@ -26,6 +27,14 @@ const Login = ({ onSubmit, errorAuth, loadingAuth }: LoginProps) => {
     username: "",
     password: "",
   };
+
+  const { trackPageView } = useMatomo();
+
+    useEffect(() => {
+        trackPageView({
+            documentTitle: 'Home',
+        });
+    }, []);
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required("This field is required!"),

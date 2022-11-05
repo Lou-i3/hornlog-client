@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import firebase from "firebase/app";
 
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
+import { useMatomo } from '@datapunt/matomo-tracker-react'
+
 
 const ForgotPassword = (props) => {
 
     const [requestSent, setRequestSent] = useState(false);
     const [error, setError] = useState(undefined);
+    const { trackPageView } = useMatomo();
+
+    useEffect(() => {
+        trackPageView({
+            documentTitle: 'ForgotPassword',
+        });
+    }, []);
 
     const sendRequest = (email) => {
 

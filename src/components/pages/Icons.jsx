@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Icon from "../global/Icon";
 import Search from "../items/Search";
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 
 const Icons = () => {
     const [searchTerms, setSearchTerms] = useState("");
+
+    const { trackPageView } = useMatomo();
+
+    useEffect(() => {
+        trackPageView({
+            documentTitle: 'Icons',
+        });
+    }, []);
 
     const handleClick = (icon) => {
         console.log("handleClick", icon);

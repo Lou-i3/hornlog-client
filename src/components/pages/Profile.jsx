@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { formatDateTime } from "../../helpers/helpers";
 import { ME_QUERY } from "../../helpers/queries";
 import Icon from "../global/Icon";
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 
 // import { useState } from 'react';
 
@@ -12,6 +13,14 @@ const Profile = (props) => {
   // const currentUser = getCurrentUser();
   const { loading, error, data } = useQuery(ME_QUERY);
   const [me, setMe] = useState(null);
+
+  const { trackPageView } = useMatomo();
+
+    useEffect(() => {
+        trackPageView({
+            documentTitle: 'Home',
+        });
+    }, []);
 
   useEffect(() => {
     console.log("profile useEffet");

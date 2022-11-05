@@ -13,6 +13,7 @@ import { MY_PARTNERS_QUERY } from "../../helpers/queries";
 import ProfilePicture from "../items/profile/ProfilePicture";
 import { DeletePartnerMutation } from "../../helpers/mutations";
 import StarRating from "../items/StarRating";
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 
 
 const NewPartnerMutation = gql`
@@ -44,6 +45,14 @@ const Profile = (props) => {
     const [mutateFctDeletePartner] = useMutation(DeletePartnerMutation, { refetchQueries: [{ query: MY_PARTNERS_QUERY }] });
 
     const [profilePicture, setProfilePicture] = useState("");
+
+    const { trackPageView } = useMatomo();
+
+    useEffect(() => {
+        trackPageView({
+            documentTitle: 'Partner Details',
+        });
+    }, []);
 
     useEffect(() => {
         setReadOnly(props.displayMode === "view");

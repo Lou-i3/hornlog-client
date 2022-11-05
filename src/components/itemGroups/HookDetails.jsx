@@ -11,6 +11,7 @@ import HookPartnersField from "../items/hooks/HookPartnersField.jsx";
 import MoodPicker from "../items/MoodPicker.jsx";
 import Pill from "../items/Pill.jsx";
 import StarRating from "../items/StarRating.jsx";
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 
 const HookDetails = (props) => {
     const { displayMode, setDisplayMode, setSelectedHook } = props;
@@ -20,6 +21,14 @@ const HookDetails = (props) => {
     const [mutateFctNewHook] = useMutation(NewHookMutation, { refetchQueries: [{ query: MY_HOOKS_QUERY }, { query: MY_PARTNERS_QUERY }] });
     const [mutateFctEditHook] = useMutation(EditHookMutation, { refetchQueries: [{ query: MY_HOOKS_QUERY }, { query: MY_PARTNERS_QUERY }] });
     const [mutateFctDeleteHook] = useMutation(DeleteHookMutation, { refetchQueries: [{ query: MY_HOOKS_QUERY }, { query: MY_PARTNERS_QUERY }] });
+
+    const { trackPageView } = useMatomo();
+
+    useEffect(() => {
+        trackPageView({
+            documentTitle: 'Hook Details',
+        });
+    }, []);
 
     useEffect(() => {
         // console.log("useEffect HookDetails");

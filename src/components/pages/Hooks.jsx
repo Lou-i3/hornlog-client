@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react';
 import Icon from "../global/Icon";
 import Illustration from "../global/Illustration";
 import FilterPanel from "../items/FilterPanel";
+import { useMatomo } from '@datapunt/matomo-tracker-react'
+
 
 const Hooks = () => {
     const [selectedHook, setSelectedHook] = useState(null);
@@ -25,6 +27,13 @@ const Hooks = () => {
         filterPenetration: null, // null, true, false
         filterSelf: false, // null, true, false
     });
+    const { trackPageView } = useMatomo();
+
+    useEffect(() => {
+        trackPageView({
+            documentTitle: 'Hooks',
+        });
+    }, []);
 
     useEffect(() => {
         window.addEventListener("resize", () => {

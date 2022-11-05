@@ -6,6 +6,7 @@ import Icon from "../global/Icon";
 import Illustration from "../global/Illustration";
 import MyPartners from "../itemGroups/myPartners";
 import FilterPanel from "../items/FilterPanel";
+import { useMatomo } from '@datapunt/matomo-tracker-react'
 
 const Partners = () => {
     const [displayMode, setDisplayMode] = useState("none");
@@ -21,6 +22,14 @@ const Partners = () => {
         hookDate: "first", // show date of : first, last
         nameType: "nickname" // nickame / full 
     });
+
+    const { trackPageView } = useMatomo();
+
+    useEffect(() => {
+        trackPageView({
+            documentTitle: 'Partners',
+        });
+    }, []);
 
     useEffect(() => {
         window.addEventListener("resize", () => {

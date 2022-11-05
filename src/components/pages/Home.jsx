@@ -12,14 +12,19 @@ const Home = () => {
     const { loading: loadingMe, errorMe, dataMe } = useQuery(ME_QUERY);
     const { loading: loadingMyHooks, errorMyHooks, data:dataMyHooks } = useQuery(MY_HOOKS_QUERY);
     const [hooks, setHooks] = useState([]);
-    const { trackPageView } = useMatomo()
+    const { trackPageView } = useMatomo();
+
+    useEffect(() => {
+        trackPageView({
+            documentTitle: 'Home',
+        });
+    }, []);
 
     useEffect(() => {
         console.log('home useEffect dataMyHooks: ', dataMyHooks);
         if (dataMyHooks) {
             setHooks(dataMyHooks.myHooks);
         }
-        trackPageView();
     }, [dataMyHooks]);
 
     useEffect(() => {
