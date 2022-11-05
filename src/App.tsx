@@ -6,7 +6,7 @@ import { Route, Routes } from "react-router-dom";
 // import 'rsuite-table/dist/css/rsuite-table.min.css';
 
 import './sass/App.scss';
-
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 import Header from './components/global/Header';
@@ -88,12 +88,14 @@ const App: React.FC<WrappedComponentProps> = ({
 }) => {
 
   const [pageLoading, setPageLoading] = useState(false);
+  const { pushInstruction } = useMatomo();
 
   useEffect(() => {
     // console.log(user?.getIdToken());
     if (user) {
       // setisLoggedIn(true);
     }
+    pushInstruction('setUserId', user?.email);
 
     // EventBus.on("logout", logOut);
 
