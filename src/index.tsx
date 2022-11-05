@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 
+import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react'
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -22,7 +24,7 @@ import firebase from 'firebase/app';
 // console.log("coucouuuu");
 
 const httpLink = createHttpLink({
-  uri:   'https://hornlog-api.nas.dewwwe.com/',
+  uri: 'https://hornlog-api.nas.dewwwe.com/',
   // credentials: 'include'
 });
 
@@ -54,6 +56,28 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
+// Matomo instance
+const matomoInstance = createInstance({
+  urlBase: 'https://matomo.nas.dewwwe.com',
+  siteId: 5,
+  // userId: '', // optional, default value: `undefined`.
+  // trackerUrl: 'https://LINK.TO.DOMAIN/tracking.php', // optional, default value: `${urlBase}matomo.php`
+  // srcUrl: 'https://LINK.TO.DOMAIN/tracking.js', // optional, default value: `${urlBase}matomo.js`
+  disabled: false, // optional, false by default. Makes all tracking calls no-ops if set to true.
+  heartBeat: { // optional, enabled by default
+    active: true, // optional, default value: true
+    // seconds: 10 // optional, default value: `15
+  },
+  linkTracking: false, // optional, default value: true
+  configurations: { // optional, default value: {}
+    // any valid matomo configuration, all below are optional
+    // disableCookies: true,
+    // setSecureCookie: true,
+    // setRequestMethod: 'POST'
+  }
+});
+
+
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
 let vh = window.innerHeight * 0.01;
 // Then we set the value in the --vh custom property to the root of the document
@@ -62,7 +86,9 @@ document.documentElement.style.setProperty('--vh', `${vh}px`);
 ReactDOM.render(
   <ApolloProvider client={client}>
     <BrowserRouter >
-      <App />
+      <MatomoProvider value={matomoInstance}>
+        <App />
+      </MatomoProvider>
     </BrowserRouter>
   </ApolloProvider>,
   document.getElementById('root')
